@@ -3,8 +3,6 @@
 import Link from "next/link";
 import { checkboxSpec } from "@/lib/components-data/checkbox";
 import { getComponent } from "@/lib/components-data/registry";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { StatusBanner } from "@/components/docs/status-banner";
 import { ComponentPreview } from "@/components/docs/component-preview";
@@ -12,6 +10,187 @@ import { PropsTable } from "@/components/docs/props-table";
 import { AnatomyDiagram } from "@/components/docs/anatomy-diagram";
 import { DosAndDonts } from "@/components/docs/dos-and-donts";
 import { TokenTable } from "@/components/docs/token-table";
+
+/* ------------------------------------------------------------------ */
+/*  FlowXCheckbox — local preview component matching Figma design     */
+/* ------------------------------------------------------------------ */
+
+function FlowXCheckbox({
+  checked = false,
+  state = "default",
+  border = true,
+  inverted = false,
+  size = "medium",
+  label = "Label",
+  value = "Value",
+}: {
+  checked?: boolean;
+  state?: "default" | "error" | "disabled" | "hover" | "focus";
+  border?: boolean;
+  inverted?: boolean;
+  size?: "small" | "medium";
+  label?: string;
+  value?: string;
+}) {
+  const isSmall = size === "small";
+  const isDisabled = state === "disabled";
+  const isError = state === "error";
+  const isHover = state === "hover";
+  const isFocus = state === "focus";
+
+  // Container background
+  const containerBg = inverted
+    ? checked
+      ? "#004c99"
+      : "#475263"
+    : checked
+      ? "#e6f0fb"
+      : "#ffffff";
+
+  // Container border
+  const containerBorder = isError
+    ? "#e62200"
+    : checked
+      ? inverted
+        ? "#3389e0"
+        : "#006bd8"
+      : isHover
+        ? inverted
+          ? "#8390a2"
+          : "#cbd1db"
+        : inverted
+          ? "#5b6a7e"
+          : "#e3e8ed";
+
+  // Checkbox fill
+  const checkboxBg = checked
+    ? isError
+      ? "#e62200"
+      : inverted
+        ? "#3389e0"
+        : "#006bd8"
+    : "transparent";
+
+  // Checkbox border
+  const checkboxBorder = isError
+    ? "#e62200"
+    : checked
+      ? "transparent"
+      : inverted
+        ? "#8390a2"
+        : "#cbd1db";
+
+  const textColor = inverted ? "#ffffff" : "#1d232c";
+  const labelColor = inverted ? "#a6b0be" : "#1d232c";
+
+  return (
+    <div
+      className={`inline-flex flex-col gap-0.5 ${isDisabled ? "opacity-50" : ""}`}
+    >
+      {/* Label */}
+      <span
+        style={{
+          fontSize: isSmall ? 10 : 12,
+          lineHeight: isSmall ? "12px" : "16px",
+          color: labelColor,
+          fontWeight: 400,
+        }}
+      >
+        {label}
+      </span>
+
+      {/* Input Container + optional error icon */}
+      <div className="inline-flex items-center gap-1.5">
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+            height: isSmall ? 28 : 36,
+            paddingLeft: border ? 8 : 0,
+            paddingRight: border ? 12 : 0,
+            borderRadius: border ? 8 : 0,
+            border: border ? `1px solid ${containerBorder}` : "none",
+            backgroundColor: border ? containerBg : "transparent",
+            cursor: isDisabled ? "not-allowed" : "pointer",
+            outline: isFocus
+              ? `2px solid ${inverted ? "#3389e0" : "#006bd8"}`
+              : undefined,
+            outlineOffset: isFocus ? 1 : undefined,
+          }}
+        >
+          {/* Checkbox icon */}
+          <div
+            style={{
+              width: isSmall ? 16 : 18,
+              height: isSmall ? 16 : 18,
+              borderRadius: 4,
+              border: `1.5px solid ${checked ? checkboxBg : checkboxBorder}`,
+              backgroundColor: checkboxBg,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+            }}
+          >
+            {checked && (
+              <svg
+                width={isSmall ? 10 : 12}
+                height={isSmall ? 10 : 12}
+                viewBox="0 0 12 12"
+                fill="none"
+              >
+                <path
+                  d="M2 6L5 9L10 3"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            )}
+          </div>
+
+          {/* Value text */}
+          <span
+            style={{
+              fontSize: isSmall ? 12 : 14,
+              lineHeight: isSmall ? "16px" : "24px",
+              color: textColor,
+              whiteSpace: "nowrap",
+            }}
+          >
+            {value}
+          </span>
+        </div>
+
+        {/* Error icon outside container */}
+        {isError && (
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            style={{ flexShrink: 0 }}
+          >
+            <circle cx="8" cy="8" r="7" stroke="#e62200" strokeWidth="1.5" />
+            <path
+              d="M8 5V8.5"
+              stroke="#e62200"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+            <circle cx="8" cy="11" r="0.75" fill="#e62200" />
+          </svg>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Tokens                                                            */
+/* ------------------------------------------------------------------ */
 
 const checkboxTokens = [
   {
@@ -49,6 +228,10 @@ const checkboxTokens = [
     preview: <div className="size-5 rounded bg-muted-foreground" />,
   },
 ];
+
+/* ------------------------------------------------------------------ */
+/*  Page                                                              */
+/* ------------------------------------------------------------------ */
 
 export default function CheckboxPage() {
   const spec = checkboxSpec;
@@ -96,30 +279,29 @@ export default function CheckboxPage() {
               name: "border",
               type: "boolean",
             },
+            {
+              name: "inverted",
+              type: "boolean",
+            },
           ]}
           render={(values) => (
             <div
-              className={`inline-flex items-center gap-3 rounded-lg px-4 py-3 ${
-                values.border !== false ? "border" : ""
+              className={`inline-flex items-center justify-center rounded-lg p-6 ${
+                values.inverted ? "bg-neutral-900" : ""
               }`}
             >
-              <Checkbox
-                checked={values.checked}
-                disabled={values.state === "disabled"}
-                aria-invalid={values.state === "error" ? true : undefined}
-                className={
-                  values.size === "small" ? "size-3.5 [&>svg]:size-3" : ""
+              <FlowXCheckbox
+                checked={values.checked === true}
+                state={
+                  (values.state as "default" | "error" | "disabled") ||
+                  "default"
                 }
+                size={
+                  (values.size as "small" | "medium") || "medium"
+                }
+                border={values.border !== false}
+                inverted={values.inverted === true}
               />
-              <Label
-                className={`${
-                  values.state === "disabled"
-                    ? "cursor-not-allowed opacity-50"
-                    : "cursor-pointer"
-                } ${values.size === "small" ? "text-sm" : ""}`}
-              >
-                Checkbox label
-              </Label>
             </div>
           )}
         />
@@ -132,45 +314,45 @@ export default function CheckboxPage() {
         <section className="space-y-4">
           <h2 className="text-xl font-semibold">Variants</h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {spec.variants.map((v) => (
-              <div
-                key={v.name}
-                className={`flex flex-col items-center gap-3 rounded-lg p-6 ${
-                  v.props.inverted === "on"
-                    ? "border border-neutral-700 bg-neutral-900 text-white"
-                    : "border"
-                }`}
-              >
+            {spec.variants.map((v) => {
+              const isInverted = v.props.inverted === "on";
+              return (
                 <div
-                  className={`inline-flex items-center gap-3 rounded-lg px-4 py-3 ${
-                    v.props.border === "on" ? "border" : ""
-                  } ${v.props.inverted === "on" ? "border-neutral-600" : ""}`}
+                  key={v.name}
+                  className={`flex flex-col items-center gap-3 rounded-lg p-6 ${
+                    isInverted
+                      ? "border border-neutral-700 bg-neutral-900 text-white"
+                      : "border"
+                  }`}
                 >
-                  <Checkbox
+                  <FlowXCheckbox
                     checked={v.props.selected === "on"}
-                    disabled={v.props.state === "disabled"}
-                    aria-invalid={
-                      v.props.state === "error" ? true : undefined
+                    state={
+                      (v.props.state as
+                        | "default"
+                        | "error"
+                        | "disabled") || "default"
                     }
+                    border={v.props.border === "on"}
+                    inverted={isInverted}
                   />
-                  <span
-                    className={`text-sm ${
-                      v.props.state === "disabled" ? "opacity-50" : ""
-                    }`}
-                  >
-                    {v.name}
-                  </span>
+                  <div className="text-center">
+                    <p className="text-sm font-medium">{v.name}</p>
+                    {v.description && (
+                      <p
+                        className={`mt-0.5 text-xs ${
+                          isInverted
+                            ? "text-neutral-400"
+                            : "text-muted-foreground"
+                        }`}
+                      >
+                        {v.description}
+                      </p>
+                    )}
+                  </div>
                 </div>
-                <div className="text-center">
-                  <p className="text-sm font-medium">{v.name}</p>
-                  {v.description && (
-                    <p className="mt-0.5 text-xs text-muted-foreground">
-                      {v.description}
-                    </p>
-                  )}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
       )}
@@ -181,29 +363,29 @@ export default function CheckboxPage() {
       {spec.states && spec.states.length > 0 && (
         <section className="space-y-4">
           <h2 className="text-xl font-semibold">States</h2>
-          <div className="flex flex-wrap items-center gap-4">
-            {spec.states.map((state) => (
-              <div key={state} className="flex flex-col items-center gap-2">
-                <div className="inline-flex items-center gap-2 rounded-lg border px-3 py-2">
-                  <Checkbox
-                    checked={state === "default" || state === "focus"}
-                    disabled={state === "disabled"}
-                    aria-invalid={state === "error" ? true : undefined}
-                    className={
-                      state === "hover"
-                        ? "border-primary/60"
-                        : state === "focus"
-                          ? "border-ring ring-3 ring-ring/50"
-                          : undefined
+          <div className="flex flex-wrap items-start gap-6">
+            {/* Show unchecked + checked for each state */}
+            {spec.states.map((s) => (
+              <div key={s} className="flex flex-col items-center gap-3">
+                <span className="text-xs font-medium text-muted-foreground capitalize">
+                  {s}
+                </span>
+                <div className="flex gap-3">
+                  <FlowXCheckbox
+                    checked={false}
+                    state={
+                      s as "default" | "error" | "disabled" | "hover" | "focus"
                     }
+                    value="Unchecked"
                   />
-                  <span
-                    className={`text-sm ${state === "disabled" ? "opacity-50" : ""}`}
-                  >
-                    {state.charAt(0).toUpperCase() + state.slice(1)}
-                  </span>
+                  <FlowXCheckbox
+                    checked={true}
+                    state={
+                      s as "default" | "error" | "disabled" | "hover" | "focus"
+                    }
+                    value="Checked"
+                  />
                 </div>
-                <span className="text-xs text-muted-foreground">{state}</span>
               </div>
             ))}
           </div>
@@ -216,21 +398,15 @@ export default function CheckboxPage() {
       {spec.sizes && spec.sizes.length > 0 && (
         <section className="space-y-4">
           <h2 className="text-xl font-semibold">Sizes</h2>
-          <div className="flex flex-wrap items-end gap-4">
-            {spec.sizes.map((size) => (
-              <div key={size} className="flex flex-col items-center gap-2">
-                <div className="inline-flex items-center gap-2 rounded-lg border px-3 py-2">
-                  <Checkbox
-                    checked
-                    className={
-                      size === "small" ? "size-3.5 [&>svg]:size-3" : ""
-                    }
-                  />
-                  <span className={size === "small" ? "text-sm" : ""}>
-                    Size {size}
-                  </span>
-                </div>
-                <span className="text-xs text-muted-foreground">{size}</span>
+          <div className="flex flex-wrap items-end gap-6">
+            {spec.sizes.map((s) => (
+              <div key={s} className="flex flex-col items-center gap-2">
+                <FlowXCheckbox
+                  checked={true}
+                  size={s as "small" | "medium"}
+                  value={`Size ${s}`}
+                />
+                <span className="text-xs text-muted-foreground">{s}</span>
               </div>
             ))}
           </div>
@@ -285,43 +461,47 @@ export default function CheckboxPage() {
               </div>
             )}
 
-            {spec.accessibility.keyboard && spec.accessibility.keyboard.length > 0 && (
-              <div>
-                <h3 className="text-sm font-semibold">Keyboard Interactions</h3>
-                <ul className="mt-2 space-y-1.5">
-                  {spec.accessibility.keyboard.map((item, i) => (
-                    <li
-                      key={i}
-                      className="flex items-start gap-2 text-sm text-muted-foreground"
-                    >
-                      <kbd className="mt-0.5 shrink-0 rounded border bg-muted px-1.5 py-0.5 text-[10px] font-mono">
-                        {item.split(" — ")[0]}
-                      </kbd>
-                      <span>{item.split(" — ")[1]}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            {spec.accessibility.keyboard &&
+              spec.accessibility.keyboard.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-semibold">
+                    Keyboard Interactions
+                  </h3>
+                  <ul className="mt-2 space-y-1.5">
+                    {spec.accessibility.keyboard.map((item, i) => (
+                      <li
+                        key={i}
+                        className="flex items-start gap-2 text-sm text-muted-foreground"
+                      >
+                        <kbd className="mt-0.5 shrink-0 rounded border bg-muted px-1.5 py-0.5 text-[10px] font-mono">
+                          {item.split(" — ")[0]}
+                        </kbd>
+                        <span>{item.split(" — ")[1]}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
-            {spec.accessibility.ariaAttributes && spec.accessibility.ariaAttributes.length > 0 && (
-              <div>
-                <h3 className="text-sm font-semibold">ARIA Attributes</h3>
-                <ul className="mt-2 space-y-1.5">
-                  {spec.accessibility.ariaAttributes.map((item, i) => (
-                    <li
-                      key={i}
-                      className="flex items-start gap-2 text-sm text-muted-foreground"
-                    >
-                      <code className="mt-0.5 shrink-0 rounded bg-muted px-1.5 py-0.5 text-[10px]">
-                        {item.split(" — ")[0]}
-                      </code>
-                      <span>{item.split(" — ")[1]}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            {spec.accessibility.ariaAttributes &&
+              spec.accessibility.ariaAttributes.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-semibold">ARIA Attributes</h3>
+                  <ul className="mt-2 space-y-1.5">
+                    {spec.accessibility.ariaAttributes.map((item, i) => (
+                      <li
+                        key={i}
+                        className="flex items-start gap-2 text-sm text-muted-foreground"
+                      >
+                        <code className="mt-0.5 shrink-0 rounded bg-muted px-1.5 py-0.5 text-[10px]">
+                          {item.split(" — ")[0]}
+                        </code>
+                        <span>{item.split(" — ")[1]}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
           </div>
         </section>
       )}
