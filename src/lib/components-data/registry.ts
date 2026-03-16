@@ -1,7 +1,8 @@
 import { type ComponentSpec } from "./types";
 import { buttonSpec } from "./button";
+import { checkboxSpec } from "./checkbox";
 
-export const componentRegistry: ComponentSpec[] = [buttonSpec];
+export const componentRegistry: ComponentSpec[] = [buttonSpec, checkboxSpec];
 
 export function getComponent(slug: string): ComponentSpec | undefined {
   return componentRegistry.find((c) => c.slug === slug);
