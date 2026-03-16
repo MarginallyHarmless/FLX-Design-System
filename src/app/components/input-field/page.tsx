@@ -313,6 +313,7 @@ export default function InputFieldPage() {
             {
               name: "size",
               options: ["small", "medium"],
+              default: "medium",
             },
             {
               name: "filled",
@@ -325,14 +326,10 @@ export default function InputFieldPage() {
             {
               name: "hasTopLabel",
               type: "boolean",
-              defaultValue: true,
+              default: true,
             },
             {
               name: "hasIconStart",
-              type: "boolean",
-            },
-            {
-              name: "hasIconEnd",
               type: "boolean",
             },
             {

@@ -9,7 +9,7 @@ import { ComponentPreview } from "@/components/docs/component-preview";
 /*  guessed. Keyed by [scope][variant][inverted][state].               */
 /* ------------------------------------------------------------------ */
 
-type StateColors = { fill: string; stroke: string; textColor: string };
+type StateColors = { fill: string; stroke: string; textColor: string; iconColor?: string };
 
 const COLORS: Record<
   string,
@@ -32,16 +32,16 @@ const COLORS: Record<
     },
     Secondary: {
       Off: {
-        Default:  { fill: "#ffffff", stroke: "#e3e8ed", textColor: "#006bd8" },
-        Hover:    { fill: "#f7f8f9", stroke: "#e3e8ed", textColor: "#006bd8" },
-        Pressed:  { fill: "#e3e8ed", stroke: "#e3e8ed", textColor: "#006bd8" },
-        Disabled: { fill: "transparent", stroke: "#cbd1db", textColor: "#a6b0be" },
+        Default:  { fill: "#ffffff", stroke: "#e3e8ed", textColor: "#006bd8", iconColor: "#1d232c" },
+        Hover:    { fill: "#f7f8f9", stroke: "#e3e8ed", textColor: "#006bd8", iconColor: "#1d232c" },
+        Pressed:  { fill: "#e3e8ed", stroke: "#e3e8ed", textColor: "#006bd8", iconColor: "#1d232c" },
+        Disabled: { fill: "transparent", stroke: "#cbd1db", textColor: "#a6b0be", iconColor: "#1d232c" },
       },
       On: {
-        Default:  { fill: "transparent", stroke: "#5b6a7e", textColor: "#3389e0" },
-        Hover:    { fill: "#475263", stroke: "#5b6a7e", textColor: "#3389e0" },
-        Pressed:  { fill: "#5b6a7e", stroke: "#5b6a7e", textColor: "#3389e0" },
-        Disabled: { fill: "transparent", stroke: "#5b6a7e", textColor: "#64748b" },
+        Default:  { fill: "transparent", stroke: "#5b6a7e", textColor: "#3389e0", iconColor: "#ffffff" },
+        Hover:    { fill: "#475263", stroke: "#5b6a7e", textColor: "#3389e0", iconColor: "#ffffff" },
+        Pressed:  { fill: "#5b6a7e", stroke: "#5b6a7e", textColor: "#3389e0", iconColor: "#ffffff" },
+        Disabled: { fill: "transparent", stroke: "#5b6a7e", textColor: "#64748b", iconColor: "#ffffff" },
       },
     },
     Tertiary: {
@@ -76,16 +76,16 @@ const COLORS: Record<
     },
     Secondary: {
       Off: {
-        Default:  { fill: "#ffffff", stroke: "#e3e8ed", textColor: "#e62200" },
-        Hover:    { fill: "#f7f8f9", stroke: "#e3e8ed", textColor: "#e62200" },
-        Pressed:  { fill: "#e3e8ed", stroke: "#e3e8ed", textColor: "#e62200" },
-        Disabled: { fill: "transparent", stroke: "#cbd1db", textColor: "#a6b0be" },
+        Default:  { fill: "#ffffff", stroke: "#e3e8ed", textColor: "#e62200", iconColor: "#1d232c" },
+        Hover:    { fill: "#f7f8f9", stroke: "#e3e8ed", textColor: "#e62200", iconColor: "#1d232c" },
+        Pressed:  { fill: "#e3e8ed", stroke: "#e3e8ed", textColor: "#e62200", iconColor: "#1d232c" },
+        Disabled: { fill: "transparent", stroke: "#cbd1db", textColor: "#a6b0be", iconColor: "#1d232c" },
       },
       On: {
-        Default:  { fill: "transparent", stroke: "#5b6a7e", textColor: "#eb4e33" },
-        Hover:    { fill: "#475263", stroke: "#5b6a7e", textColor: "#eb4e33" },
-        Pressed:  { fill: "#5b6a7e", stroke: "#5b6a7e", textColor: "#eb4e33" },
-        Disabled: { fill: "transparent", stroke: "#5b6a7e", textColor: "#64748b" },
+        Default:  { fill: "transparent", stroke: "#5b6a7e", textColor: "#eb4e33", iconColor: "#ffffff" },
+        Hover:    { fill: "#475263", stroke: "#5b6a7e", textColor: "#eb4e33", iconColor: "#ffffff" },
+        Pressed:  { fill: "#5b6a7e", stroke: "#5b6a7e", textColor: "#eb4e33", iconColor: "#ffffff" },
+        Disabled: { fill: "transparent", stroke: "#5b6a7e", textColor: "#64748b", iconColor: "#ffffff" },
       },
     },
     Tertiary: {
@@ -120,16 +120,16 @@ const COLORS: Record<
     },
     Secondary: {
       Off: {
-        Default:  { fill: "#ffffff", stroke: "#e3e8ed", textColor: "#008060" },
-        Hover:    { fill: "#f7f8f9", stroke: "#e3e8ed", textColor: "#008060" },
-        Pressed:  { fill: "#e3e8ed", stroke: "#e3e8ed", textColor: "#008060" },
-        Disabled: { fill: "transparent", stroke: "#cbd1db", textColor: "#a6b0be" },
+        Default:  { fill: "#ffffff", stroke: "#e3e8ed", textColor: "#008060", iconColor: "#1d232c" },
+        Hover:    { fill: "#f7f8f9", stroke: "#e3e8ed", textColor: "#008060", iconColor: "#1d232c" },
+        Pressed:  { fill: "#e3e8ed", stroke: "#e3e8ed", textColor: "#008060", iconColor: "#1d232c" },
+        Disabled: { fill: "transparent", stroke: "#cbd1db", textColor: "#a6b0be", iconColor: "#1d232c" },
       },
       On: {
-        Default:  { fill: "transparent", stroke: "#5b6a7e", textColor: "#339980" },
-        Hover:    { fill: "#475263", stroke: "#5b6a7e", textColor: "#339980" },
-        Pressed:  { fill: "#5b6a7e", stroke: "#5b6a7e", textColor: "#339980" },
-        Disabled: { fill: "transparent", stroke: "#5b6a7e", textColor: "#64748b" },
+        Default:  { fill: "transparent", stroke: "#5b6a7e", textColor: "#339980", iconColor: "#ffffff" },
+        Hover:    { fill: "#475263", stroke: "#5b6a7e", textColor: "#339980", iconColor: "#ffffff" },
+        Pressed:  { fill: "#5b6a7e", stroke: "#5b6a7e", textColor: "#339980", iconColor: "#ffffff" },
+        Disabled: { fill: "transparent", stroke: "#5b6a7e", textColor: "#64748b", iconColor: "#ffffff" },
       },
     },
     Tertiary: {
@@ -171,8 +171,11 @@ function CheckIcon({ size, color }: { size: number; color: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
       <path
-        d="M20.293 5.293a1 1 0 0 1 1.414 1.414l-11 11a1 1 0 0 1-1.414 0l-5-5a1 1 0 1 1 1.414-1.414L10 15.586l10.293-10.293Z"
-        fill={color}
+        d="M20 6L9.5 16.5L4 11"
+        stroke={color}
+        strokeWidth={1}
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -182,8 +185,11 @@ function ArrowRightIcon({ size, color }: { size: number; color: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
       <path
-        d="M13.293 5.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 0 1-1.414-1.414L17.586 13H4a1 1 0 1 1 0-2h13.586l-4.293-4.293a1 1 0 0 1 0-1.414Z"
-        fill={color}
+        d="M4 12H20M20 12L14 6M20 12L14 18"
+        stroke={color}
+        strokeWidth={1}
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -238,7 +244,7 @@ function FlowXButton({
       }}
     >
       {hasIconStart && (
-        <CheckIcon size={sizeTokens.iconSize} color={colors.textColor} />
+        <CheckIcon size={sizeTokens.iconSize} color={colors.iconColor ?? colors.textColor} />
       )}
       {hasLabel && (
         <span
@@ -254,7 +260,7 @@ function FlowXButton({
         </span>
       )}
       {hasIconEnd && (
-        <ArrowRightIcon size={sizeTokens.iconSize} color={colors.textColor} />
+        <ArrowRightIcon size={sizeTokens.iconSize} color={colors.iconColor ?? colors.textColor} />
       )}
     </div>
   );
