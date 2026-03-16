@@ -203,27 +203,26 @@ function FlowXInputField({
               <path d="M4 6L8 10L12 6" stroke={prefixSuffixColor} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           )}
+          {/* Error Icon */}
+          {isError && (
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              style={{ flexShrink: 0 }}
+            >
+              <circle cx="8" cy="8" r="7" stroke="#e62200" strokeWidth="1" />
+              <path
+                d="M8 5V8.5"
+                stroke="#e62200"
+                strokeWidth="1"
+                strokeLinecap="round"
+              />
+              <circle cx="8" cy="11" r="0.75" fill="#e62200" />
+            </svg>
+          )}
         </div>
-
-        {/* Error icon outside container */}
-        {isError && (
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            style={{ flexShrink: 0 }}
-          >
-            <circle cx="8" cy="8" r="7" stroke="#e62200" strokeWidth="1" />
-            <path
-              d="M8 5V8.5"
-              stroke="#e62200"
-              strokeWidth="1"
-              strokeLinecap="round"
-            />
-            <circle cx="8" cy="11" r="0.75" fill="#e62200" />
-          </svg>
-        )}
       </div>
 
       {/* Description */}
@@ -326,6 +325,7 @@ export default function InputFieldPage() {
             {
               name: "hasTopLabel",
               type: "boolean",
+              defaultValue: true,
             },
             {
               name: "hasIconStart",
