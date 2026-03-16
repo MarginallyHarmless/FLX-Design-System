@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import { Open_Sans, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { SidebarNav } from "@/components/docs/sidebar-nav";
+import { TopBar } from "@/components/docs/top-bar";
+import { Breadcrumbs } from "@/components/docs/breadcrumbs";
+import Link from "next/link";
 import "./globals.css";
 
 const openSans = Open_Sans({
@@ -41,7 +46,28 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TooltipProvider>
-            {children}
+            <div className="flex min-h-screen">
+              {/* Sidebar - hidden on mobile, shown on md+ */}
+              <aside className="hidden md:flex w-60 flex-col border-r bg-background fixed inset-y-0 left-0 z-30">
+                <div className="p-4 border-b">
+                  <Link href="/" className="font-semibold text-lg">
+                    FlowX Design System
+                  </Link>
+                </div>
+                <ScrollArea className="flex-1 py-4">
+                  <SidebarNav />
+                </ScrollArea>
+              </aside>
+
+              {/* Main area */}
+              <div className="flex-1 flex flex-col md:pl-60">
+                <TopBar />
+                <main className="flex-1 px-6 py-8 mx-auto w-full max-w-[900px]">
+                  <Breadcrumbs />
+                  {children}
+                </main>
+              </div>
+            </div>
           </TooltipProvider>
         </ThemeProvider>
       </body>
