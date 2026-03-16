@@ -65,12 +65,20 @@ Extract:
 - [ ] Element tree documented for each variant
 - [ ] Layout properties recorded for all auto-layout frames
 - [ ] Fill and stroke hex values recorded for all elements
-- [ ] Differences between variants noted
+- [ ] Elements with NO fill noted as transparent (do NOT invent a fill color)
+- [ ] Differences between variants noted (especially inverted vs non-inverted fills/strokes)
 
 ---
 
-### Pass 3: Typography (EVERY Variant)
+### Pass 3: Typography AND Text Colors (EVERY Variant)
 
+> **⛔ CRITICAL:** `scan_text_nodes` returns font sizes/weights but NOT text
+> colors. Text colors are `fills` on the text node — you MUST follow up with
+> `get_node_info` on every text node ID returned by `scan_text_nodes` to get
+> the actual fill color. Skipping this step is the #1 cause of color
+> mismatches in component implementations.
+
+**Step 3a — Typography:**
 **Tool:** `mcp__Vibma__scan_text_nodes` on **EVERY** variant node ID
 
 Extract:
@@ -80,14 +88,36 @@ Extract:
 - `fontWeight` (numeric: 400, 600, 700)
 - `lineHeight` (px or %)
 - `letterSpacing`
+- **text node IDs** — save these for Step 3b
 
 **NEVER guess font sizes or weights from bounding boxes.** The `scan_text_nodes` tool returns exact typographic data — always use it.
 
+**Step 3b — Text Colors:**
+**Tool:** `mcp__Vibma__get_node_info` on **EVERY text node ID** from Step 3a
+
+**Parameters:**
+- `fields: ["name", "fills"]`
+- `depth: 0`
+
+Extract:
+- `fills[0].color` — this is the actual text color hex value
+
+**Batch text node IDs in groups of 10–15** for efficiency.
+
+> **⛔ DO NOT** assume text colors from context, reuse colors from other
+> components, or copy hex values from memory. Every text color must come
+> from `get_node_info` → `fills` on that specific text node in that
+> specific variant. Colors that look similar (e.g. `#a6b0be` vs `#64748b`)
+> are NOT interchangeable.
+
 **Completion checklist:**
-- [ ] EVERY variant scanned for text nodes
+- [ ] EVERY variant scanned for text nodes (Step 3a)
 - [ ] fontSize, fontFamily, fontWeight, lineHeight recorded per text element per variant
 - [ ] Variations across sizes noted (e.g. small = 12px, medium = 14px)
 - [ ] No values guessed from bounding box dimensions
+- [ ] EVERY text node ID from Step 3a queried with `get_node_info` for fills (Step 3b)
+- [ ] Text color hex recorded per text element per variant
+- [ ] Text colors cross-checked across variants (e.g. inverted vs non-inverted, disabled vs default)
 
 ---
 
@@ -322,7 +352,7 @@ Fill in the rest of the `ComponentSpec`:
 - **name** — display name (e.g. `"Radio Button"`)
 - **description** — one-sentence summary of the component's purpose
 - **status** — `"stable"`, `"beta"`, `"deprecated"`, or `"planned"`
-- **figmaLink** — URL to the Figma component
+- **figmaLink** — Real Figma URL to the component set. **Do NOT use placeholder URLs.** Get the node ID by running `mcp__Vibma__search_nodes` with `types: ["COMPONENT_SET"]` and the component name, then construct: `https://www.figma.com/design/aGMqzHMsAiwCUU5DSgUe1S/?node-id={id with colon replaced by dash}` (e.g. node `90:3228` → `node-id=90-3228`)
 - **lastUpdated** — today's date in `YYYY-MM-DD` format
 - **variants** — array of `{ name, description, props }` for each meaningful variant
 - **props** — array of prop definitions with name, type, default, options, description
@@ -792,24 +822,65 @@ All helpers are imported from `@/lib/components-data/variant-style-helpers`.
 
 ---
 
+## ⛔ MANDATORY: Data-Driven Preview Components
+
+> **This is not optional. Every preview component MUST read ALL visual
+> properties from the spec via helpers. If you hardcode a single hex color
+> or font size in the component JSX, the build is wrong.**
+
+The data-driven approach is the **only** safeguard against guessing values.
+When colors and typography live in `variantStyles`, they must come from
+Figma extraction (Pass 2–4). When they're hardcoded inline, there is
+nothing stopping you from guessing — and you WILL guess wrong.
+
+**Rules:**
+1. **Zero hardcoded hex values** in the preview component. Every color
+   comes from `getTextColor()`, `getElementStyle()`, or `buildElementStyle()`.
+2. **Zero hardcoded font sizes or line heights.** Every typographic value
+   comes from `getElementTypography()` (which reads from `variantStyles`
+   with `ElementSpec` as fallback).
+3. **Zero `isSmall ? X : Y` ternaries for visual properties.** Size
+   differences are encoded in the `variantStyles` entries (one per
+   State × Size × Inverted combination). The component just reads the
+   right entry via `variantProps`.
+4. The ONLY acceptable hardcoded values are structural constants that
+   don't change across variants (e.g. `gap: 6`, `borderRadius: 8`) —
+   and even those should come from `ElementSpec.layout` or
+   `ElementSpec.dimensions` when available.
+
+**If you catch yourself writing `inverted ? "#xxx" : "#yyy"` in the
+component file, STOP. That value belongs in `variantStyles`.**
+
+**Reference implementation:** `src/app/components/input-field/page.tsx`
+uses `getTextColor`, `getElementStyle`, and `getElementTypography` for
+all visual properties. Follow that pattern.
+
+---
+
 ## Common Pitfalls
 
 1. **Don't sample — extract ALL variants.** Every variant in the component set must be queried in Passes 2–4. Sampling 2–3 "representative" variants misses color/visibility differences. Query them all.
 
-2. **Don't guess typography from bounding boxes.** Always use `mcp__Vibma__scan_text_nodes` (Pass 3). Labels are often SemiBold (600), not Regular (400). Small sizes often use 12px, not 10px. Guessing leads to subtle mismatches.
+2. **Don't guess typography from bounding boxes.** Always use `mcp__Vibma__scan_text_nodes` (Pass 3a). Labels are often SemiBold (600), not Regular (400). Small sizes often use 12px, not 10px. Guessing leads to subtle mismatches.
 
-3. **Don't approximate icons.** If Figma uses a custom SVG (e.g. circle-with-checkmark vs circle-with-dot), extract the exact SVG path in Pass 5. Never substitute basic shapes.
+3. **Don't forget text colors.** `scan_text_nodes` does NOT return colors — only typography. You MUST follow up with `mcp__Vibma__get_node_info` (fields: `["name", "fills"]`) on every text node ID to get the actual fill color (Pass 3b). This was the #1 source of bugs in the Input Field component: text colors were guessed from memory (`#a6b0be`) when the actual Figma values were different (`#ffffff`, `#64748b`). Colors that "look close" in a neutral palette are NOT interchangeable.
 
-4. **Don't hardcode colors in the preview component.** All colors must come from the helpers (`buildElementStyle`, `getTextColor`, `getElementStyle`). The preview component should have zero hardcoded hex values.
+4. **Don't assume transparent means there's a fill you haven't found.** If `get_node_info` returns no `fills` array for a container frame, that container is transparent in Figma. Do NOT invent a fill color (e.g. `#2a3142` for "dark background"). The inverted Input Field container has no fill — the dark background comes from the preview context, not the component.
 
-5. **Don't skip token bindings.** Pass 4 is essential for the Design Tokens section and for pairing every hex value with its semantic token name in `variantStyles`.
+5. **Don't approximate icons.** If Figma uses a custom SVG (e.g. circle-with-checkmark vs circle-with-dot), extract the exact SVG path in Pass 5. Never substitute basic shapes.
 
-6. **Don't forget toggleable elements.** Boolean component properties from Pass 1 control element visibility. Mark these elements as `toggleable: true` in `elements` and include `visible: true/false` in every `variantStyles` entry.
+6. **Don't hardcode colors OR typography in the preview component.** All colors must come from `getTextColor` / `getElementStyle` / `buildElementStyle`. All font sizes and line heights must come from `getElementTypography`. The preview component should have ZERO hardcoded hex values and ZERO hardcoded font sizes. If you write `isSmall ? 12 : 14` you are doing it wrong — that data belongs in `variantStyles`. See the "MANDATORY: Data-Driven Preview Components" section above.
 
-7. **Don't ignore layout sizing modes.** Only record `width`/`height` in `dimensions` when the sizing is FIXED. Elements with HUG or FILL sizing should not have explicit width/height — they size from content or parent.
+7. **Don't skip token bindings.** Pass 4 is essential for the Design Tokens section and for pairing every hex value with its semantic token name in `variantStyles`.
 
-8. **Don't skip the validation checklist (Step 2f).** Verify variant count matches, every element has entries in every variant style, and every fill/stroke has both hex and token before creating files.
+8. **Don't forget toggleable elements.** Boolean component properties from Pass 1 control element visibility. Mark these elements as `toggleable: true` in `elements` and include `visible: true/false` in every `variantStyles` entry.
 
-9. **Use `font-family: var(--font-flowx)`** for all text in preview components. The docs site uses a different font; component previews must use Open Sans via the CSS variable.
+9. **Don't ignore layout sizing modes.** Only record `width`/`height` in `dimensions` when the sizing is FIXED. Elements with HUG or FILL sizing should not have explicit width/height — they size from content or parent.
 
-10. **Labels go below previews.** In States and Sizes sections, the label/title text sits below the component preview, not above. Match the pattern from Radio V3.
+10. **Don't skip the validation checklist (Step 2f).** Verify variant count matches, every element has entries in every variant style, and every fill/stroke has both hex and token before creating files.
+
+11. **Use `font-family: var(--font-flowx)`** for all text in preview components. The docs site uses a different font; component previews must use Open Sans via the CSS variable.
+
+12. **Labels go below previews.** In States and Sizes sections, the label/title text sits below the component preview, not above. Match the pattern from Radio V3.
+
+13. **Don't reuse color values from other components or from memory.** Every color in `variantStyles` must be freshly extracted from Figma for THIS component via `get_node_info` → `fills`/`strokes`. Even if two components use the same design tokens, always verify.

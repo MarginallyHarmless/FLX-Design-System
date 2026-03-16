@@ -120,6 +120,27 @@ export function getTextColor(
 }
 
 /**
+ * Get typography for an element in a specific variant.
+ * Returns variant-level overrides if present, otherwise falls back to the
+ * base typography defined in the ElementSpec.
+ */
+export function getElementTypography(
+  spec: ComponentSpec,
+  variantProps: Record<string, string>,
+  elementPart: string
+): { fontSize?: number; lineHeight?: number; fontWeight?: number } | undefined {
+  const vs = getElementStyle(spec, variantProps, elementPart);
+  const base = getElementSpec(spec, elementPart)?.typography;
+
+  const fontSize = vs?.fontSize ?? base?.fontSize;
+  const lineHeight = vs?.lineHeight ?? base?.lineHeight;
+  const fontWeight = vs?.fontWeight ?? base?.fontWeight;
+
+  if (fontSize == null && lineHeight == null && fontWeight == null) return undefined;
+  return { fontSize, lineHeight, fontWeight };
+}
+
+/**
  * Check if a toggleable element is visible in a specific variant.
  * Returns true by default if no visibility data exists.
  */

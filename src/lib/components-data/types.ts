@@ -53,6 +53,10 @@ export interface ElementStyle {
   height?: number;
   visible?: boolean;
   svg?: string;
+  // Typography overrides — used when typography varies by variant (e.g. size)
+  fontSize?: number;
+  lineHeight?: number;
+  fontWeight?: number;
 }
 
 export interface VariantStyle {
