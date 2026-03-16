@@ -40,8 +40,6 @@ export function StatusBanner({
 
   return (
     <div className="flex flex-wrap items-center gap-3 rounded-lg border bg-muted/40 px-4 py-2.5 text-sm">
-      <span className="font-semibold">{name}</span>
-
       <Badge variant="outline" className={config.className}>
         {config.label}
       </Badge>

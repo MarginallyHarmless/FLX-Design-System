@@ -6,6 +6,7 @@ interface Control {
   name: string;
   options?: string[];
   type?: "boolean";
+  default?: any;
 }
 
 interface ComponentPreviewProps {
@@ -74,7 +75,9 @@ export function ComponentPreview({
   const [values, setValues] = useState<Record<string, any>>(() => {
     const init: Record<string, any> = {};
     for (const c of controls) {
-      if (c.type === "boolean") {
+      if (c.default !== undefined) {
+        init[c.name] = c.default;
+      } else if (c.type === "boolean") {
         init[c.name] = false;
       } else if (c.options && c.options.length > 0) {
         init[c.name] = c.options[0];

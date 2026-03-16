@@ -29,17 +29,17 @@ export function ComponentPageTemplate({
 }: ComponentPageTemplateProps) {
   return (
     <div className="space-y-10">
-      {/* 1. Status Banner */}
-      <StatusBanner
-        name={spec.name}
-        status={spec.status}
-        figmaLink={spec.figmaLink}
-        lastUpdated={spec.lastUpdated}
-      />
-
-      {/* 2. Title + Description */}
+      {/* 1. Title + Status + Description */}
       <div>
         <h1 className="text-3xl font-bold tracking-tight">{spec.name}</h1>
+        <div className="mt-2">
+          <StatusBanner
+            name={spec.name}
+            status={spec.status}
+            figmaLink={spec.figmaLink}
+            lastUpdated={spec.lastUpdated}
+          />
+        </div>
         <p className="mt-2 text-lg text-muted-foreground">
           {spec.description}
         </p>
