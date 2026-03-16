@@ -3,13 +3,17 @@
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
+import { MobileNav } from "./mobile-nav";
 
 export function TopBar() {
   return (
     <header className="flex h-14 items-center justify-between border-b px-6">
-      <Link href="/" className="text-lg font-semibold md:hidden">
-        FlowX Design System
-      </Link>
+      <div className="flex items-center gap-2">
+        <MobileNav />
+        <Link href="/" className="text-lg font-semibold md:hidden">
+          FlowX Design System
+        </Link>
+      </div>
       <div className="hidden md:block" />
       <div className="flex items-center gap-2">
         <a
