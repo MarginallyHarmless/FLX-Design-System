@@ -1,12 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "@/components/ui/accordion";
 
 interface Control {
   name: string;
@@ -19,6 +13,56 @@ interface ComponentPreviewProps {
   description?: string;
   controls: Control[];
   render: (values: Record<string, any>) => React.ReactNode;
+}
+
+function SegmentControl({
+  options,
+  value,
+  onChange,
+}: {
+  options: string[];
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div
+      style={{
+        display: "inline-flex",
+        borderRadius: 8,
+        backgroundColor: "#e3e8ed",
+        padding: 3,
+        gap: 2,
+      }}
+    >
+      {options.map((opt) => {
+        const isActive = value === opt;
+        return (
+          <button
+            key={opt}
+            onClick={() => onChange(opt)}
+            style={{
+              padding: "5px 14px",
+              borderRadius: 6,
+              border: "none",
+              fontSize: 13,
+              fontWeight: isActive ? 500 : 400,
+              color: isActive ? "#1d232c" : "#64748b",
+              backgroundColor: isActive ? "#ffffff" : "transparent",
+              boxShadow: isActive
+                ? "0 1px 2px rgba(0,0,0,0.08)"
+                : "none",
+              cursor: "pointer",
+              transition: "all 0.15s ease",
+              lineHeight: "20px",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {opt.charAt(0).toUpperCase() + opt.slice(1)}
+          </button>
+        );
+      })}
+    </div>
+  );
 }
 
 export function ComponentPreview({
@@ -59,59 +103,48 @@ export function ComponentPreview({
 
       {/* Canvas */}
       <div
-        className="flex min-h-[200px] items-center justify-center rounded-none border-b p-8"
-        style={{ fontFamily: "var(--font-flowx)", backgroundColor: "#f7f8f9" }}
+        className="flex min-h-[200px] items-center justify-center rounded-none border-b p-8 transition-colors duration-200"
+        style={{
+          fontFamily: "var(--font-flowx)",
+          backgroundColor: values.inverted ? "#1a1f27" : "#f7f8f9",
+        }}
       >
         {render(values)}
       </div>
 
       {/* Controls */}
       {controls.length > 0 && (
-        <div className="flex flex-wrap items-center gap-4 px-4 py-3">
-          {controls.map((c) => (
-            <label
-              key={c.name}
-              className="flex items-center gap-2 text-sm text-muted-foreground"
-            >
-              <span className="font-medium">{c.name}</span>
-              {c.type === "boolean" ? (
-                <input
-                  type="checkbox"
-                  checked={!!values[c.name]}
-                  onChange={(e) => update(c.name, e.target.checked)}
-                  className="accent-primary"
+        <div className="flex flex-wrap items-start gap-6 px-4 py-4">
+          {controls.map((c) => {
+            const segmentOptions = c.type === "boolean"
+              ? ["Off", "On"]
+              : c.options ?? [];
+
+            const segmentValue = c.type === "boolean"
+              ? (values[c.name] ? "On" : "Off")
+              : (values[c.name] ?? segmentOptions[0]);
+
+            return (
+              <div key={c.name} className="flex flex-col gap-1.5">
+                <span className="text-sm font-medium text-muted-foreground capitalize">
+                  {c.name}
+                </span>
+                <SegmentControl
+                  options={segmentOptions}
+                  value={segmentValue}
+                  onChange={(val) => {
+                    if (c.type === "boolean") {
+                      update(c.name, val === "On");
+                    } else {
+                      update(c.name, val);
+                    }
+                  }}
                 />
-              ) : c.options ? (
-                <select
-                  value={values[c.name] ?? ""}
-                  onChange={(e) => update(c.name, e.target.value)}
-                  className="rounded-md border bg-background px-2 py-1 text-sm"
-                >
-                  {c.options.map((o) => (
-                    <option key={o} value={o}>
-                      {o}
-                    </option>
-                  ))}
-                </select>
-              ) : null}
-            </label>
-          ))}
+              </div>
+            );
+          })}
         </div>
       )}
-
-      {/* Code placeholder */}
-      <Accordion>
-        <AccordionItem value="code">
-          <AccordionTrigger className="px-4 text-xs text-muted-foreground">
-            View code
-          </AccordionTrigger>
-          <AccordionContent className="px-4">
-            <pre className="rounded-md bg-muted p-3 text-xs">
-              <code>{"// Code snippet placeholder"}</code>
-            </pre>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
     </div>
   );
 }
