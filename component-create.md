@@ -354,7 +354,7 @@ Fill in the rest of the `ComponentSpec`:
 - **status** — `"stable"`, `"beta"`, `"deprecated"`, or `"planned"`
 - **figmaLink** — Real Figma URL to the component set. **Do NOT use placeholder URLs.** Get the node ID by running `mcp__Vibma__search_nodes` with `types: ["COMPONENT_SET"]` and the component name, then construct: `https://www.figma.com/design/aGMqzHMsAiwCUU5DSgUe1S/?node-id={id with colon replaced by dash}` (e.g. node `90:3228` → `node-id=90-3228`)
 - **lastUpdated** — today's date in `YYYY-MM-DD` format
-- **variants** — array of `{ name, description, props }` for each meaningful variant
+- **variants** — array of `{ name, useCase, props }` for each use case. `useCase` is a short sentence answering "when would I use this?"
 - **props** — array of prop definitions with name, type, default, options, description
 - **states** — array of interaction states (e.g. `["default", "hover", "focus", "error", "disabled"]`)
 - **sizes** — array of size variants if applicable (e.g. `["small", "medium"]`)
@@ -579,12 +579,12 @@ export default function [Name]Page() {
 
       <hr style={{ borderColor: "#f7f8f9" }} />
 
-      {/* 4. Variants */}
-      {/* Grid of all variant cards */}
+      {/* 4. Use Cases */}
+      {/* Grid of use case cards with name + useCase text */}
 
       <hr style={{ borderColor: "#f7f8f9" }} />
 
-      {/* 5. States */}
+      {/* 5. States Reference */}
       {/* Show each state with labels below */}
 
       <hr style={{ borderColor: "#f7f8f9" }} />
@@ -630,7 +630,7 @@ export default function [Name]Page() {
 
 Use `<hr style={{ borderColor: "#f7f8f9" }} />` (neutrals-50) between ALL sections. Do **not** use the `<Separator />` component.
 
-### Variant Card Style
+### Use Case Card Style
 
 ```tsx
 <div
@@ -640,18 +640,23 @@ Use `<hr style={{ borderColor: "#f7f8f9" }} />` (neutrals-50) between ALL sectio
   style={!isInverted ? { backgroundColor: "#f7f8f9" } : undefined}
 >
   <FlowX[Name] {...variantProps} />
-  <p className={`text-xs ${isInverted ? "text-neutral-400" : "text-muted-foreground"}`}>
-    {variant.name}
-  </p>
+  <div className="text-center">
+    <p className={`text-sm font-medium ${isInverted ? "text-neutral-200" : ""}`}>
+      {v.name}
+    </p>
+    <p className={`mt-0.5 text-xs ${isInverted ? "text-neutral-400" : "text-muted-foreground"}`}>
+      {v.useCase}
+    </p>
+  </div>
 </div>
 ```
 
-- No borders on variant cards
+- No borders on use case cards
 - `backgroundColor: "#f7f8f9"` for normal variants
 - `bg-neutral-900` for inverted variants
-- Labels **below** previews, styled as `text-xs text-muted-foreground`
+- Card title (`text-sm font-medium`) + use case text (`text-xs text-muted-foreground`) below preview
 
-### States Section
+### States Reference Section
 
 Labels go **below** the component preview:
 
