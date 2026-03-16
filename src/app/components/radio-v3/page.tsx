@@ -332,7 +332,7 @@ export default function RadioV3Page() {
       {/* 4. Variants */}
       {spec.variants && spec.variants.length > 0 && (
         <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Variants</h2>
+          <h2 className="text-xl font-semibold">Use Cases</h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {spec.variants.map((v) => {
               const isInverted = v.props.inverted === "on";
@@ -357,15 +357,14 @@ export default function RadioV3Page() {
                     border={v.props.border === "on"}
                     inverted={isInverted}
                   />
-                  <p
-                    className={`text-xs ${
-                      isInverted
-                        ? "text-neutral-400"
-                        : "text-muted-foreground"
-                    }`}
-                  >
-                    {v.name}
-                  </p>
+                  <div className="text-center">
+                    <p className={`text-sm font-medium ${isInverted ? "text-neutral-200" : ""}`}>
+                      {v.name}
+                    </p>
+                    <p className={`mt-0.5 text-xs ${isInverted ? "text-neutral-400" : "text-muted-foreground"}`}>
+                      {v.useCase}
+                    </p>
+                  </div>
                 </div>
               );
             })}
@@ -378,7 +377,7 @@ export default function RadioV3Page() {
       {/* 5. States */}
       {spec.states && spec.states.length > 0 && (
         <section className="space-y-4">
-          <h2 className="text-xl font-semibold">States</h2>
+          <h2 className="text-xl font-semibold">States Reference</h2>
           <div className="flex flex-wrap items-start gap-6">
             {spec.states.map((s) => (
               <div key={s} className="flex flex-col items-center gap-3">

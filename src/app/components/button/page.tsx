@@ -4,7 +4,7 @@ import Link from "next/link";
 import { buttonSpec } from "@/lib/components-data/button";
 import { getComponent } from "@/lib/components-data/registry";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+
 import { StatusBanner } from "@/components/docs/status-banner";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
@@ -68,7 +68,7 @@ export default function ButtonPage() {
         </p>
       </div>
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 3. Interactive Preview */}
       <section className="space-y-4">
@@ -102,17 +102,18 @@ export default function ButtonPage() {
         />
       </section>
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 4. Variants */}
       {spec.variants && spec.variants.length > 0 && (
         <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Variants</h2>
+          <h2 className="text-xl font-semibold">Use Cases</h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {spec.variants.map((v) => (
               <div
                 key={v.name}
-                className="flex flex-col items-center gap-3 rounded-lg border p-6"
+                className="flex flex-col items-center gap-3 rounded-lg p-6"
+                style={{ backgroundColor: "#f7f8f9" }}
               >
                 <Button
                   variant={v.props.variant as any}
@@ -121,11 +122,9 @@ export default function ButtonPage() {
                 </Button>
                 <div className="text-center">
                   <p className="text-sm font-medium">{v.name}</p>
-                  {v.useCase && (
-                    <p className="mt-0.5 text-xs text-muted-foreground">
-                      {v.useCase}
-                    </p>
-                  )}
+                  <p className="mt-0.5 text-xs text-muted-foreground">
+                    {v.useCase}
+                  </p>
                 </div>
               </div>
             ))}
@@ -133,12 +132,12 @@ export default function ButtonPage() {
         </section>
       )}
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 5. States */}
       {spec.states && spec.states.length > 0 && (
         <section className="space-y-4">
-          <h2 className="text-xl font-semibold">States</h2>
+          <h2 className="text-xl font-semibold">States Reference</h2>
           <div className="flex flex-wrap items-center gap-4">
             {spec.states.map((state) => (
               <div key={state} className="flex flex-col items-center gap-2">
@@ -163,7 +162,7 @@ export default function ButtonPage() {
         </section>
       )}
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 6. Sizes */}
       {spec.sizes && spec.sizes.length > 0 && (
@@ -182,7 +181,7 @@ export default function ButtonPage() {
         </section>
       )}
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 7. Props Table */}
       {spec.props && spec.props.length > 0 && (
@@ -192,7 +191,7 @@ export default function ButtonPage() {
         </section>
       )}
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 8. Anatomy Diagram */}
       {spec.anatomy && spec.anatomy.length > 0 && (
@@ -202,7 +201,7 @@ export default function ButtonPage() {
         </section>
       )}
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 9. Dos and Don'ts */}
       {spec.guidelines && (
@@ -212,7 +211,7 @@ export default function ButtonPage() {
         </section>
       )}
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 10. Accessibility */}
       {spec.accessibility && (
@@ -271,7 +270,7 @@ export default function ButtonPage() {
         </section>
       )}
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 11. Design Tokens */}
       <section className="space-y-4">
@@ -279,7 +278,7 @@ export default function ButtonPage() {
         <TokenTable tokens={buttonTokens} />
       </section>
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 12. Related Components */}
       {spec.relatedComponents && spec.relatedComponents.length > 0 && (

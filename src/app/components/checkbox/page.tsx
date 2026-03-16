@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { checkboxSpec } from "@/lib/components-data/checkbox";
 import { getComponent } from "@/lib/components-data/registry";
-import { Separator } from "@/components/ui/separator";
+
 import { StatusBanner } from "@/components/docs/status-banner";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
@@ -254,7 +254,7 @@ export default function CheckboxPage() {
         </p>
       </div>
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 3. Interactive Preview */}
       <section className="space-y-4">
@@ -307,12 +307,12 @@ export default function CheckboxPage() {
         />
       </section>
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 4. Variants */}
       {spec.variants && spec.variants.length > 0 && (
         <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Variants</h2>
+          <h2 className="text-xl font-semibold">Use Cases</h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {spec.variants.map((v) => {
               const isInverted = v.props.inverted === "on";
@@ -320,10 +320,9 @@ export default function CheckboxPage() {
                 <div
                   key={v.name}
                   className={`flex flex-col items-center gap-3 rounded-lg p-6 ${
-                    isInverted
-                      ? "border border-neutral-700 bg-neutral-900 text-white"
-                      : "border"
+                    isInverted ? "bg-neutral-900 text-white" : ""
                   }`}
+                  style={!isInverted ? { backgroundColor: "#f7f8f9" } : undefined}
                 >
                   <FlowXCheckbox
                     checked={v.props.selected === "on"}
@@ -337,18 +336,12 @@ export default function CheckboxPage() {
                     inverted={isInverted}
                   />
                   <div className="text-center">
-                    <p className="text-sm font-medium">{v.name}</p>
-                    {v.useCase && (
-                      <p
-                        className={`mt-0.5 text-xs ${
-                          isInverted
-                            ? "text-neutral-400"
-                            : "text-muted-foreground"
-                        }`}
-                      >
-                        {v.useCase}
-                      </p>
-                    )}
+                    <p className={`text-sm font-medium ${isInverted ? "text-neutral-200" : ""}`}>
+                      {v.name}
+                    </p>
+                    <p className={`mt-0.5 text-xs ${isInverted ? "text-neutral-400" : "text-muted-foreground"}`}>
+                      {v.useCase}
+                    </p>
                   </div>
                 </div>
               );
@@ -357,19 +350,16 @@ export default function CheckboxPage() {
         </section>
       )}
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 5. States */}
       {spec.states && spec.states.length > 0 && (
         <section className="space-y-4">
-          <h2 className="text-xl font-semibold">States</h2>
+          <h2 className="text-xl font-semibold">States Reference</h2>
           <div className="flex flex-wrap items-start gap-6">
             {/* Show unchecked + checked for each state */}
             {spec.states.map((s) => (
               <div key={s} className="flex flex-col items-center gap-3">
-                <span className="text-xs font-medium text-muted-foreground capitalize">
-                  {s}
-                </span>
                 <div className="flex gap-3">
                   <FlowXCheckbox
                     checked={false}
@@ -386,13 +376,16 @@ export default function CheckboxPage() {
                     value="Checked"
                   />
                 </div>
+                <span className="text-xs text-muted-foreground capitalize">
+                  {s}
+                </span>
               </div>
             ))}
           </div>
         </section>
       )}
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 6. Sizes */}
       {spec.sizes && spec.sizes.length > 0 && (
@@ -413,7 +406,7 @@ export default function CheckboxPage() {
         </section>
       )}
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 7. Props Table */}
       {spec.props && spec.props.length > 0 && (
@@ -423,7 +416,7 @@ export default function CheckboxPage() {
         </section>
       )}
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 8. Anatomy Diagram */}
       {spec.anatomy && spec.anatomy.length > 0 && (
@@ -433,7 +426,7 @@ export default function CheckboxPage() {
         </section>
       )}
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 9. Dos and Don'ts */}
       {spec.guidelines && (
@@ -443,7 +436,7 @@ export default function CheckboxPage() {
         </section>
       )}
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 10. Accessibility */}
       {spec.accessibility && (
@@ -506,7 +499,7 @@ export default function CheckboxPage() {
         </section>
       )}
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 11. Design Tokens */}
       <section className="space-y-4">
@@ -514,7 +507,7 @@ export default function CheckboxPage() {
         <TokenTable tokens={checkboxTokens} />
       </section>
 
-      <Separator />
+      <hr style={{ borderColor: "#f7f8f9" }} />
 
       {/* 12. Related Components */}
       {spec.relatedComponents && spec.relatedComponents.length > 0 && (
