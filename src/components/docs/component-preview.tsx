@@ -7,6 +7,8 @@ interface Control {
   options?: string[];
   type?: "boolean";
   default?: any;
+  /** Name of another control that must be truthy for this control to be enabled. */
+  disabledUnless?: string;
 }
 
 interface ComponentPreviewProps {
@@ -20,10 +22,12 @@ function SegmentControl({
   options,
   value,
   onChange,
+  disabled = false,
 }: {
   options: string[];
   value: string;
   onChange: (value: string) => void;
+  disabled?: boolean;
 }) {
   return (
     <div
@@ -33,6 +37,8 @@ function SegmentControl({
         backgroundColor: "#e3e8ed",
         padding: 3,
         gap: 2,
+        opacity: disabled ? 0.4 : 1,
+        pointerEvents: disabled ? "none" : undefined,
       }}
     >
       {options.map((opt) => {
@@ -41,6 +47,7 @@ function SegmentControl({
           <button
             key={opt}
             onClick={() => onChange(opt)}
+            disabled={disabled}
             style={{
               padding: "5px 14px",
               borderRadius: 6,
@@ -52,7 +59,7 @@ function SegmentControl({
               boxShadow: isActive
                 ? "0 1px 2px rgba(0,0,0,0.08)"
                 : "none",
-              cursor: "pointer",
+              cursor: disabled ? "default" : "pointer",
               transition: "all 0.15s ease",
               lineHeight: "20px",
               whiteSpace: "nowrap",
@@ -114,6 +121,10 @@ export function ComponentPreview({
               ? (values[c.name] ? "On" : "Off")
               : (values[c.name] ?? segmentOptions[0]);
 
+            const isDisabled = c.disabledUnless
+              ? !values[c.disabledUnless]
+              : false;
+
             return (
               <div key={c.name} className="flex flex-col gap-1.5">
                 <span className="text-sm font-medium text-muted-foreground capitalize">
@@ -122,6 +133,7 @@ export function ComponentPreview({
                 <SegmentControl
                   options={segmentOptions}
                   value={segmentValue}
+                  disabled={isDisabled}
                   onChange={(val) => {
                     if (c.type === "boolean") {
                       update(c.name, val === "On");
