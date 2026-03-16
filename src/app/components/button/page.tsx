@@ -121,9 +121,9 @@ export default function ButtonPage() {
                 </Button>
                 <div className="text-center">
                   <p className="text-sm font-medium">{v.name}</p>
-                  {v.description && (
+                  {v.useCase && (
                     <p className="mt-0.5 text-xs text-muted-foreground">
-                      {v.description}
+                      {v.useCase}
                     </p>
                   )}
                 </div>

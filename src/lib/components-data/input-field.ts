@@ -9,12 +9,12 @@ export const inputFieldSpec: ComponentSpec = {
   lastUpdated: "2026-03-16",
 
   variants: [
-    { name: "Default", description: "Standard input in its default state.", props: { state: "default", filled: "off", inverted: "off" } },
-    { name: "Filled", description: "Input with user-entered text.", props: { state: "default", filled: "on", inverted: "off" } },
-    { name: "Focused", description: "Input with active focus ring.", props: { state: "focused", filled: "off", inverted: "off" } },
-    { name: "Error", description: "Input in error state with red border.", props: { state: "error", filled: "off", inverted: "off" } },
-    { name: "Disabled", description: "Non-interactive input with reduced opacity.", props: { state: "disabled", filled: "off", inverted: "off" } },
-    { name: "Inverted", description: "Input on dark/inverted background.", props: { state: "default", filled: "off", inverted: "on" } },
+    { name: "Default", useCase: "The standard empty input, ready for user entry.", props: { state: "default", filled: "off", inverted: "off" } },
+    { name: "Filled", useCase: "Shows user-entered content in its resting state.", props: { state: "default", filled: "on", inverted: "off" } },
+    { name: "Focused", useCase: "Active typing state with focus ring — shown for visual reference.", props: { state: "focused", filled: "off", inverted: "off" } },
+    { name: "With Validation Error", useCase: "Show when form validation fails after submission.", props: { state: "error", filled: "off", inverted: "off" } },
+    { name: "Disabled", useCase: "Use when the field should be visible but not editable.", props: { state: "disabled", filled: "off", inverted: "off" } },
+    { name: "On Dark Background", useCase: "Use on dark surfaces like modals or hero sections.", props: { state: "default", filled: "off", inverted: "on" } },
   ],
 
   props: [

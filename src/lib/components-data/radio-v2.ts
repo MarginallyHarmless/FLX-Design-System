@@ -12,34 +12,32 @@ export const radioV2Spec: ComponentSpec = {
   variants: [
     {
       name: "Default Unselected",
-      description:
-        "Standard radio in its unchecked state with border.",
+      useCase: "Standard radio in its unchecked state with border.",
       props: { selected: "off", state: "default", border: "on", inverted: "off" },
     },
     {
       name: "Default Selected",
-      description:
-        "Radio in its checked state with blue fill ring indicator.",
+      useCase: "Radio in its checked state with blue fill ring indicator.",
       props: { selected: "on", state: "default", border: "on", inverted: "off" },
     },
     {
       name: "Without Border",
-      description: "Radio without the outer input container border.",
+      useCase: "Radio without the outer input container border.",
       props: { selected: "off", state: "default", border: "off", inverted: "off" },
     },
     {
       name: "Inverted",
-      description: "Radio on dark/inverted background.",
+      useCase: "Radio on dark/inverted background.",
       props: { selected: "off", state: "default", border: "on", inverted: "on" },
     },
     {
       name: "Error",
-      description: "Radio in error state with red border indication.",
+      useCase: "Radio in error state with red border indication.",
       props: { selected: "off", state: "error", border: "on", inverted: "off" },
     },
     {
       name: "Disabled",
-      description: "Non-interactive radio with reduced opacity.",
+      useCase: "Non-interactive radio with reduced opacity.",
       props: { selected: "off", state: "disabled", border: "on", inverted: "off" },
     },
   ],

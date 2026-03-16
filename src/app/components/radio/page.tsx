@@ -362,7 +362,7 @@ export default function RadioPage() {
                   />
                   <div className="text-center">
                     <p className="text-sm font-medium">{v.name}</p>
-                    {v.description && (
+                    {v.useCase && (
                       <p
                         className={`mt-0.5 text-xs ${
                           isInverted
@@ -370,7 +370,7 @@ export default function RadioPage() {
                             : "text-muted-foreground"
                         }`}
                       >
-                        {v.description}
+                        {v.useCase}
                       </p>
                     )}
                   </div>

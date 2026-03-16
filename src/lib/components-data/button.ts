@@ -10,31 +10,11 @@ export const buttonSpec: ComponentSpec = {
   lastUpdated: "2026-03-16",
 
   variants: [
-    {
-      name: "Default",
-      description: "Primary action button with solid fill.",
-      props: { variant: "default" },
-    },
-    {
-      name: "Secondary",
-      description: "For secondary actions with subtle emphasis.",
-      props: { variant: "secondary" },
-    },
-    {
-      name: "Outline",
-      description: "Bordered button for tertiary actions.",
-      props: { variant: "outline" },
-    },
-    {
-      name: "Ghost",
-      description: "Transparent button for minimal visual weight.",
-      props: { variant: "ghost" },
-    },
-    {
-      name: "Destructive",
-      description: "For dangerous or irreversible actions.",
-      props: { variant: "destructive" },
-    },
+    { name: "Default", useCase: "Primary call to action — use for the most important action on the page.", props: { variant: "default" } },
+    { name: "Secondary", useCase: "Use for supporting actions that don't compete with the primary action.", props: { variant: "secondary" } },
+    { name: "Outline", useCase: "Use for tertiary actions or when a lighter visual weight is needed.", props: { variant: "outline" } },
+    { name: "Ghost", useCase: "Use for inline or contextual actions with minimal visual presence.", props: { variant: "ghost" } },
+    { name: "Destructive", useCase: "Use for dangerous or irreversible actions like delete or remove.", props: { variant: "destructive" } },
   ],
 
   props: [

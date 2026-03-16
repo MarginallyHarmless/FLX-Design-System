@@ -10,56 +10,16 @@ export const radioV3Spec: ComponentSpec = {
   lastUpdated: "2026-03-16",
 
   variants: [
-    {
-      name: "Default Unselected",
-      description: "Standard radio in its unchecked state with border.",
-      props: { selected: "off", state: "default", border: "on", inverted: "off" },
-    },
-    {
-      name: "Default Selected",
-      description: "Radio in its checked state with blue fill ring indicator.",
-      props: { selected: "on", state: "default", border: "on", inverted: "off" },
-    },
-    {
-      name: "Without Border",
-      description: "Radio without the outer input container border.",
-      props: { selected: "off", state: "default", border: "off", inverted: "off" },
-    },
-    {
-      name: "Selected Without Border",
-      description: "Selected radio without the outer input container border.",
-      props: { selected: "on", state: "default", border: "off", inverted: "off" },
-    },
-    {
-      name: "Inverted Unselected",
-      description: "Radio on dark/inverted background.",
-      props: { selected: "off", state: "default", border: "on", inverted: "on" },
-    },
-    {
-      name: "Inverted Selected",
-      description: "Selected radio on dark/inverted background.",
-      props: { selected: "on", state: "default", border: "on", inverted: "on" },
-    },
-    {
-      name: "Error Unselected",
-      description: "Unselected radio in error state with red border and error icon.",
-      props: { selected: "off", state: "error", border: "on", inverted: "off" },
-    },
-    {
-      name: "Error Selected",
-      description: "Selected radio in error state with red fill and error icon.",
-      props: { selected: "on", state: "error", border: "on", inverted: "off" },
-    },
-    {
-      name: "Disabled Unselected",
-      description: "Non-interactive radio in disabled state.",
-      props: { selected: "off", state: "disabled", border: "on", inverted: "off" },
-    },
-    {
-      name: "Disabled Selected",
-      description: "Non-interactive selected radio in disabled state.",
-      props: { selected: "on", state: "disabled", border: "on", inverted: "off" },
-    },
+    { name: "Default Unselected", useCase: "Standard unchecked radio, the most common starting state.", props: { selected: "off", state: "default", border: "on", inverted: "off" } },
+    { name: "Default Selected", useCase: "Checked state showing the user's active selection.", props: { selected: "on", state: "default", border: "on", inverted: "off" } },
+    { name: "Without Border", useCase: "Use in compact layouts where the container border adds visual noise.", props: { selected: "off", state: "default", border: "off", inverted: "off" } },
+    { name: "Selected Without Border", useCase: "Checked state in borderless compact layouts.", props: { selected: "on", state: "default", border: "off", inverted: "off" } },
+    { name: "On Dark Background", useCase: "Use on dark surfaces like modals or hero sections.", props: { selected: "off", state: "default", border: "on", inverted: "on" } },
+    { name: "Selected on Dark Background", useCase: "Checked state on dark surfaces.", props: { selected: "on", state: "default", border: "on", inverted: "on" } },
+    { name: "Error Unselected", useCase: "Show when form validation requires a selection.", props: { selected: "off", state: "error", border: "on", inverted: "off" } },
+    { name: "Error Selected", useCase: "Selected but still in error — e.g. group-level validation failure.", props: { selected: "on", state: "error", border: "on", inverted: "off" } },
+    { name: "Disabled Unselected", useCase: "Use when the option exists but is not currently available.", props: { selected: "off", state: "disabled", border: "on", inverted: "off" } },
+    { name: "Disabled Selected", useCase: "Use when showing a locked-in selection the user cannot change.", props: { selected: "on", state: "disabled", border: "on", inverted: "off" } },
   ],
 
   props: [

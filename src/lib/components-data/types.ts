@@ -81,7 +81,7 @@ export interface ComponentSpec {
 
   variants: {
     name: string;
-    description?: string;
+    useCase: string;
     props: Record<string, string>;
   }[];
 

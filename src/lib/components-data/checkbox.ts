@@ -9,12 +9,12 @@ export const checkboxSpec: ComponentSpec = {
   lastUpdated: "2026-03-16",
 
   variants: [
-    { name: "Default Unselected", description: "Standard checkbox in its unchecked state with border.", props: { selected: "off", state: "default", border: "on", inverted: "off" } },
-    { name: "Default Selected", description: "Checkbox in its checked state with blue fill and checkmark.", props: { selected: "on", state: "default", border: "on", inverted: "off" } },
-    { name: "Without Border", description: "Checkbox without the outer input container border.", props: { selected: "off", state: "default", border: "off", inverted: "off" } },
-    { name: "Inverted", description: "Checkbox on dark/inverted background.", props: { selected: "off", state: "default", border: "on", inverted: "on" } },
-    { name: "Error", description: "Checkbox in error state with red border indication.", props: { selected: "off", state: "error", border: "on", inverted: "off" } },
-    { name: "Disabled", description: "Non-interactive checkbox with reduced opacity.", props: { selected: "off", state: "disabled", border: "on", inverted: "off" } },
+    { name: "Default Unselected", useCase: "Standard unchecked checkbox, the most common starting state.", props: { selected: "off", state: "default", border: "on", inverted: "off" } },
+    { name: "Default Selected", useCase: "Checked state confirming the user's choice.", props: { selected: "on", state: "default", border: "on", inverted: "off" } },
+    { name: "Without Border", useCase: "Use in compact layouts where the container border adds visual noise.", props: { selected: "off", state: "default", border: "off", inverted: "off" } },
+    { name: "On Dark Background", useCase: "Use on dark surfaces like modals or hero sections.", props: { selected: "off", state: "default", border: "on", inverted: "on" } },
+    { name: "With Validation Error", useCase: "Show when a required checkbox has not been checked.", props: { selected: "off", state: "error", border: "on", inverted: "off" } },
+    { name: "Disabled", useCase: "Use when the option exists but is not currently available.", props: { selected: "off", state: "disabled", border: "on", inverted: "off" } },
   ],
 
   props: [
