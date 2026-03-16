@@ -1,8 +1,8 @@
 import { type ComponentSpec } from "./types";
 
 export const radioV3Spec: ComponentSpec = {
-  slug: "radio-v3",
-  name: "Radio V3",
+  slug: "radio",
+  name: "Radio",
   description:
     "Vanilla HTML/CSS/JS implementation of the Radio component, matching Figma pixel-for-pixel. Supports selected, error, disabled, border, inverted, and size variants.",
   status: "stable",

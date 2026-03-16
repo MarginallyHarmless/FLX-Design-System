@@ -88,22 +88,9 @@ export function ComponentPreview({
 
   return (
     <div className="rounded-lg border bg-card text-card-foreground">
-      {/* Banner */}
-      <div className="rounded-t-lg bg-muted/60 px-4 py-2 text-xs text-muted-foreground">
-        📐 Design reference — production uses PrimeVue / PrimeReact
-      </div>
-
-      {/* Header */}
-      <div className="border-b px-4 py-3">
-        <h3 className="text-base font-semibold">{title}</h3>
-        {description && (
-          <p className="mt-0.5 text-sm text-muted-foreground">{description}</p>
-        )}
-      </div>
-
       {/* Canvas */}
       <div
-        className="flex min-h-[200px] items-center justify-center rounded-none border-b p-8 transition-colors duration-200"
+        className="flex min-h-[200px] items-center justify-center rounded-t-lg border-b p-8 transition-colors duration-200"
         style={{
           fontFamily: "var(--font-flowx)",
           backgroundColor: values.inverted ? "#1a1f27" : "#f7f8f9",
@@ -145,6 +132,11 @@ export function ComponentPreview({
           })}
         </div>
       )}
+
+      {/* Footer */}
+      <div className="rounded-b-lg px-4 py-2 text-xs text-muted-foreground" style={{ backgroundColor: "#f7f8f9" }}>
+        📐 Design reference
+      </div>
     </div>
   );
 }
