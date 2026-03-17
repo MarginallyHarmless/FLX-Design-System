@@ -120,10 +120,10 @@ function FlowXSelectField({
           gap: 6,
           height: showChips ? "auto" : containerStyle?.height,
           minHeight: containerStyle?.height,
-          paddingLeft: 12,
+          paddingLeft: 6,
           paddingRight: 12,
-          paddingTop: 6,
-          paddingBottom: 6,
+          paddingTop: isSmall ? 4 : 2,
+          paddingBottom: isSmall ? 4 : 2,
           borderRadius: 8,
           border: `${containerStyle?.strokeWidth ?? 1}px solid ${containerStyle?.stroke}`,
           backgroundColor: containerStyle?.fill,
@@ -169,7 +169,7 @@ function FlowXSelectField({
                   fill="none"
                   style={{ flexShrink: 0, opacity: 0.7 }}
                 >
-                  <path d="M5 5L11 11M11 5L5 11" stroke={chipStyle?.textColor ?? "#000"} strokeWidth="1.5" strokeLinecap="round" />
+                  <path d="M4 4L12 12M12 4L4 12" stroke={inverted ? (chipStyle?.textColor ?? "#000") : "#64748B"} strokeWidth="1.25" strokeLinecap="round" />
                 </svg>
               </span>
             ))}
