@@ -81,14 +81,23 @@ Renders the 16x16 warning circle SVG icon shown next to the input container in e
 
 **Implementation:** Inline SVG with circle, exclamation line, and dot. Stroke color `#e62200`, strokeWidth `1`.
 
+## Design Decision: Colors Owned by Shared Components
+
+All three shared components own their color logic internally — they derive colors from their props (state, inverted, disabled) rather than reading from per-component spec data files. This means changing a color in `shared-elements.tsx` updates it everywhere instantly. No per-component data file updates needed.
+
+The existing `Description` entries in `input-field.ts` and `select-field.ts` variant styles remain for documentation/token reference purposes but are not read by the shared components at render time.
+
 ## Rollout
+
+### Files created
+
+1. **`src/components/docs/shared-elements.tsx`** — New file with all three components. Single source of truth for Label, Description, and Error Icon colors/typography.
 
 ### Files modified
 
-1. **`src/components/docs/shared-elements.tsx`** — New file with all three components.
 2. **`src/app/components/input-field/page.tsx`** — Replace inline Label, Description, Error Icon with shared imports.
 3. **`src/app/components/select-field/page.tsx`** — Same.
-4. **`src/app/components/radio/page.tsx`** — Replace inline Label and Error Icon. Add Description (currently missing — fixes the bug).
+4. **`src/app/components/radio/page.tsx`** — Replace inline Label and Error Icon. Add `<FlowXDescription>` and `hasDescription` control to interactive preview (currently missing — fixes the bug).
 5. **`src/app/components/checkbox/page.tsx`** — Same as Radio.
 
 ### Files NOT modified
@@ -101,11 +110,11 @@ Renders the 16x16 warning circle SVG icon shown next to the input container in e
 
 For each component page:
 1. Import `FlowXLabel`, `FlowXDescription`, `FlowXErrorIcon` from `@/components/docs/shared-elements`
-2. Remove the inline label rendering code
-3. Remove the inline description/helper text rendering code
-4. Remove the inline error icon SVG
-5. Replace with shared component calls, passing the appropriate props from the existing state/variant logic
-6. For Radio and Checkbox: add `hasDescription` control to the interactive preview and render `<FlowXDescription>` in the preview component
+2. Remove the inline label rendering code and replace with `<FlowXLabel>`
+3. Remove the inline description/helper text rendering code and replace with `<FlowXDescription>`
+4. Remove the inline error icon SVG and replace with `<FlowXErrorIcon>`
+5. Pass the appropriate props from the existing state/variant logic (state, inverted, size, disabled)
+6. For Radio and Checkbox: add `hasDescription` boolean control to the interactive preview and render `<FlowXDescription>` in the preview component (new functionality)
 
 ## Testing
 
