@@ -4,6 +4,7 @@ import { tabsSpec } from "@/lib/components-data/tabs";
 import {
   findVariantStyle,
 } from "@/lib/components-data/variant-style-helpers";
+import { PhosphorIcon, type IconName } from "@/lib/phosphor-icons";
 
 import { ComponentPageTemplate } from "@/components/docs/component-page-template";
 import { ComponentPreview } from "@/components/docs/component-preview";
@@ -20,6 +21,7 @@ function FlowXTabs({
   tabs = ["Tab Name", "Tab Name", "Tab Name", "Tab Name", "Tab Name"],
   activeIndex = 1,
   hasIcon = false,
+  iconName,
   hasCounter = false,
 }: {
   size?: "small" | "medium";
@@ -27,6 +29,7 @@ function FlowXTabs({
   tabs?: string[];
   activeIndex?: number;
   hasIcon?: boolean;
+  iconName?: IconName;
   hasCounter?: boolean;
 }) {
   const spec = tabsSpec;
@@ -80,17 +83,8 @@ function FlowXTabs({
             }}
           >
             {/* Left Icon */}
-            {hasIcon && (
-              <svg
-                width={16}
-                height={16}
-                viewBox="0 0 16 16"
-                fill="none"
-                style={{ flexShrink: 0 }}
-              >
-                <circle cx="8" cy="5" r="3" stroke={nameStyle?.textColor} strokeWidth="1.2" fill="none" />
-                <path d="M2 14C2 11.2386 4.23858 9 7 9H9C11.7614 9 14 11.2386 14 14" stroke={nameStyle?.textColor} strokeWidth="1.2" strokeLinecap="round" fill="none" />
-              </svg>
+            {hasIcon && iconName && (
+              <PhosphorIcon name={iconName} size={16} color={nameStyle?.textColor} />
             )}
 
             {/* Tab Name */}
@@ -210,6 +204,12 @@ export default function TabsPage() {
               type: "boolean",
             },
             {
+              name: "iconName",
+              type: "icon",
+              default: "User",
+              disabledUnless: "hasIcon",
+            },
+            {
               name: "hasCounter",
               type: "boolean",
             },
@@ -219,6 +219,7 @@ export default function TabsPage() {
               size={(values.size as "small" | "medium") || "medium"}
               inverted={values.inverted === true}
               hasIcon={values.hasIcon === true}
+              iconName={(values.iconName as IconName) || "User"}
               hasCounter={values.hasCounter === true}
             />
           )}
