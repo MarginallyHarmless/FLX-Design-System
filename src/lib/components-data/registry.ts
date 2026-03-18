@@ -6,8 +6,9 @@ import { radioV3Spec } from "./radio-v3";
 import { selectFieldSpec } from "./select-field";
 import { segmentedButtonSpec } from "./segmented-button";
 import { switchSpec } from "./switch";
+import { tabsSpec } from "./tabs";
 
-export const componentRegistry: ComponentSpec[] = [buttonSpec, checkboxSpec, inputFieldSpec, radioV3Spec, segmentedButtonSpec, selectFieldSpec, switchSpec];
+export const componentRegistry: ComponentSpec[] = [buttonSpec, checkboxSpec, inputFieldSpec, radioV3Spec, segmentedButtonSpec, selectFieldSpec, switchSpec, tabsSpec];
 
 export function getComponent(slug: string): ComponentSpec | undefined {
   return componentRegistry.find((c) => c.slug === slug);
