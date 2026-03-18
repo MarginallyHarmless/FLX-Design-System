@@ -10,6 +10,7 @@ import {
 import { ComponentPageTemplate } from "@/components/docs/component-page-template";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { FlowXErrorIcon } from "@/components/docs/shared-elements";
+import { PencilSimple, Trash, Check, X as XIcon, SortAscending, Funnel } from "@phosphor-icons/react";
 
 /* ------------------------------------------------------------------ */
 /*  Colors extracted from Figma (scan_text_nodes + get_node_info)     */
@@ -33,63 +34,6 @@ const colors = {
   saveBtnDisabled: "#e3e8ed",
   cancelBtn: "#e62200",
 };
-
-/* ------------------------------------------------------------------ */
-/*  SVG Icons                                                         */
-/* ------------------------------------------------------------------ */
-
-function SortIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-      <path d="M3 5L6 2L9 5" stroke="#64748b" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M3 7L6 10L9 7" stroke="#64748b" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function FilterIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-      <path d="M1.5 2.5H10.5L7 6.5V9.5L5 10.5V6.5L1.5 2.5Z" stroke="#64748b" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function PencilIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M11.5 2L14 4.5L5.5 13H3V10.5L11.5 2Z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function TrashIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M3 5H13" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-      <path d="M5 5V13H11V5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M6.5 3H9.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function CheckIcon({ color = "#ffffff" }: { color?: string }) {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M3 7L6 10L11 4" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function XIcon({ color = "#ffffff" }: { color?: string }) {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M3.5 3.5L10.5 10.5" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M10.5 3.5L3.5 10.5" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
 
 /* ------------------------------------------------------------------ */
 /*  Sub-components                                                    */
@@ -362,10 +306,10 @@ function ReadOnlyActions() {
   return (
     <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
       <SmallSecondaryButton scope="Brand">
-        <PencilIcon />
+        <PencilSimple size={16} color="currentColor" />
       </SmallSecondaryButton>
       <SmallSecondaryButton scope="Brand">
-        <TrashIcon />
+        <Trash size={16} color="currentColor" />
       </SmallSecondaryButton>
     </div>
   );
@@ -375,10 +319,10 @@ function EditActions({ disabled = false }: { disabled?: boolean }) {
   return (
     <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
       <SmallPrimaryButton scope="Success" state={disabled ? "Disabled" : "Default"}>
-        <CheckIcon color={disabled ? "#8390a2" : "#ffffff"} />
+        <Check size={14} color={disabled ? "#8390a2" : "#ffffff"} />
       </SmallPrimaryButton>
       <SmallPrimaryButton scope="Danger">
-        <XIcon />
+        <XIcon size={14} color="#ffffff" />
       </SmallPrimaryButton>
     </div>
   );
@@ -459,8 +403,8 @@ function FlowXValuesTable({
               >
                 {col.label}
               </span>
-              {col.hasFilter && <FilterIcon />}
-              {col.hasSort && <SortIcon />}
+              {col.hasFilter && <Funnel size={12} color="#64748b" />}
+              {col.hasSort && <SortAscending size={12} color="#64748b" />}
             </div>
           </React.Fragment>
         ))}
