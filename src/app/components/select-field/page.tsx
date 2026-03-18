@@ -7,6 +7,7 @@ import {
   getElementTypography,
 } from "@/lib/components-data/variant-style-helpers";
 
+import { X as XClose, CaretDown } from "@phosphor-icons/react";
 import { ComponentPageTemplate } from "@/components/docs/component-page-template";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { FlowXLabel, FlowXDescription, FlowXErrorIcon } from "@/components/docs/shared-elements";
@@ -140,15 +141,7 @@ function FlowXSelectField({
                 }}
               >
                 {chip}
-                <svg
-                  width={chipXSize}
-                  height={chipXSize}
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  style={{ flexShrink: 0, opacity: 0.7 }}
-                >
-                  <path d="M4 4L12 12M12 4L4 12" stroke={inverted ? (chipStyle?.textColor ?? "#000") : "#64748B"} strokeWidth="1.25" strokeLinecap="round" />
-                </svg>
+                <XClose size={chipXSize} color={inverted ? (chipStyle?.textColor ?? "#000") : "#64748B"} style={{ flexShrink: 0, opacity: 0.7 }} />
               </span>
             ))}
             <span
@@ -187,21 +180,7 @@ function FlowXSelectField({
         {isError && <FlowXErrorIcon />}
 
         {/* CaretDown */}
-        <svg
-          width={caretStyle?.width ?? 24}
-          height={caretStyle?.height ?? 24}
-          viewBox="0 0 24 24"
-          fill="none"
-          style={{ flexShrink: 0 }}
-        >
-          <path
-            d="M7 10L12 15L17 10"
-            stroke={placeholderColor}
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        <CaretDown size={caretStyle?.width ?? 24} color={placeholderColor} style={{ flexShrink: 0 }} />
       </div>
 
       {/* Description */}
