@@ -3,6 +3,7 @@
 import { checkboxSpec } from "@/lib/components-data/checkbox";
 import { ComponentPageTemplate } from "@/components/docs/component-page-template";
 import { ComponentPreview } from "@/components/docs/component-preview";
+import { FlowXLabel, FlowXDescription, FlowXErrorIcon } from "@/components/docs/shared-elements";
 
 /* ------------------------------------------------------------------ */
 /*  FlowXCheckbox — local preview component matching Figma design      */
@@ -17,6 +18,7 @@ function FlowXCheckbox({
   size = "medium",
   label = "Label",
   value = "Value",
+  hasDescription = false,
 }: {
   selected?: boolean;
   state?: "default" | "error" | "disabled";
@@ -25,6 +27,7 @@ function FlowXCheckbox({
   size?: "small" | "medium";
   label?: string;
   value?: string;
+  hasDescription?: boolean;
 }) {
   const isSmall = size === "small";
   const isDisabled = state === "disabled";
@@ -87,12 +90,6 @@ function FlowXCheckbox({
     return "#cbd1db";
   };
 
-  /* ---- Label color ---- */
-  const getLabelColor = () => {
-    if (isDisabled) return inverted ? "#64748b" : "#8390a2";
-    return inverted ? "#ffffff" : "#1d232c";
-  };
-
   /* ---- Value text color ---- */
   const getValueColor = () => {
     if (isDisabled) {
@@ -108,7 +105,6 @@ function FlowXCheckbox({
   const containerBorder = getContainerBorder();
   const checkboxFill = getCheckboxFill();
   const checkboxStroke = getCheckboxStroke();
-  const labelColor = getLabelColor();
   const valueColor = getValueColor();
 
   const iconSize = isSmall ? 16 : 24;
@@ -124,16 +120,12 @@ function FlowXCheckbox({
       }}
     >
       {/* Label */}
-      <span
-        style={{
-          fontSize: isSmall ? 12 : 14,
-          lineHeight: isSmall ? "16px" : "24px",
-          color: labelColor,
-          fontWeight: 600,
-        }}
-      >
-        {label}
-      </span>
+      <FlowXLabel
+        label={label}
+        size={size}
+        inverted={inverted}
+        disabled={state === "disabled"}
+      />
 
       {/* Input row: container + optional error icon */}
       <div
@@ -252,25 +244,15 @@ function FlowXCheckbox({
         </div>
 
         {/* Error icon outside container */}
-        {isError && (
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            style={{ flexShrink: 0 }}
-          >
-            <circle cx="8" cy="8" r="7" stroke="#e62200" strokeWidth="1" />
-            <path
-              d="M8 5V8.5"
-              stroke="#e62200"
-              strokeWidth="1"
-              strokeLinecap="round"
-            />
-            <circle cx="8" cy="11" r="0.75" fill="#e62200" />
-          </svg>
-        )}
+        {isError && <FlowXErrorIcon />}
       </div>
+
+      {/* Description */}
+      <FlowXDescription
+        state={state}
+        inverted={inverted}
+        visible={hasDescription}
+      />
     </div>
   );
 }
@@ -363,6 +345,10 @@ export default function CheckboxPage() {
               name: "inverted",
               type: "boolean",
             },
+            {
+              name: "hasDescription",
+              type: "boolean",
+            },
           ]}
           render={(values) => (
             <FlowXCheckbox
@@ -376,6 +362,7 @@ export default function CheckboxPage() {
               }
               border={values.border !== false}
               inverted={values.inverted === true}
+              hasDescription={values.hasDescription === true}
             />
           )}
         />

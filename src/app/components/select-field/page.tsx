@@ -9,6 +9,7 @@ import {
 
 import { ComponentPageTemplate } from "@/components/docs/component-page-template";
 import { ComponentPreview } from "@/components/docs/component-preview";
+import { FlowXLabel, FlowXDescription, FlowXErrorIcon } from "@/components/docs/shared-elements";
 
 /* ------------------------------------------------------------------ */
 /*  FlowXSelectField — data-driven preview component                    */
@@ -52,20 +53,15 @@ function FlowXSelectField({
 
   // All visual data from the spec
   const containerStyle = getElementStyle(spec, variantProps, "InputContainer");
-  const labelColor = getTextColor(spec, variantProps, "Label");
   const valueColor = getTextColor(spec, variantProps, "ValueText");
   const placeholderColor = getTextColor(spec, variantProps, "Placeholder");
-  const descriptionColor = getTextColor(spec, variantProps, "Description");
   const chipStyle = getElementStyle(spec, variantProps, "Chip");
   const chipCountStyle = getElementStyle(spec, variantProps, "ChipCount");
   const caretStyle = getElementStyle(spec, variantProps, "CaretDown");
 
-  const labelTypo = getElementTypography(spec, variantProps, "Label");
   const valueTypo = getElementTypography(spec, variantProps, "ValueText");
   const placeholderTypo = getElementTypography(spec, variantProps, "Placeholder");
   const chipTypo = getElementTypography(spec, variantProps, "Chip");
-  const descTypo = getElementTypography(spec, variantProps, "Description");
-  const infoIconStyle = getElementStyle(spec, variantProps, "InfoIcon");
 
   const showChips = filled && fillMode === "chips";
   const showTextValue = filled && fillMode === "text";
@@ -86,31 +82,13 @@ function FlowXSelectField({
       style={{ minWidth: 200 }}
     >
       {/* Label */}
-      {hasLabel && (
-        <div className="inline-flex items-center gap-1">
-          <span
-            style={{
-              fontSize: labelTypo?.fontSize,
-              lineHeight: labelTypo?.lineHeight ? `${labelTypo.lineHeight}px` : undefined,
-              color: labelColor,
-              fontWeight: labelTypo?.fontWeight,
-            }}
-          >
-            Label
-          </span>
-          <svg
-            width={infoIconStyle?.width ?? 14}
-            height={infoIconStyle?.height ?? 14}
-            viewBox="0 0 14 14"
-            fill="none"
-            style={{ opacity: 0.5 }}
-          >
-            <circle cx="7" cy="7" r="6" stroke={labelColor} strokeWidth="1.2" />
-            <path d="M7 6.5V10" stroke={labelColor} strokeWidth="1.2" strokeLinecap="round" />
-            <circle cx="7" cy="4.5" r="0.6" fill={labelColor} />
-          </svg>
-        </div>
-      )}
+      <FlowXLabel
+        label="Label"
+        size={size === "small" ? "small" : "medium"}
+        inverted={inverted}
+        disabled={state === "disabled"}
+        hasLabel={hasLabel}
+      />
 
       {/* Input Container */}
       <div
@@ -206,19 +184,7 @@ function FlowXSelectField({
         )}
 
         {/* Error Icon */}
-        {isError && (
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            style={{ flexShrink: 0 }}
-          >
-            <circle cx="8" cy="8" r="7" stroke="#e62200" strokeWidth="1" />
-            <path d="M8 5V8.5" stroke="#e62200" strokeWidth="1" strokeLinecap="round" />
-            <circle cx="8" cy="11" r="0.75" fill="#e62200" />
-          </svg>
-        )}
+        {isError && <FlowXErrorIcon />}
 
         {/* CaretDown */}
         <svg
@@ -239,17 +205,11 @@ function FlowXSelectField({
       </div>
 
       {/* Description */}
-      {hasDescription && (
-        <span
-          style={{
-            fontSize: descTypo?.fontSize,
-            lineHeight: descTypo?.lineHeight ? `${descTypo.lineHeight}px` : undefined,
-            color: descriptionColor,
-          }}
-        >
-          {isError ? "Error message goes here" : "Helper text goes here"}
-        </span>
-      )}
+      <FlowXDescription
+        state={state}
+        inverted={inverted}
+        visible={hasDescription}
+      />
     </div>
   );
 }
