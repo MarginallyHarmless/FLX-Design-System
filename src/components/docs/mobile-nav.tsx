@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { Menu } from "lucide-react";
+import { List } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -32,7 +32,7 @@ export function MobileNav() {
           onClick={() => setOpen(true)}
           aria-label="Open navigation"
         >
-          <Menu className="size-5" />
+          <List size={20} />
         </Button>
         <SheetContent side="left" className="w-60 p-0">
           <SheetHeader className="border-b">

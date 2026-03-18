@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   Card,
@@ -5,7 +7,7 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@phosphor-icons/react";
 
 const quickLinks = [
   {
@@ -43,7 +45,7 @@ export default function Home() {
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   {link.title}
-                  <ArrowRight className="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
+                  <ArrowRight size={16} className="opacity-0 transition-opacity group-hover:opacity-100" />
                 </CardTitle>
                 <CardDescription>{link.description}</CardDescription>
               </CardHeader>

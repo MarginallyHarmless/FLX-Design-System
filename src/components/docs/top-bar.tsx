@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ExternalLink } from "lucide-react";
+import { ArrowSquareOut } from "@phosphor-icons/react";
 import { ThemeToggle } from "./theme-toggle";
 import { MobileNav } from "./mobile-nav";
 
@@ -23,7 +23,7 @@ export function TopBar() {
           aria-label="Open Figma"
           className="inline-flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
         >
-          <ExternalLink className="h-4 w-4" />
+          <ArrowSquareOut size={16} />
         </a>
         <ThemeToggle />
       </div>

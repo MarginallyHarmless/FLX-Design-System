@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronRight } from "lucide-react";
+import { CaretRight } from "@phosphor-icons/react";
 
 function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -30,7 +30,7 @@ export function Breadcrumbs() {
       </Link>
       {crumbs.map((crumb) => (
         <span key={crumb.href} className="flex items-center gap-1">
-          <ChevronRight className="h-3.5 w-3.5" />
+          <CaretRight size={14} />
           {crumb.isLast ? (
             <span className="font-medium text-foreground">{crumb.label}</span>
           ) : (

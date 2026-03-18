@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink } from "lucide-react";
+import { ArrowSquareOut } from "@phosphor-icons/react";
 
 interface StatusBannerProps {
   name: string;
@@ -51,7 +51,7 @@ export function StatusBanner({
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
         >
-          <ExternalLink className="size-3" />
+          <ArrowSquareOut size={12} />
           Figma
         </a>
       )}
