@@ -2,8 +2,14 @@
 
 import React from "react";
 import { valuesTableSpec } from "@/lib/components-data/values-table";
+import { inputFieldSpec } from "@/lib/components-data/input-field";
+import {
+  getTextColor,
+  getElementStyle,
+} from "@/lib/components-data/variant-style-helpers";
 import { ComponentPageTemplate } from "@/components/docs/component-page-template";
 import { ComponentPreview } from "@/components/docs/component-preview";
+import { FlowXErrorIcon } from "@/components/docs/shared-elements";
 
 /* ------------------------------------------------------------------ */
 /*  Colors extracted from Figma (scan_text_nodes + get_node_info)     */
@@ -84,15 +90,6 @@ function XIcon({ color = "#ffffff" }: { color?: string }) {
   );
 }
 
-function ErrorIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
-      <circle cx="8" cy="8" r="7" stroke={colors.errorBorder} strokeWidth="1.5" />
-      <path d="M8 5V8.5" stroke={colors.errorBorder} strokeWidth="1.5" strokeLinecap="round" />
-      <circle cx="8" cy="11" r="0.75" fill={colors.errorBorder} />
-    </svg>
-  );
-}
 
 /* ------------------------------------------------------------------ */
 /*  Sub-components                                                    */
@@ -111,20 +108,20 @@ interface CellData {
 
 const readOnlyRow1: CellData[] = [
   { value: "CODE 2" },
-  { value: "Filled Cell" },
-  { value: "Filled Cell" },
+  { value: "Value" },
+  { value: "Value" },
 ];
 
 const readOnlyRow2: CellData[] = [
   { value: "CODE 1" },
-  { value: "Filled Cell" },
-  { value: "Filled Cell" },
+  { value: "Value" },
+  { value: "Value" },
 ];
 
 const readOnlyRow3: CellData[] = [
   { value: "CODE 1" },
-  { value: "Filled Cell" },
-  { value: "Filled Cell" },
+  { value: "Value" },
+  { value: "Value" },
 ];
 
 interface EditCellData {
@@ -151,7 +148,7 @@ interface ErrorCellData {
 const errorRow: ErrorCellData[] = [
   { value: "CODE 1", isReadOnly: true },
   { value: "Value", hasError: true },
-  { value: "Filled Cell" },
+  { value: "Value" },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -162,8 +159,6 @@ function ReadOnlyCell({ data }: { data: CellData }) {
   return (
     <div
       style={{
-        width: 153,
-        height: 52,
         display: "flex",
         alignItems: "center",
         fontSize: 14,
@@ -177,125 +172,93 @@ function ReadOnlyCell({ data }: { data: CellData }) {
   );
 }
 
+/**
+ * Reusable inline input cell that pulls styles from inputFieldSpec
+ * to match the Input Field component exactly (label off, small size).
+ */
+function InputCell({
+  value,
+  state = "default",
+  isPlaceholder = false,
+}: {
+  value: string;
+  state?: "default" | "focused" | "error";
+  isPlaceholder?: boolean;
+}) {
+  const spec = inputFieldSpec;
+  const variantProps = { State: state === "default" ? "Default" : state === "focused" ? "Focused" : "Error", Size: "Medium", Inverted: "Off" };
+
+  const containerStyle = getElementStyle(spec, variantProps, "InputContainer");
+  const valueColor = getTextColor(spec, variantProps, "ValueText");
+  const placeholderColor = getTextColor(spec, variantProps, "Placeholder");
+  const isFocused = state === "focused";
+  const isError = state === "error";
+
+  const focusRingColor = isFocused ? containerStyle?.stroke : undefined;
+
+  return (
+    <div style={{ width: "100%", display: "flex", alignItems: "center" }}>
+      <div
+        style={{
+          width: "100%",
+          height: containerStyle?.height ?? 28,
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 6,
+          paddingLeft: 8,
+          paddingRight: 8,
+          borderRadius: 8,
+          border: `${containerStyle?.strokeWidth ?? 1}px solid ${containerStyle?.stroke}`,
+          backgroundColor: containerStyle?.fill ?? "#ffffff",
+          outline: focusRingColor ? `2px solid ${focusRingColor}` : undefined,
+          outlineOffset: isFocused ? 1 : undefined,
+          fontSize: 14,
+          lineHeight: "24px",
+          fontWeight: 400,
+          color: isPlaceholder ? placeholderColor : valueColor,
+        }}
+      >
+        <span style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          {value}
+        </span>
+        {isError && <FlowXErrorIcon size={14} />}
+      </div>
+    </div>
+  );
+}
+
 function EditableCell({ data }: { data: EditCellData }) {
   if (data.isReadOnly) {
     return (
-      <div
-        style={{
-          width: 153,
-          height: 52,
-          display: "flex",
-          alignItems: "center",
-          fontSize: 14,
-          fontWeight: 400,
-          color: colors.cellText,
-        }}
-      >
+      <div style={{ display: "flex", alignItems: "center", fontSize: 14, fontWeight: 400, color: colors.cellText }}>
         {data.value}
       </div>
     );
   }
 
   return (
-    <div
-      style={{
-        width: 160,
-        height: 52,
-        display: "flex",
-        alignItems: "center",
-        position: "relative",
-      }}
-    >
-      <div
-        style={{
-          width: "100%",
-          height: 36,
-          display: "flex",
-          alignItems: "center",
-          paddingLeft: 10,
-          paddingRight: 10,
-          borderRadius: 4,
-          border: `1px solid ${data.isFocused ? colors.inputBorderFocus : colors.inputBorder}`,
-          backgroundColor: colors.white,
-          outline: data.isFocused ? `2px solid ${colors.inputBorderFocus}` : undefined,
-          outlineOffset: data.isFocused ? 1 : undefined,
-          fontSize: 14,
-          fontWeight: 400,
-          color: data.isPlaceholder ? "#93999f" : colors.cellText,
-        }}
-      >
-        {data.value}
-        {data.isFocused && (
-          <span
-            style={{
-              display: "inline-block",
-              width: 1,
-              height: 18,
-              backgroundColor: colors.cellText,
-              marginLeft: 1,
-              animation: "blink 1s step-end infinite",
-            }}
-          />
-        )}
-      </div>
-    </div>
+    <InputCell
+      value={data.value}
+      state={data.isFocused ? "focused" : "default"}
+      isPlaceholder={data.isPlaceholder}
+    />
   );
 }
 
 function ErrorCell({ data }: { data: ErrorCellData }) {
   if (data.isReadOnly) {
     return (
-      <div
-        style={{
-          width: 153,
-          height: 52,
-          display: "flex",
-          alignItems: "center",
-          fontSize: 14,
-          fontWeight: 400,
-          color: colors.cellText,
-        }}
-      >
+      <div style={{ display: "flex", alignItems: "center", fontSize: 14, fontWeight: 400, color: colors.cellText }}>
         {data.value}
       </div>
     );
   }
 
   return (
-    <div
-      style={{
-        width: 160,
-        display: "flex",
-        flexDirection: "column",
-        gap: 2,
-      }}
-    >
-      <div
-        style={{
-          width: "100%",
-          height: 36,
-          display: "flex",
-          alignItems: "center",
-          paddingLeft: 10,
-          paddingRight: data.hasError ? 8 : 10,
-          borderRadius: 4,
-          border: `1px solid ${data.hasError ? colors.errorBorder : colors.inputBorder}`,
-          backgroundColor: colors.white,
-          fontSize: 14,
-          fontWeight: 400,
-          color: colors.cellText,
-          gap: 6,
-        }}
-      >
-        <span style={{ flex: 1 }}>{data.value}</span>
-        {data.hasError && <ErrorIcon />}
-      </div>
-      {data.errorMessage && (
-        <span style={{ fontSize: 12, color: colors.errorText, lineHeight: "18px" }}>
-          {data.errorMessage}
-        </span>
-      )}
-    </div>
+    <InputCell
+      value={data.value}
+      state={data.hasError ? "error" : "default"}
+    />
   );
 }
 
@@ -511,7 +474,7 @@ function FlowXValuesTable({
         style={{
           display: "flex",
           alignItems: "center",
-          minHeight: 56,
+          height: 56,
           borderBottom: `1px solid ${colors.border}`,
           paddingLeft: 14,
         }}
@@ -534,12 +497,10 @@ function FlowXValuesTable({
       <div
         style={{
           display: "flex",
-          alignItems: editMode ? "flex-start" : "center",
-          minHeight: 56,
+          alignItems: "center",
+          height: 56,
           borderBottom: `1px solid ${colors.border}`,
           paddingLeft: 14,
-          paddingTop: editMode ? 10 : 0,
-          paddingBottom: editMode ? 10 : 0,
         }}
       >
         {editMode
@@ -568,7 +529,7 @@ function FlowXValuesTable({
             justifyContent: "center",
             paddingLeft: 16,
             paddingRight: 16,
-            paddingTop: editMode ? 8 : 0,
+            alignItems: "center",
           }}
         >
           {editMode ? <EditActions /> : <ReadOnlyActions />}
@@ -579,11 +540,9 @@ function FlowXValuesTable({
       <div
         style={{
           display: "flex",
-          alignItems: error ? "flex-start" : "center",
-          minHeight: 56,
+          alignItems: "center",
+          height: 56,
           paddingLeft: 14,
-          paddingTop: error ? 10 : 0,
-          paddingBottom: error ? 10 : 0,
         }}
       >
         {error
@@ -612,7 +571,7 @@ function FlowXValuesTable({
             justifyContent: "center",
             paddingLeft: 16,
             paddingRight: 16,
-            paddingTop: error ? 8 : 0,
+            alignItems: "center",
           }}
         >
           {error ? <EditActions disabled /> : <ReadOnlyActions />}
@@ -692,11 +651,10 @@ export default function ValuesTablePage() {
             {
               name: "error",
               type: "boolean",
-              disabledUnless: "editMode",
             },
           ]}
           render={(values) => (
-            <div style={{ overflowX: "auto", padding: 16 }}>
+            <div style={{ width: "100%", padding: 16 }}>
               <FlowXValuesTable
                 editMode={values.editMode === true}
                 error={values.error === true}
