@@ -10,7 +10,7 @@ import {
 import { ComponentPageTemplate } from "@/components/docs/component-page-template";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { FlowXErrorIcon } from "@/components/docs/shared-elements";
-import { PencilSimple, Trash, Check, X as XIcon, SortAscending, Funnel } from "@phosphor-icons/react";
+import { PencilSimple, TrashSimple, Check, X as XIcon, SortAscending, Funnel } from "@phosphor-icons/react";
 
 /* ------------------------------------------------------------------ */
 /*  Colors extracted from Figma (scan_text_nodes + get_node_info)     */
@@ -309,7 +309,7 @@ function ReadOnlyActions() {
         <PencilSimple size={16} color="currentColor" />
       </SmallSecondaryButton>
       <SmallSecondaryButton scope="Brand">
-        <Trash size={16} color="currentColor" />
+        <TrashSimple size={16} color="currentColor" />
       </SmallSecondaryButton>
     </div>
   );

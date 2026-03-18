@@ -2,7 +2,7 @@ import React from "react";
 import {
   MagnifyingGlass,
   PencilSimple,
-  Trash,
+  TrashSimple,
   Check,
   X,
   ArrowRight,
@@ -22,7 +22,7 @@ import type { IconProps } from "@phosphor-icons/react";
 export const ICON_OPTIONS = [
   "MagnifyingGlass",
   "PencilSimple",
-  "Trash",
+  "TrashSimple",
   "Check",
   "X",
   "ArrowRight",
@@ -43,7 +43,7 @@ export type IconName = (typeof ICON_OPTIONS)[number];
 const ICON_MAP: Record<IconName, React.ComponentType<IconProps>> = {
   MagnifyingGlass,
   PencilSimple,
-  Trash,
+  TrashSimple,
   Check,
   X,
   ArrowRight,
