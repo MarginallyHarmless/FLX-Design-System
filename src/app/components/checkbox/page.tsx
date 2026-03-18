@@ -13,12 +13,13 @@ import { FlowXLabel, FlowXDescription, FlowXErrorIcon } from "@/components/docs/
 function FlowXCheckbox({
   selected = false,
   state = "default",
-  border = true,
+  border: borderProp = true,
   inverted = false,
   size = "medium",
   label = "Label",
   value = "Value",
   hasDescription = false,
+  subtitle = "",
 }: {
   selected?: boolean;
   state?: "default" | "error" | "disabled";
@@ -28,10 +29,13 @@ function FlowXCheckbox({
   label?: string;
   value?: string;
   hasDescription?: boolean;
+  subtitle?: string;
 }) {
   const isSmall = size === "small";
   const isDisabled = state === "disabled";
   const isError = state === "error";
+  const hasSubtitle = !!subtitle;
+  const border = hasSubtitle || borderProp;
 
   /* ---- Container background ---- */
   const getContainerBg = () => {
@@ -101,11 +105,18 @@ function FlowXCheckbox({
     return inverted ? "#ffffff" : "#1d232c";
   };
 
+  /* ---- Subtitle text color ---- */
+  const getSubtitleColor = () => {
+    if (isDisabled) return inverted ? "#a6b0be" : "#64748b";
+    return inverted ? "#cbd1db" : "#64748b";
+  };
+
   const containerBg = getContainerBg();
   const containerBorder = getContainerBorder();
   const checkboxFill = getCheckboxFill();
   const checkboxStroke = getCheckboxStroke();
   const valueColor = getValueColor();
+  const subtitleColor = getSubtitleColor();
 
   const iconSize = isSmall ? 16 : 24;
 
@@ -139,11 +150,11 @@ function FlowXCheckbox({
         <div
           style={{
             display: "inline-flex",
-            alignItems: "center",
-            gap: isSmall ? (border ? 4 : 6) : (border ? 6 : 8),
-            height: isSmall ? 28 : 36,
-            paddingLeft: border ? (isSmall ? 6 : 8) : 0,
-            paddingRight: border ? (isSmall ? 6 : 8) : 0,
+            alignItems: hasSubtitle ? "flex-start" : "center",
+            gap: hasSubtitle ? 8 : (isSmall ? (border ? 4 : 6) : (border ? 6 : 8)),
+            ...(hasSubtitle
+              ? { paddingTop: 8, paddingBottom: 8, paddingLeft: 12, paddingRight: 12 }
+              : { height: isSmall ? 28 : 36, paddingLeft: border ? (isSmall ? 6 : 8) : 0, paddingRight: border ? (isSmall ? 6 : 8) : 0 }),
             borderRadius: border ? 8 : 0,
             border: border ? `1px solid ${containerBorder}` : "none",
             backgroundColor: containerBg,
@@ -230,17 +241,42 @@ function FlowXCheckbox({
             </svg>
           )}
 
-          {/* Value text */}
-          <span
-            style={{
-              fontSize: isSmall ? 12 : 14,
-              lineHeight: isSmall ? "16px" : "24px",
-              color: valueColor,
-              whiteSpace: "nowrap",
-            }}
-          >
-            {value}
-          </span>
+          {/* Value text + optional inline description */}
+          {hasSubtitle ? (
+            <div style={{ display: "flex", flexDirection: "column", gap: isSmall ? 2 : 0 }}>
+              <span
+                style={{
+                  fontSize: isSmall ? 12 : 14,
+                  lineHeight: isSmall ? "16px" : "24px",
+                  fontWeight: 600,
+                  color: valueColor,
+                }}
+              >
+                {value}
+              </span>
+              <span
+                style={{
+                  fontSize: isSmall ? 10 : 12,
+                  lineHeight: isSmall ? "12px" : "16px",
+                  fontWeight: 400,
+                  color: subtitleColor,
+                }}
+              >
+                {subtitle}
+              </span>
+            </div>
+          ) : (
+            <span
+              style={{
+                fontSize: isSmall ? 12 : 14,
+                lineHeight: isSmall ? "16px" : "24px",
+                color: valueColor,
+                whiteSpace: "nowrap",
+              }}
+            >
+              {value}
+            </span>
+          )}
         </div>
 
         {/* Error icon outside container */}
@@ -340,6 +376,7 @@ export default function CheckboxPage() {
             {
               name: "border",
               type: "boolean",
+              forcedOnWhen: "subtitle",
             },
             {
               name: "inverted",
@@ -347,6 +384,10 @@ export default function CheckboxPage() {
             },
             {
               name: "hasDescription",
+              type: "boolean",
+            },
+            {
+              name: "subtitle",
               type: "boolean",
             },
           ]}
@@ -363,6 +404,7 @@ export default function CheckboxPage() {
               border={values.border !== false}
               inverted={values.inverted === true}
               hasDescription={values.hasDescription === true}
+              subtitle={values.subtitle ? "This is a description text for the checkbox group item." : ""}
             />
           )}
         />

@@ -9,6 +9,8 @@ interface Control {
   default?: any;
   /** Name of another control that must be truthy for this control to be enabled. */
   disabledUnless?: string;
+  /** Name of another boolean control — when truthy, this boolean control is forced on. */
+  forcedOnWhen?: string;
 }
 
 interface ComponentPreviewProps {
@@ -106,7 +108,15 @@ export function ComponentPreview({
           backgroundColor: values.inverted ? "#1a1f27" : "#f7f8f9",
         }}
       >
-        {render(values)}
+        {render((() => {
+          const resolved = { ...values };
+          for (const c of controls) {
+            if (c.forcedOnWhen && values[c.forcedOnWhen]) {
+              resolved[c.name] = true;
+            }
+          }
+          return resolved;
+        })())}
       </div>
 
       {/* Controls */}
@@ -117,13 +127,17 @@ export function ComponentPreview({
               ? ["Off", "On"]
               : c.options ?? [];
 
+            const isForcedOn = c.forcedOnWhen
+              ? !!values[c.forcedOnWhen]
+              : false;
+
             const segmentValue = c.type === "boolean"
-              ? (values[c.name] ? "On" : "Off")
+              ? ((isForcedOn || values[c.name]) ? "On" : "Off")
               : (values[c.name] ?? segmentOptions[0]);
 
-            const isDisabled = c.disabledUnless
+            const isDisabled = isForcedOn || (c.disabledUnless
               ? !values[c.disabledUnless]
-              : false;
+              : false);
 
             return (
               <div key={c.name} className="flex flex-col gap-1.5">

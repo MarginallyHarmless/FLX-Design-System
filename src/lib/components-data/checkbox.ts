@@ -66,6 +66,12 @@ export const checkboxSpec: ComponentSpec = {
       type: "string",
       description: "The main text content next to the checkbox icon.",
     },
+    {
+      name: "subtitle",
+      type: "string",
+      default: '""',
+      description: "Optional subtitle text displayed below the value inside the container. When present, border is always shown and the value becomes semibold.",
+    },
   ],
 
   states: ["default", "error", "disabled"],
