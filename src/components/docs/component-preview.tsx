@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { ICON_OPTIONS, PhosphorIcon } from "@/lib/phosphor-icons";
 
 interface Control {
   name: string;
   options?: string[];
-  type?: "boolean";
+  type?: "boolean" | "icon";
   default?: any;
   /** Name of another control that must be truthy for this control to be enabled. */
   disabledUnless?: string;
@@ -88,6 +89,8 @@ export function ComponentPreview({
         init[c.name] = c.default;
       } else if (c.type === "boolean") {
         init[c.name] = false;
+      } else if (c.type === "icon") {
+        init[c.name] = c.default ?? ICON_OPTIONS[0];
       } else if (c.options && c.options.length > 0) {
         init[c.name] = c.options[0];
       }
@@ -144,18 +147,43 @@ export function ComponentPreview({
                 <span className="text-sm font-medium text-muted-foreground capitalize">
                   {c.name}
                 </span>
-                <SegmentControl
-                  options={segmentOptions}
-                  value={segmentValue}
-                  disabled={isDisabled}
-                  onChange={(val) => {
-                    if (c.type === "boolean") {
-                      update(c.name, val === "On");
-                    } else {
-                      update(c.name, val);
-                    }
-                  }}
-                />
+                {c.type === "icon" ? (
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                    <PhosphorIcon name={segmentValue as any} size={16} />
+                    <select
+                      value={segmentValue}
+                      disabled={isDisabled}
+                      onChange={(e) => update(c.name, e.target.value)}
+                      style={{
+                        padding: "5px 8px",
+                        borderRadius: 6,
+                        border: "1px solid #e3e8ed",
+                        fontSize: 13,
+                        color: "#1d232c",
+                        backgroundColor: "#ffffff",
+                        cursor: isDisabled ? "default" : "pointer",
+                        opacity: isDisabled ? 0.4 : 1,
+                      }}
+                    >
+                      {ICON_OPTIONS.map((opt) => (
+                        <option key={opt} value={opt}>{opt}</option>
+                      ))}
+                    </select>
+                  </div>
+                ) : (
+                  <SegmentControl
+                    options={segmentOptions}
+                    value={segmentValue}
+                    disabled={isDisabled}
+                    onChange={(val) => {
+                      if (c.type === "boolean") {
+                        update(c.name, val === "On");
+                      } else {
+                        update(c.name, val);
+                      }
+                    }}
+                  />
+                )}
               </div>
             );
           })}
