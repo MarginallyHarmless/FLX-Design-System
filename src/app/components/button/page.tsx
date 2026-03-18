@@ -3,6 +3,7 @@
 import { buttonSpec } from "@/lib/components-data/button";
 import { ComponentPageTemplate } from "@/components/docs/component-page-template";
 import { ComponentPreview } from "@/components/docs/component-preview";
+import { PhosphorIcon, type IconName } from "@/lib/phosphor-icons";
 
 /* ------------------------------------------------------------------ */
 /*  Color lookup tables — every value extracted from Figma, never      */
@@ -165,36 +166,6 @@ const SIZE_MAP: Record<
 /*  All color/size values from Figma extraction, zero hardcoded guess  */
 /* ------------------------------------------------------------------ */
 
-/* ---- Icon components (SVG paths from Figma vectors) ---- */
-
-function CheckIcon({ size, color }: { size: number; color: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
-      <path
-        d="M20 6L9.5 16.5L4 11"
-        stroke={color}
-        strokeWidth={1}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function ArrowRightIcon({ size, color }: { size: number; color: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
-      <path
-        d="M4 12H20M20 12L14 6M20 12L14 18"
-        stroke={color}
-        strokeWidth={1}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 function FlowXButton({
   scope = "Brand",
   variant = "Primary",
@@ -204,6 +175,8 @@ function FlowXButton({
   hasLabel = true,
   hasIconStart = false,
   hasIconEnd = false,
+  iconStart,
+  iconEnd,
   label = "Button",
 }: {
   scope?: "Brand" | "Danger" | "Success";
@@ -214,6 +187,8 @@ function FlowXButton({
   hasLabel?: boolean;
   hasIconStart?: boolean;
   hasIconEnd?: boolean;
+  iconStart?: IconName;
+  iconEnd?: IconName;
   label?: string;
 }) {
   const inv = inverted ? "On" : "Off";
@@ -243,8 +218,8 @@ function FlowXButton({
         boxSizing: "border-box",
       }}
     >
-      {hasIconStart && (
-        <CheckIcon size={sizeTokens.iconSize} color={colors.iconColor ?? colors.textColor} />
+      {hasIconStart && iconStart && (
+        <PhosphorIcon name={iconStart} size={sizeTokens.iconSize} color={colors.iconColor ?? colors.textColor} />
       )}
       {hasLabel && (
         <span
@@ -259,8 +234,8 @@ function FlowXButton({
           {label}
         </span>
       )}
-      {hasIconEnd && (
-        <ArrowRightIcon size={sizeTokens.iconSize} color={colors.iconColor ?? colors.textColor} />
+      {hasIconEnd && iconEnd && (
+        <PhosphorIcon name={iconEnd} size={sizeTokens.iconSize} color={colors.iconColor ?? colors.textColor} />
       )}
     </div>
   );
@@ -374,8 +349,20 @@ export default function ButtonPage() {
               type: "boolean",
             },
             {
+              name: "iconStart",
+              type: "icon",
+              default: "Check",
+              disabledUnless: "hasIconStart",
+            },
+            {
               name: "hasIconEnd",
               type: "boolean",
+            },
+            {
+              name: "iconEnd",
+              type: "icon",
+              default: "ArrowRight",
+              disabledUnless: "hasIconEnd",
             },
           ]}
           render={(values) => (
@@ -388,6 +375,8 @@ export default function ButtonPage() {
               hasLabel={values.hasLabel !== false}
               hasIconStart={values.hasIconStart === true}
               hasIconEnd={values.hasIconEnd === true}
+              iconStart={values.hasIconStart ? (values.iconStart as IconName) : undefined}
+              iconEnd={values.hasIconEnd ? (values.iconEnd as IconName) : undefined}
             />
           )}
         />
