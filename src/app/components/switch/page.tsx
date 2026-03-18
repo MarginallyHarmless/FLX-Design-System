@@ -234,7 +234,7 @@ export default function SwitchPage() {
             },
             {
               name: "size",
-              options: ["small", "medium"],
+              options: ["medium", "small"],
             },
             {
               name: "inverted",

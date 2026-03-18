@@ -143,6 +143,7 @@ Deduplicate bindings from Pass 4. One entry per unique element+property+token co
 - [ ] All toggleable elements marked + have `visible` in variant styles
 - [ ] Typography from `scan_text_nodes` only, never from bounding boxes
 - [ ] Icons from SVG exports only, never approximated
+- [ ] Shared sub-components used for Label, Description, Error Icon — no inline duplicates
 
 ---
 
@@ -161,6 +162,24 @@ Add import + entry to `src/lib/components-data/registry.ts`. This auto-updates s
 ## Step 5: Create Route Page
 
 Create `src/app/components/[slug]/page.tsx`. Use `src/app/components/input-field/page.tsx` as primary reference.
+
+### Shared Sub-Components (MANDATORY)
+
+Before building the preview component, check if the Figma component uses any of these common sub-elements. If it does, **import and use the shared components** — do NOT re-implement them inline.
+
+```tsx
+import { FlowXLabel, FlowXDescription, FlowXErrorIcon } from "@/components/docs/shared-elements";
+```
+
+| Sub-component | Use when | Props |
+|---------------|----------|-------|
+| `<FlowXLabel>` | Component has a label text above it | `label`, `size`, `inverted`, `disabled`, `showInfo`, `hasLabel` |
+| `<FlowXDescription>` | Component has helper/error text below it | `text`, `state`, `inverted`, `visible` |
+| `<FlowXErrorIcon>` | Component shows a warning icon in error state | `size` (default 16) |
+
+These components own their colors internally — do NOT hardcode label colors, description colors, or error icon SVGs. See `/utilities` page for live previews and full prop docs.
+
+**⛔ If you find yourself writing `getLabelColor()`, inline label `<span>` with hardcoded colors, inline error icon `<svg>`, or inline description text — STOP and use the shared component instead.**
 
 ### Preview Component — Data-Driven (MANDATORY)
 
@@ -248,6 +267,18 @@ Import from `@/lib/components-data/variant-style-helpers`:
 | `getTextColor(spec, props, part)` | Text color hex |
 | `getElementTypography(spec, props, part)` | Typography with variant overrides → base fallback |
 | `isElementVisible(spec, props, part)` | Boolean visibility |
+
+### Shared Sub-Components
+
+Import from `@/components/docs/shared-elements`:
+
+| Component | Use |
+|-----------|-----|
+| `FlowXLabel` | Label text above component (size, inverted, disabled, showInfo) |
+| `FlowXDescription` | Helper/error text below component (state, inverted, visible) |
+| `FlowXErrorIcon` | 16px warning circle icon (error state) |
+
+See `/utilities` page for live previews.
 
 ### Reference Pages
 

@@ -335,7 +335,7 @@ export default function CheckboxPage() {
             },
             {
               name: "size",
-              options: ["small", "medium"],
+              options: ["medium", "small"],
             },
             {
               name: "border",

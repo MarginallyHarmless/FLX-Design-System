@@ -280,8 +280,7 @@ export default function SelectFieldPage() {
             },
             {
               name: "size",
-              options: ["small", "medium"],
-              default: "medium",
+              options: ["medium", "small"],
             },
             {
               name: "filled",

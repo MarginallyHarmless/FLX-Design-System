@@ -19,6 +19,8 @@ const foundationsItems = [
   { label: "Grid", href: "/foundations/grid" },
 ];
 
+const utilitiesItems = [{ label: "Sub-components", href: "/utilities" }];
+
 const patternsItems = [{ label: "Patterns", href: "/patterns" }];
 
 const resourcesItems = [
@@ -35,6 +37,7 @@ function buildSections(): NavSection[] {
   return [
     { title: "Foundations", items: foundationsItems },
     { title: "Components", items: componentItems },
+    { title: "Utilities", items: utilitiesItems },
     { title: "Patterns", items: patternsItems },
     { title: "Resources", items: resourcesItems },
   ];

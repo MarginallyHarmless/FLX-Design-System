@@ -266,8 +266,7 @@ export default function InputFieldPage() {
             },
             {
               name: "size",
-              options: ["small", "medium"],
-              default: "medium",
+              options: ["medium", "small"],
             },
             {
               name: "filled",

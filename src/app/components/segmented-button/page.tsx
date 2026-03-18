@@ -14,7 +14,7 @@ function FlowXSegmentedButton({
   disabled = false,
   inverted = false,
   size = "medium",
-  options = ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"],
+  options = ["Tab 1", "Tab 2", "Tab 3"],
   selectedIndex = 0,
   label = "Label",
   onSelect,
@@ -239,7 +239,7 @@ export default function SegmentedButtonPage() {
             },
             {
               name: "size",
-              options: ["small", "medium"],
+              options: ["medium", "small"],
             },
           ]}
           render={(values) => (

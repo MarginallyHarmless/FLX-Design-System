@@ -257,7 +257,7 @@ export default function RadioV3Page() {
             },
             {
               name: "size",
-              options: ["small", "medium"],
+              options: ["medium", "small"],
             },
             {
               name: "border",
