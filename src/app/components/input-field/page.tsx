@@ -10,6 +10,7 @@ import {
 import { ComponentPageTemplate } from "@/components/docs/component-page-template";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { FlowXLabel, FlowXDescription, FlowXErrorIcon } from "@/components/docs/shared-elements";
+import { PhosphorIcon, type IconName } from "@/lib/phosphor-icons";
 
 /* ------------------------------------------------------------------ */
 /*  FlowXInputField — data-driven preview component                    */
@@ -29,6 +30,8 @@ function FlowXInputField({
   hasTopLabel = true,
   hasIconStart = false,
   hasIconEnd = false,
+  iconStartName,
+  iconEndName,
   hasPrefix = false,
   hasSuffix = false,
   hasDescription = false,
@@ -42,6 +45,8 @@ function FlowXInputField({
   hasTopLabel?: boolean;
   hasIconStart?: boolean;
   hasIconEnd?: boolean;
+  iconStartName?: IconName;
+  iconEndName?: IconName;
   hasPrefix?: boolean;
   hasSuffix?: boolean;
   hasDescription?: boolean;
@@ -112,17 +117,8 @@ function FlowXInputField({
           }}
         >
           {/* Icon Start */}
-          {hasIconStart && (
-            <svg
-              width={iconStartStyle?.width ?? 16}
-              height={iconStartStyle?.height ?? 16}
-              viewBox="0 0 16 16"
-              fill="none"
-              style={{ flexShrink: 0 }}
-            >
-              <circle cx="7" cy="7" r="5.5" stroke={prefixSuffixColor} strokeWidth="1.2" />
-              <path d="M11 11L14 14" stroke={prefixSuffixColor} strokeWidth="1.2" strokeLinecap="round" />
-            </svg>
+          {hasIconStart && iconStartName && (
+            <PhosphorIcon name={iconStartName} size={iconStartStyle?.width ?? 16} color={prefixSuffixColor} />
           )}
 
           {/* Prefix */}
@@ -169,16 +165,8 @@ function FlowXInputField({
           )}
 
           {/* Icon End */}
-          {hasIconEnd && (
-            <svg
-              width={iconEndStyle?.width ?? 16}
-              height={iconEndStyle?.height ?? 16}
-              viewBox="0 0 16 16"
-              fill="none"
-              style={{ flexShrink: 0 }}
-            >
-              <path d="M4 6L8 10L12 6" stroke={prefixSuffixColor} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+          {hasIconEnd && iconEndName && (
+            <PhosphorIcon name={iconEndName} size={iconEndStyle?.width ?? 16} color={prefixSuffixColor} />
           )}
           {/* Error Icon */}
           {isError && <FlowXErrorIcon />}
@@ -286,6 +274,22 @@ export default function InputFieldPage() {
               type: "boolean",
             },
             {
+              name: "iconStartName",
+              type: "icon",
+              default: "MagnifyingGlass",
+              disabledUnless: "hasIconStart",
+            },
+            {
+              name: "hasIconEnd",
+              type: "boolean",
+            },
+            {
+              name: "iconEndName",
+              type: "icon",
+              default: "CaretDown",
+              disabledUnless: "hasIconEnd",
+            },
+            {
               name: "hasPrefix",
               type: "boolean",
             },
@@ -316,7 +320,9 @@ export default function InputFieldPage() {
                 inverted={values.inverted === true}
                 hasTopLabel={values.hasTopLabel !== false}
                 hasIconStart={values.hasIconStart === true}
+                iconStartName={values.hasIconStart ? (values.iconStartName as IconName) : undefined}
                 hasIconEnd={values.hasIconEnd === true}
+                iconEndName={values.hasIconEnd ? (values.iconEndName as IconName) : undefined}
                 hasPrefix={values.hasPrefix === true}
                 hasSuffix={values.hasSuffix === true}
                 hasDescription={values.hasDescription === true}
