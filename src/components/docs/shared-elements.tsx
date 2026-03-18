@@ -3,6 +3,8 @@
 /*  Single source of truth for Label, Description, and Error Icon      */
 /* ------------------------------------------------------------------ */
 
+import { WarningCircle, Info } from "@phosphor-icons/react";
+
 export function FlowXLabel({
   label = "Label",
   size = "medium",
@@ -49,17 +51,7 @@ export function FlowXLabel({
         {label}
       </span>
       {showInfo && (
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          style={{ flexShrink: 0 }}
-        >
-          <circle cx="8" cy="8" r="7" stroke={color} strokeWidth="1" />
-          <path d="M8 7V11" stroke={color} strokeWidth="1" strokeLinecap="round" />
-          <circle cx="8" cy="5" r="0.75" fill={color} />
-        </svg>
+        <Info size={16} color={color} weight="bold" style={{ flexShrink: 0 }} />
       )}
     </div>
   );
@@ -105,22 +97,5 @@ export function FlowXDescription({
 }
 
 export function FlowXErrorIcon({ size = 16 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 16 16"
-      fill="none"
-      style={{ flexShrink: 0 }}
-    >
-      <circle cx="8" cy="8" r="7" stroke="#e62200" strokeWidth="1" />
-      <path
-        d="M8 5V8.5"
-        stroke="#e62200"
-        strokeWidth="1"
-        strokeLinecap="round"
-      />
-      <circle cx="8" cy="11" r="0.75" fill="#e62200" />
-    </svg>
-  );
+  return <WarningCircle size={size} color="#e62200" weight="bold" style={{ flexShrink: 0 }} />;
 }
