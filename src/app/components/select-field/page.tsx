@@ -29,6 +29,7 @@ function FlowXSelectField({
   size = "medium",
   inverted = false,
   hasLabel = true,
+  inlineLabel = false,
   hasDescription = false,
   placeholder = "Placeholder",
 }: {
@@ -38,6 +39,7 @@ function FlowXSelectField({
   size?: "small" | "medium";
   inverted?: boolean;
   hasLabel?: boolean;
+  inlineLabel?: boolean;
   hasDescription?: boolean;
   placeholder?: string;
 }) {
@@ -77,6 +79,122 @@ function FlowXSelectField({
 
   const sampleChips = ["Opt 1", "Opt 2", "Opt 3"];
 
+  const selectContainer = (
+    <div
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 6,
+        height: showChips ? "auto" : containerStyle?.height,
+        minHeight: containerStyle?.height,
+        paddingLeft: 6,
+        paddingRight: 12,
+        paddingTop: isSmall ? 4 : 2,
+        paddingBottom: isSmall ? 4 : 2,
+        borderRadius: 8,
+        border: `${containerStyle?.strokeWidth ?? 1}px solid ${containerStyle?.stroke}`,
+        backgroundColor: containerStyle?.fill,
+        cursor: isDisabled ? "not-allowed" : "pointer",
+        outline: focusRingColor ? `2px solid ${focusRingColor}` : undefined,
+        outlineOffset: isFocused ? 1 : undefined,
+        width: "100%",
+        flex: inlineLabel ? 1 : undefined,
+      }}
+    >
+      {/* Placeholder, Text Value, or Chips */}
+      {showChips ? (
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: isSmall ? 2 : 4,
+            flex: 1,
+          }}
+        >
+          {sampleChips.map((chip) => (
+            <span
+              key={chip}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 4,
+                paddingLeft: chipPadH,
+                paddingRight: chipPadH,
+                paddingTop: chipPadV,
+                paddingBottom: chipPadV,
+                borderRadius: chipRadius,
+                backgroundColor: chipStyle?.fill,
+                fontSize: chipTypo?.fontSize,
+                lineHeight: chipTypo?.lineHeight ? `${chipTypo.lineHeight}px` : undefined,
+                color: chipStyle?.textColor,
+              }}
+            >
+              {chip}
+              <XClose size={chipXSize} color={inverted ? (chipStyle?.textColor ?? "#000") : "#64748B"} style={{ flexShrink: 0, opacity: 0.7 }} />
+            </span>
+          ))}
+          <span
+            style={{
+              fontSize: chipTypo?.fontSize,
+              lineHeight: chipTypo?.lineHeight ? `${chipTypo.lineHeight}px` : undefined,
+              color: chipCountStyle?.textColor,
+              paddingLeft: 2,
+              paddingRight: 2,
+              display: "inline-flex",
+              alignItems: "center",
+            }}
+          >
+            + 20
+          </span>
+        </div>
+      ) : (
+        <span
+          style={{
+            fontSize: showTextValue ? valueTypo?.fontSize : placeholderTypo?.fontSize,
+            lineHeight: showTextValue
+              ? (valueTypo?.lineHeight ? `${valueTypo.lineHeight}px` : undefined)
+              : (placeholderTypo?.lineHeight ? `${placeholderTypo.lineHeight}px` : undefined),
+            color: showTextValue ? valueColor : placeholderColor,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            flex: 1,
+          }}
+        >
+          {showTextValue ? "Selected Option" : placeholder}
+        </span>
+      )}
+
+      {/* Error Icon */}
+      {isError && <FlowXErrorIcon />}
+
+      {/* CaretDown */}
+      <CaretDown size={caretStyle?.width ?? 24} color={placeholderColor} style={{ flexShrink: 0 }} />
+    </div>
+  );
+
+  if (inlineLabel) {
+    return (
+      <div style={{ minWidth: 200 }}>
+        <div className="inline-flex items-center gap-3" style={{ width: "100%" }}>
+          <FlowXLabel
+            label="Label"
+            size={size === "small" ? "small" : "medium"}
+            inverted={inverted}
+            disabled={state === "disabled"}
+            hasLabel={hasLabel}
+          />
+          {selectContainer}
+        </div>
+        <FlowXDescription
+          state={state}
+          inverted={inverted}
+          visible={hasDescription}
+        />
+      </div>
+    );
+  }
+
   return (
     <div
       className="inline-flex flex-col gap-0.5"
@@ -92,96 +210,7 @@ function FlowXSelectField({
       />
 
       {/* Input Container */}
-      <div
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 6,
-          height: showChips ? "auto" : containerStyle?.height,
-          minHeight: containerStyle?.height,
-          paddingLeft: 6,
-          paddingRight: 12,
-          paddingTop: isSmall ? 4 : 2,
-          paddingBottom: isSmall ? 4 : 2,
-          borderRadius: 8,
-          border: `${containerStyle?.strokeWidth ?? 1}px solid ${containerStyle?.stroke}`,
-          backgroundColor: containerStyle?.fill,
-          cursor: isDisabled ? "not-allowed" : "pointer",
-          outline: focusRingColor ? `2px solid ${focusRingColor}` : undefined,
-          outlineOffset: isFocused ? 1 : undefined,
-          width: "100%",
-        }}
-      >
-        {/* Placeholder, Text Value, or Chips */}
-        {showChips ? (
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: isSmall ? 2 : 4,
-              flex: 1,
-            }}
-          >
-            {sampleChips.map((chip) => (
-              <span
-                key={chip}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 4,
-                  paddingLeft: chipPadH,
-                  paddingRight: chipPadH,
-                  paddingTop: chipPadV,
-                  paddingBottom: chipPadV,
-                  borderRadius: chipRadius,
-                  backgroundColor: chipStyle?.fill,
-                  fontSize: chipTypo?.fontSize,
-                  lineHeight: chipTypo?.lineHeight ? `${chipTypo.lineHeight}px` : undefined,
-                  color: chipStyle?.textColor,
-                }}
-              >
-                {chip}
-                <XClose size={chipXSize} color={inverted ? (chipStyle?.textColor ?? "#000") : "#64748B"} style={{ flexShrink: 0, opacity: 0.7 }} />
-              </span>
-            ))}
-            <span
-              style={{
-                fontSize: chipTypo?.fontSize,
-                lineHeight: chipTypo?.lineHeight ? `${chipTypo.lineHeight}px` : undefined,
-                color: chipCountStyle?.textColor,
-                paddingLeft: 2,
-                paddingRight: 2,
-                display: "inline-flex",
-                alignItems: "center",
-              }}
-            >
-              + 20
-            </span>
-          </div>
-        ) : (
-          <span
-            style={{
-              fontSize: showTextValue ? valueTypo?.fontSize : placeholderTypo?.fontSize,
-              lineHeight: showTextValue
-                ? (valueTypo?.lineHeight ? `${valueTypo.lineHeight}px` : undefined)
-                : (placeholderTypo?.lineHeight ? `${placeholderTypo.lineHeight}px` : undefined),
-              color: showTextValue ? valueColor : placeholderColor,
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              flex: 1,
-            }}
-          >
-            {showTextValue ? "Selected Option" : placeholder}
-          </span>
-        )}
-
-        {/* Error Icon */}
-        {isError && <FlowXErrorIcon />}
-
-        {/* CaretDown */}
-        <CaretDown size={caretStyle?.width ?? 24} color={placeholderColor} style={{ flexShrink: 0 }} />
-      </div>
+      {selectContainer}
 
       {/* Description */}
       <FlowXDescription
@@ -276,9 +305,8 @@ export default function SelectFieldPage() {
               type: "boolean",
             },
             {
-              name: "hasLabel",
-              type: "boolean",
-              default: true,
+              name: "label",
+              options: ["vertical", "horizontal", "off"],
             },
             {
               name: "hasDescription",
@@ -302,7 +330,8 @@ export default function SelectFieldPage() {
                 filled={values.filled === true}
                 fillMode={(values.fillMode as "chips" | "text") || "chips"}
                 inverted={values.inverted === true}
-                hasLabel={values.hasLabel !== false}
+                hasLabel={values.label !== "off"}
+                inlineLabel={values.label === "horizontal"}
                 hasDescription={values.hasDescription === true}
               />
             </div>
@@ -311,6 +340,45 @@ export default function SelectFieldPage() {
       }
       useCases={
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Label position use cases */}
+          <div
+            className="flex flex-col items-center gap-3 rounded-lg p-6"
+            style={{ backgroundColor: "#f7f8f9" }}
+          >
+            <FlowXSelectField filled fillMode="text" hasLabel inlineLabel={false} />
+            <div className="text-center">
+              <p className="text-sm font-medium">Vertical label</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                Used in most situations on the platform.
+              </p>
+            </div>
+          </div>
+          <div
+            className="flex flex-col items-center gap-3 rounded-lg p-6"
+            style={{ backgroundColor: "#f7f8f9" }}
+          >
+            <FlowXSelectField filled fillMode="text" hasLabel inlineLabel />
+            <div className="text-center">
+              <p className="text-sm font-medium">Horizontal label</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                Used in scenarios where vertical space is limited, such as nodes on a canvas.
+              </p>
+            </div>
+          </div>
+          <div
+            className="flex flex-col items-center gap-3 rounded-lg p-6"
+            style={{ backgroundColor: "#f7f8f9" }}
+          >
+            <FlowXSelectField filled fillMode="text" hasLabel={false} inlineLabel={false} />
+            <div className="text-center">
+              <p className="text-sm font-medium">No label</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                Used when the context makes the purpose self-evident or a preceding element already acts as the label.
+              </p>
+            </div>
+          </div>
+
+          {/* Existing variant cards */}
           {spec.variants.map((v) => {
             const isInverted = v.props.inverted === "on";
             return (

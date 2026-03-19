@@ -267,6 +267,79 @@ export default function SwitchPage() {
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {spec.variants.map((v) => {
               const isInverted = v.props.inverted === "on";
+              const isLeftAlign = v.props.layout === "left-align";
+              const isCardUseCase = v.props.layout === "card";
+              if (isLeftAlign) {
+                return (
+                  <div
+                    key={v.name}
+                    className={`flex flex-col gap-3 rounded-lg p-6 sm:col-span-2 ${
+                      isInverted ? "bg-neutral-900 text-white" : ""
+                    }`}
+                    style={!isInverted ? { backgroundColor: "#f7f8f9" } : undefined}
+                  >
+                    <div className="flex flex-col gap-3">
+                      <FlowXSwitch on={true} size="medium" label="Email notifications" labelPosition="right" />
+                      <FlowXSwitch on={false} size="medium" label="Push notifications" labelPosition="right" />
+                    </div>
+                    <div>
+                      <p className={`text-sm font-medium ${isInverted ? "text-neutral-200" : ""}`}>
+                        {v.name}
+                      </p>
+                      <p className={`mt-0.5 text-xs ${isInverted ? "text-neutral-400" : "text-muted-foreground"}`}>
+                        {v.useCase}
+                      </p>
+                    </div>
+                  </div>
+                );
+              }
+              if (isCardUseCase) {
+                return (
+                  <div
+                    key={v.name}
+                    className={`flex flex-col gap-3 rounded-lg p-6 sm:col-span-2 ${
+                      isInverted ? "bg-neutral-900 text-white" : ""
+                    }`}
+                    style={!isInverted ? { backgroundColor: "#f7f8f9" } : undefined}
+                  >
+                    <div
+                      className="rounded-lg border bg-white px-4 py-3 flex items-center justify-between"
+                      style={{
+                        borderColor: isInverted ? "#374151" : "#e3e8ed",
+                        backgroundColor: isInverted ? "#1f2937" : "#ffffff",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: 14,
+                          fontWeight: 500,
+                          color: isInverted ? "#ffffff" : "#0f1114",
+                          fontFamily: "var(--font-flowx)",
+                        }}
+                      >
+                        {v.props.cardTitle || "Enable notifications"}
+                      </span>
+                      <FlowXSwitch
+                        on={v.props.on === "on"}
+                        state={
+                          (v.props.state as "default" | "disabled") || "default"
+                        }
+                        inverted={isInverted}
+                        size={(v.props.size as "small" | "medium") || "medium"}
+                        label=""
+                      />
+                    </div>
+                    <div>
+                      <p className={`text-sm font-medium ${isInverted ? "text-neutral-200" : ""}`}>
+                        {v.name}
+                      </p>
+                      <p className={`mt-0.5 text-xs ${isInverted ? "text-neutral-400" : "text-muted-foreground"}`}>
+                        {v.useCase}
+                      </p>
+                    </div>
+                  </div>
+                );
+              }
               return (
                 <div
                   key={v.name}

@@ -28,6 +28,7 @@ function FlowXInputField({
   size = "medium",
   inverted = false,
   hasTopLabel = true,
+  inlineLabel = false,
   hasIconStart = false,
   hasIconEnd = false,
   iconStartName,
@@ -43,6 +44,7 @@ function FlowXInputField({
   size?: "small" | "medium";
   inverted?: boolean;
   hasTopLabel?: boolean;
+  inlineLabel?: boolean;
   hasIconStart?: boolean;
   hasIconEnd?: boolean;
   iconStartName?: IconName;
@@ -81,6 +83,107 @@ function FlowXInputField({
   // Focus ring color comes from the Focused variant's container stroke
   const focusRingColor = isFocused ? containerStyle?.stroke : undefined;
 
+  const inputContainer = (
+    <div className="inline-flex items-center gap-1.5" style={{ flex: inlineLabel ? 1 : undefined }}>
+      <div
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 6,
+          height: containerStyle?.height,
+          paddingLeft: 8,
+          paddingRight: 8,
+          borderRadius: 8,
+          border: `${containerStyle?.strokeWidth ?? 1}px solid ${containerStyle?.stroke}`,
+          backgroundColor: containerStyle?.fill,
+          cursor: isDisabled ? "not-allowed" : "text",
+          outline: focusRingColor
+            ? `2px solid ${focusRingColor}`
+            : undefined,
+          outlineOffset: isFocused ? 1 : undefined,
+          width: "100%",
+        }}
+      >
+        {/* Icon Start */}
+        {hasIconStart && iconStartName && (
+          <PhosphorIcon name={iconStartName} size={iconStartStyle?.width ?? 16} color={prefixSuffixColor} />
+        )}
+
+        {/* Prefix */}
+        {hasPrefix && (
+          <span
+            style={{
+              fontSize: prefixTypo?.fontSize,
+              color: prefixSuffixColor,
+              whiteSpace: "nowrap",
+              flexShrink: 0,
+            }}
+          >
+            $
+          </span>
+        )}
+
+        {/* Input text / Placeholder */}
+        <span
+          style={{
+            fontSize: inputTypo?.fontSize,
+            lineHeight: inputTypo?.lineHeight ? `${inputTypo.lineHeight}px` : undefined,
+            color: hasValue ? valueColor : placeholderColor,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            flex: 1,
+          }}
+        >
+          {hasValue ? value : placeholder}
+        </span>
+
+        {/* Suffix */}
+        {hasSuffix && (
+          <span
+            style={{
+              fontSize: prefixTypo?.fontSize,
+              color: prefixSuffixColor,
+              whiteSpace: "nowrap",
+              flexShrink: 0,
+            }}
+          >
+            kg
+          </span>
+        )}
+
+        {/* Icon End */}
+        {hasIconEnd && iconEndName && (
+          <PhosphorIcon name={iconEndName} size={iconEndStyle?.width ?? 16} color={prefixSuffixColor} />
+        )}
+        {/* Error Icon */}
+        {isError && <FlowXErrorIcon />}
+      </div>
+    </div>
+  );
+
+  if (inlineLabel) {
+    return (
+      <div style={{ minWidth: 200 }}>
+        <div className="inline-flex items-center gap-3" style={{ width: "100%" }}>
+          <FlowXLabel
+            label="Label"
+            size={size === "small" ? "small" : "medium"}
+            inverted={inverted}
+            disabled={state === "disabled"}
+            hasLabel={hasTopLabel}
+          />
+          {inputContainer}
+        </div>
+        <FlowXDescription
+          state={state === "hover" ? "default" : state}
+          inverted={inverted}
+          visible={hasDescription}
+        />
+      </div>
+    );
+  }
+
   return (
     <div
       className="inline-flex flex-col gap-0.5"
@@ -96,82 +199,7 @@ function FlowXInputField({
       />
 
       {/* Input Container + optional error icon */}
-      <div className="inline-flex items-center gap-1.5">
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 6,
-            height: containerStyle?.height,
-            paddingLeft: 8,
-            paddingRight: 8,
-            borderRadius: 8,
-            border: `${containerStyle?.strokeWidth ?? 1}px solid ${containerStyle?.stroke}`,
-            backgroundColor: containerStyle?.fill,
-            cursor: isDisabled ? "not-allowed" : "text",
-            outline: focusRingColor
-              ? `2px solid ${focusRingColor}`
-              : undefined,
-            outlineOffset: isFocused ? 1 : undefined,
-            width: "100%",
-          }}
-        >
-          {/* Icon Start */}
-          {hasIconStart && iconStartName && (
-            <PhosphorIcon name={iconStartName} size={iconStartStyle?.width ?? 16} color={prefixSuffixColor} />
-          )}
-
-          {/* Prefix */}
-          {hasPrefix && (
-            <span
-              style={{
-                fontSize: prefixTypo?.fontSize,
-                color: prefixSuffixColor,
-                whiteSpace: "nowrap",
-                flexShrink: 0,
-              }}
-            >
-              $
-            </span>
-          )}
-
-          {/* Input text / Placeholder */}
-          <span
-            style={{
-              fontSize: inputTypo?.fontSize,
-              lineHeight: inputTypo?.lineHeight ? `${inputTypo.lineHeight}px` : undefined,
-              color: hasValue ? valueColor : placeholderColor,
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              flex: 1,
-            }}
-          >
-            {hasValue ? value : placeholder}
-          </span>
-
-          {/* Suffix */}
-          {hasSuffix && (
-            <span
-              style={{
-                fontSize: prefixTypo?.fontSize,
-                color: prefixSuffixColor,
-                whiteSpace: "nowrap",
-                flexShrink: 0,
-              }}
-            >
-              kg
-            </span>
-          )}
-
-          {/* Icon End */}
-          {hasIconEnd && iconEndName && (
-            <PhosphorIcon name={iconEndName} size={iconEndStyle?.width ?? 16} color={prefixSuffixColor} />
-          )}
-          {/* Error Icon */}
-          {isError && <FlowXErrorIcon />}
-        </div>
-      </div>
+      {inputContainer}
 
       {/* Description */}
       <FlowXDescription
@@ -265,9 +293,8 @@ export default function InputFieldPage() {
               type: "boolean",
             },
             {
-              name: "hasTopLabel",
-              type: "boolean",
-              default: true,
+              name: "label",
+              options: ["vertical", "horizontal", "off"],
             },
             {
               name: "hasIconStart",
@@ -318,7 +345,8 @@ export default function InputFieldPage() {
                 }
                 value={values.filled === true ? "Value" : ""}
                 inverted={values.inverted === true}
-                hasTopLabel={values.hasTopLabel !== false}
+                hasTopLabel={values.label !== "off"}
+                inlineLabel={values.label === "horizontal"}
                 hasIconStart={values.hasIconStart === true}
                 iconStartName={values.hasIconStart ? (values.iconStartName as IconName) : undefined}
                 hasIconEnd={values.hasIconEnd === true}
@@ -333,6 +361,45 @@ export default function InputFieldPage() {
       }
       useCases={
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Label position use cases */}
+          <div
+            className="flex flex-col items-center gap-3 rounded-lg p-6"
+            style={{ backgroundColor: "#f7f8f9" }}
+          >
+            <FlowXInputField value="Value" hasTopLabel inlineLabel={false} />
+            <div className="text-center">
+              <p className="text-sm font-medium">Vertical label</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                Used in most situations on the platform.
+              </p>
+            </div>
+          </div>
+          <div
+            className="flex flex-col items-center gap-3 rounded-lg p-6"
+            style={{ backgroundColor: "#f7f8f9" }}
+          >
+            <FlowXInputField value="Value" hasTopLabel inlineLabel />
+            <div className="text-center">
+              <p className="text-sm font-medium">Horizontal label</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                Used in scenarios where vertical space is limited, such as nodes on a canvas.
+              </p>
+            </div>
+          </div>
+          <div
+            className="flex flex-col items-center gap-3 rounded-lg p-6"
+            style={{ backgroundColor: "#f7f8f9" }}
+          >
+            <FlowXInputField value="Value" hasTopLabel={false} inlineLabel={false} />
+            <div className="text-center">
+              <p className="text-sm font-medium">No label</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                Used when the context makes the purpose self-evident or a preceding element already acts as the label.
+              </p>
+            </div>
+          </div>
+
+          {/* Existing variant cards */}
           {spec.variants.map((v) => {
             const isInverted = v.props.inverted === "on";
             return (

@@ -11,12 +11,8 @@ export const switchSpec: ComponentSpec = {
   lastUpdated: "2026-03-17",
 
   variants: [
-    { name: "Default On", useCase: "Active toggle showing a feature is enabled.", props: { on: "on", state: "default", inverted: "off", size: "medium" } },
-    { name: "Default Off", useCase: "Inactive toggle for opt-out state.", props: { on: "off", state: "default", inverted: "off", size: "medium" } },
-    { name: "Disabled On", useCase: "Locked-on state user cannot change.", props: { on: "on", state: "disabled", inverted: "off", size: "medium" } },
-    { name: "Disabled Off", useCase: "Locked-off state, feature unavailable.", props: { on: "off", state: "disabled", inverted: "off", size: "medium" } },
-    { name: "Inverted On", useCase: "Active toggle on dark background.", props: { on: "on", state: "default", inverted: "on", size: "medium" } },
-    { name: "Inverted Off", useCase: "Inactive toggle on dark background.", props: { on: "off", state: "default", inverted: "on", size: "medium" } },
+    { name: "Left-side Alignment", useCase: "Default placement — switch on the left with label to the right. Use for standard toggle lists and forms.", props: { on: "on", state: "default", inverted: "off", size: "medium", layout: "left-align" } },
+    { name: "Right-side Alignment", useCase: "Switch aligned right when it controls the whole card or shares a line with another element.", props: { on: "on", state: "default", inverted: "off", size: "medium", layout: "card", cardTitle: "Enable notifications" } },
   ],
 
   props: [
