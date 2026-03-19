@@ -5,6 +5,7 @@ import {
   FlowXLabel,
   FlowXDescription,
   FlowXErrorIcon,
+  FlowXTooltip,
 } from "@/components/docs/shared-elements";
 
 /* ------------------------------------------------------------------ */
@@ -224,6 +225,66 @@ export default function UtilitiesPage() {
               default: "true",
               description:
                 "When false the component renders nothing.",
+            },
+          ]}
+        />
+      </section>
+
+      <hr style={{ borderColor: "#f7f8f9" }} />
+
+      {/* ============================================================ */}
+      {/*  Tooltip                                                      */}
+      {/* ============================================================ */}
+      <section>
+        <h2 className="text-xl font-semibold">Tooltip</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          A compact pill overlay used for contextual hints and inline error
+          messages. Background color shifts by use case and inverted mode.
+        </p>
+
+        <div className="mt-4">
+          <ComponentPreview
+            title="Tooltip"
+            description="Toggle use case and inverted mode."
+            controls={[
+              { name: "useCase", options: ["default", "error"] },
+              { name: "inverted", type: "boolean" },
+            ]}
+            render={(values) => (
+              <div style={{ fontFamily: "var(--font-flowx)" }}>
+                <FlowXTooltip
+                  useCase={
+                    (values.useCase as "default" | "error") || "default"
+                  }
+                  inverted={values.inverted === true}
+                />
+              </div>
+            )}
+          />
+        </div>
+
+        <PropsTable
+          rows={[
+            {
+              name: "text",
+              type: "string",
+              default: "(auto)",
+              description:
+                'Custom text. Defaults to "This is a tooltip - placeholder text" or "This field is required" for error use case.',
+            },
+            {
+              name: "useCase",
+              type: '"default" | "error"',
+              default: '"default"',
+              description:
+                "Controls background color: neutrals/700 (#475263) for default, red/500 (#e62200) for error.",
+            },
+            {
+              name: "inverted",
+              type: "boolean",
+              default: "false",
+              description:
+                "Shifts error background to red/400 (#eb4e33) for use on dark surfaces. No effect on default use case.",
             },
           ]}
         />

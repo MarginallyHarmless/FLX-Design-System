@@ -9,7 +9,7 @@ import {
 } from "@/lib/components-data/variant-style-helpers";
 import { ComponentPageTemplate } from "@/components/docs/component-page-template";
 import { ComponentPreview } from "@/components/docs/component-preview";
-import { FlowXErrorIcon } from "@/components/docs/shared-elements";
+import { FlowXErrorIcon, FlowXTooltip } from "@/components/docs/shared-elements";
 import { PencilSimple, TrashSimple, Check, X as XIcon, SortAscending, Funnel } from "@phosphor-icons/react";
 
 /* ------------------------------------------------------------------ */
@@ -91,7 +91,7 @@ interface ErrorCellData {
 
 const errorRow: ErrorCellData[] = [
   { value: "CODE 1", isReadOnly: true },
-  { value: "Value", hasError: true },
+  { value: "Add a value...", hasError: true, isPlaceholder: true },
   { value: "Value" },
 ];
 
@@ -165,7 +165,22 @@ function InputCell({
         <span style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
           {value}
         </span>
-        {isError && <FlowXErrorIcon size={14} />}
+        {isError && (
+          <div style={{ position: "relative", display: "inline-flex", alignItems: "center" }}>
+            <FlowXErrorIcon size={14} />
+            <div
+              style={{
+                position: "absolute",
+                bottom: "calc(100% + 6px)",
+                left: "50%",
+                transform: "translateX(-50%)",
+                zIndex: 10,
+              }}
+            >
+              <FlowXTooltip useCase="error" />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -202,6 +217,7 @@ function ErrorCell({ data }: { data: ErrorCellData }) {
     <InputCell
       value={data.value}
       state={data.hasError ? "error" : "default"}
+      isPlaceholder={data.isPlaceholder}
     />
   );
 }
@@ -336,7 +352,7 @@ function VerticalSep() {
   return (
     <div
       style={{
-        width: 1,
+        width: 0.5,
         alignSelf: "stretch",
         backgroundColor: colors.border,
         flexShrink: 0,
@@ -352,9 +368,11 @@ function VerticalSep() {
 function FlowXValuesTable({
   editMode = false,
   error = false,
+  bordered = true,
 }: {
   editMode?: boolean;
   error?: boolean;
+  bordered?: boolean;
 }) {
   return (
     <div
@@ -362,10 +380,11 @@ function FlowXValuesTable({
         fontFamily: "var(--font-flowx)",
         fontSize: 14,
         backgroundColor: colors.white,
-        border: `1px solid ${colors.border}`,
+        border: bordered ? `0.5px solid ${colors.border}` : "none",
         borderRadius: 16,
         overflow: "hidden",
         width: "100%",
+        boxShadow: bordered ? "none" : "2px 2px 24px 0px rgba(22, 52, 98, 0.08)",
       }}
     >
       {/* ---- Header ---- */}
@@ -374,8 +393,8 @@ function FlowXValuesTable({
           display: "flex",
           alignItems: "center",
           height: 50,
-          backgroundColor: colors.headerBg,
-          borderBottom: `1px solid ${colors.border}`,
+          backgroundColor: bordered ? colors.headerBg : colors.white,
+          borderBottom: `0.5px solid ${colors.border}`,
           paddingLeft: 14,
         }}
       >
@@ -419,7 +438,7 @@ function FlowXValuesTable({
           display: "flex",
           alignItems: "center",
           height: 56,
-          borderBottom: `1px solid ${colors.border}`,
+          borderBottom: `0.5px solid ${colors.border}`,
           paddingLeft: 14,
         }}
       >
@@ -443,7 +462,7 @@ function FlowXValuesTable({
           display: "flex",
           alignItems: "center",
           height: 56,
-          borderBottom: `1px solid ${colors.border}`,
+          borderBottom: `0.5px solid ${colors.border}`,
           paddingLeft: 14,
         }}
       >
@@ -585,7 +604,7 @@ export default function ValuesTablePage() {
       tokens={tableTokens}
       interactivePreview={
         <ComponentPreview
-          title="Values Table"
+          title="Table (Values)"
           description="Toggle edit mode and error state to see different row behaviors."
           controls={[
             {
@@ -596,12 +615,18 @@ export default function ValuesTablePage() {
               name: "error",
               type: "boolean",
             },
+            {
+              name: "bordered",
+              type: "boolean",
+              default: true,
+            },
           ]}
           render={(values) => (
             <div style={{ width: "100%", padding: 16 }}>
               <FlowXValuesTable
                 editMode={values.editMode === true}
                 error={values.error === true}
+                bordered={values.bordered !== false}
               />
             </div>
           )}
@@ -609,39 +634,52 @@ export default function ValuesTablePage() {
       }
       useCases={
         <div className="grid gap-8">
-          {spec.variants.map((v) => (
-            <div
-              key={v.name}
-              className="flex flex-col gap-3 rounded-lg p-6"
-              style={{ backgroundColor: "#f7f8f9" }}
-            >
-              <div style={{ overflowX: "auto" }}>
-                <FlowXValuesTable
-                  editMode={v.props.editMode === "on"}
-                  error={v.props.error === "on"}
-                />
-              </div>
-              <div>
-                <p className="text-sm font-medium">{v.name}</p>
-                <p className="mt-0.5 text-xs text-muted-foreground">{v.useCase}</p>
-              </div>
+          <div
+            className="flex flex-col gap-3 rounded-lg p-6"
+            style={{ backgroundColor: "#f7f8f9" }}
+          >
+            <div style={{ overflowX: "auto" }}>
+              <FlowXValuesTable bordered />
             </div>
-          ))}
+            <div>
+              <p className="text-sm font-medium">Bordered</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">Used when the table is part of a card alongside other UI elements.</p>
+            </div>
+          </div>
+          <div
+            className="flex flex-col gap-3 rounded-lg p-6"
+            style={{ backgroundColor: "#f7f8f9" }}
+          >
+            <div style={{ overflowX: "auto", padding: 16 }}>
+              <FlowXValuesTable bordered={false} />
+            </div>
+            <div>
+              <p className="text-sm font-medium">Standalone</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">Used when the table is the card itself, displayed standalone without other elements.</p>
+            </div>
+          </div>
         </div>
       }
       statesReference={
         <div className="flex flex-col gap-8">
-          {["read-only", "editing", "error"].map((s) => (
-            <div key={s} className="flex flex-col gap-3">
-              <div style={{ overflowX: "auto" }}>
-                <FlowXValuesTable
-                  editMode={s === "editing" || s === "error"}
-                  error={s === "error"}
-                />
-              </div>
-              <span className="text-xs text-muted-foreground capitalize">{s}</span>
+          <div className="flex flex-col gap-3">
+            <div style={{ overflowX: "auto" }}>
+              <FlowXValuesTable />
             </div>
-          ))}
+            <span className="text-xs text-muted-foreground">Read-only</span>
+          </div>
+          <div className="flex flex-col gap-3">
+            <div style={{ overflowX: "auto" }}>
+              <FlowXValuesTable editMode />
+            </div>
+            <span className="text-xs text-muted-foreground">Editing</span>
+          </div>
+          <div className="flex flex-col gap-3">
+            <div style={{ overflowX: "auto" }}>
+              <FlowXValuesTable error />
+            </div>
+            <span className="text-xs text-muted-foreground">Error</span>
+          </div>
         </div>
       }
       sizes={<></>}

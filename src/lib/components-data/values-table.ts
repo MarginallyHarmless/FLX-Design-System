@@ -2,7 +2,7 @@ import { type ComponentSpec } from "./types";
 
 export const valuesTableSpec: ComponentSpec = {
   slug: "values-table",
-  name: "Values Table",
+  name: "Table (Values)",
   description:
     "An editable data table for managing localized key-value pairs across multiple languages. Supports read-only, editable, and error validation states per row.",
   status: "stable",

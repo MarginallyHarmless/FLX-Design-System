@@ -99,3 +99,48 @@ export function FlowXDescription({
 export function FlowXErrorIcon({ size = 16 }: { size?: number }) {
   return <WarningCircle size={size} color="#e62200" weight="bold" style={{ flexShrink: 0 }} />;
 }
+
+export function FlowXTooltip({
+  text,
+  useCase = "default",
+  inverted = false,
+}: {
+  text?: string;
+  useCase?: "default" | "error";
+  inverted?: boolean;
+}) {
+  const isError = useCase === "error";
+
+  const getFill = () => {
+    if (isError) return inverted ? "#eb4e33" : "#e62200";
+    return "#475263";
+  };
+
+  const defaultText = isError
+    ? "This field is required"
+    : "This is a tooltip - placeholder text";
+
+  return (
+    <div
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        padding: 8,
+        borderRadius: 8,
+        backgroundColor: getFill(),
+      }}
+    >
+      <span
+        style={{
+          fontSize: 12,
+          lineHeight: "16px",
+          fontWeight: 400,
+          color: "#ffffff",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {text ?? defaultText}
+      </span>
+    </div>
+  );
+}
