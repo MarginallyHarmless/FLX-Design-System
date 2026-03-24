@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Open_Sans, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { Open_Sans, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -14,7 +14,7 @@ const openSans = Open_Sans({
   variable: "--font-flowx",
 });
 
-const jakarta = Plus_Jakarta_Sans({
+const docsFont = Open_Sans({
   subsets: ["latin"],
   variable: "--font-docs",
 });
@@ -37,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${openSans.variable} ${jakarta.variable} ${jetbrains.variable} antialiased`}
+        className={`${openSans.variable} ${docsFont.variable} ${jetbrains.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"
