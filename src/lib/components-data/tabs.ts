@@ -220,41 +220,41 @@ export const tabsSpec: ComponentSpec = {
     do: [
       {
         description:
-          "Use tabs to organize related content into separate panels that users can switch between.",
+          "[placeholder] Use tabs to organize related content into separate panels that users can switch between.",
       },
       {
         description:
-          "Keep tab labels short (1-2 words) to maintain a clean, scannable layout.",
+          "[placeholder] Keep tab labels short (1-2 words) to maintain a clean, scannable layout.",
       },
       {
         description:
-          "Use the inverted variant on dark backgrounds to maintain readability.",
+          "[placeholder] Use the inverted variant on dark backgrounds to maintain readability.",
       },
       {
         description:
-          "Ensure at least one tab is always active to indicate the current content.",
+          "[placeholder] Ensure at least one tab is always active to indicate the current content.",
       },
       {
         description:
-          "Use the counter badge to indicate the number of items within a tab's content.",
+          "[placeholder] Use the counter badge to indicate the number of items within a tab's content.",
       },
     ],
     dont: [
       {
         description:
-          "Don't use tabs for sequential steps or wizard flows -- use a stepper instead.",
+          "[placeholder] Don't use tabs for sequential steps or wizard flows -- use a stepper instead.",
       },
       {
         description:
-          "Don't use more than 7 tabs -- consider grouping or using a different navigation pattern.",
+          "[placeholder] Don't use more than 7 tabs -- consider grouping or using a different navigation pattern.",
       },
       {
         description:
-          "Don't use tabs for actions or commands -- they are for content navigation only.",
+          "[placeholder] Don't use tabs for actions or commands -- they are for content navigation only.",
       },
       {
         description:
-          "Don't nest tabs within tabs -- this creates confusing navigation hierarchy.",
+          "[placeholder] Don't nest tabs within tabs -- this creates confusing navigation hierarchy.",
       },
     ],
   },
@@ -281,8 +281,8 @@ export const tabsSpec: ComponentSpec = {
   relatedComponents: ["segmented-button", "button"],
 
   considerations: [
-    "When tab count may exceed the visible container width → implement horizontal scroll or an overflow menu; the base component does not handle this.",
-    "When tab content loads asynchronously → keep the tab bar interactive during loading to avoid layout jumps; show a skeleton inside the panel, not on the tabs.",
-    "When a counter badge shows zero → hide the badge entirely rather than displaying '0', which adds visual clutter without information.",
+    "[placeholder] When tab count may exceed the visible container width → implement horizontal scroll or an overflow menu; the base component does not handle this.",
+    "[placeholder] When tab content loads asynchronously → keep the tab bar interactive during loading to avoid layout jumps; show a skeleton inside the panel, not on the tabs.",
+    "[placeholder] When a counter badge shows zero → hide the badge entirely rather than displaying '0', which adds visual clutter without information.",
   ],
 };

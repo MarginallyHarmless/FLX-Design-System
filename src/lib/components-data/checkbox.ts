@@ -561,41 +561,41 @@ export const checkboxSpec: ComponentSpec = {
     do: [
       {
         description:
-          "Use checkboxes for independent choices where multiple options can be selected simultaneously.",
+          "[placeholder] Use checkboxes for independent choices where multiple options can be selected simultaneously.",
       },
       {
         description:
-          "Always provide a clear, descriptive label for each checkbox option.",
+          "[placeholder] Always provide a clear, descriptive label for each checkbox option.",
       },
       {
         description:
-          "Use the error state with a helper message to indicate a required checkbox that hasn't been checked.",
+          "[placeholder] Use the error state with a helper message to indicate a required checkbox that hasn't been checked.",
       },
       {
         description:
-          "Group related checkboxes vertically for easy scanning.",
+          "[placeholder] Group related checkboxes vertically for easy scanning.",
       },
       {
         description:
-          "Use the disabled state with a tooltip to explain why an option is unavailable.",
+          "[placeholder] Use the disabled state with a tooltip to explain why an option is unavailable.",
       },
     ],
     dont: [
       {
         description:
-          "Don't use checkboxes for mutually exclusive choices -- use Radio buttons instead.",
+          "[placeholder] Don't use checkboxes for mutually exclusive choices -- use Radio buttons instead.",
       },
       {
         description:
-          "Don't use checkboxes for binary on/off settings -- use a Switch instead.",
+          "[placeholder] Don't use checkboxes for binary on/off settings -- use a Switch instead.",
       },
       {
         description:
-          "Don't present more than 7 checkbox options in a single group -- consider restructuring the form.",
+          "[placeholder] Don't present more than 7 checkbox options in a single group -- consider restructuring the form.",
       },
       {
         description:
-          "Don't rely solely on color to communicate the checked/unchecked state (the checkmark icon is essential).",
+          "[placeholder] Don't rely solely on color to communicate the checked/unchecked state (the checkmark icon is essential).",
       },
     ],
   },
@@ -618,8 +618,8 @@ export const checkboxSpec: ComponentSpec = {
   relatedComponents: ["radio", "switch", "select-field"],
 
   considerations: [
-    "When a single checkbox controls agreement or consent → pair with the error state for validation, not the disabled state; disabled implies the user can't act.",
-    "When checkboxes appear in a dense list (5+ items) → use the borderless variant to reduce visual noise and let the content breathe.",
-    "When using the subtitle prop → the border is always shown regardless of the border prop value, because the subtitle needs the container framing for readability.",
+    "[placeholder] When a single checkbox controls agreement or consent → pair with the error state for validation, not the disabled state; disabled implies the user can't act.",
+    "[placeholder] When checkboxes appear in a dense list (5+ items) → use the borderless variant to reduce visual noise and let the content breathe.",
+    "[placeholder] When using the subtitle prop → the border is always shown regardless of the border prop value, because the subtitle needs the container framing for readability.",
   ],
 };

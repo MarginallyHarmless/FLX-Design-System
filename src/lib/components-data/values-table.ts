@@ -64,15 +64,15 @@ export const valuesTableSpec: ComponentSpec = {
 
   guidelines: {
     do: [
-      { description: "Show clear validation errors inline with the affected cell." },
-      { description: "Provide save/cancel actions when a row is in edit mode." },
-      { description: "Use placeholder text ('Add a value...') for empty cells to indicate they accept input." },
-      { description: "Disable the save button when validation errors are present." },
+      { description: "[placeholder] Show clear validation errors inline with the affected cell." },
+      { description: "[placeholder] Provide save/cancel actions when a row is in edit mode." },
+      { description: "[placeholder] Use placeholder text ('Add a value...') for empty cells to indicate they accept input." },
+      { description: "[placeholder] Disable the save button when validation errors are present." },
     ],
     dont: [
-      { description: "Don't allow saving a row with validation errors." },
-      { description: "Don't show edit and save/cancel buttons simultaneously on the same row." },
-      { description: "Don't use the table for non-tabular or unstructured data." },
+      { description: "[placeholder] Don't allow saving a row with validation errors." },
+      { description: "[placeholder] Don't show edit and save/cancel buttons simultaneously on the same row." },
+      { description: "[placeholder] Don't use the table for non-tabular or unstructured data." },
     ],
   },
 
@@ -96,9 +96,9 @@ export const valuesTableSpec: ComponentSpec = {
   relatedComponents: ["input-field"],
 
   considerations: [
-    "When entering edit mode on one row → disable edit buttons on other rows to prevent concurrent edits and confusing save states.",
-    "When a language column has no translation yet → show placeholder text ('Add a value...') with reduced opacity so the cell is clearly actionable, not broken.",
-    "When the table has many rows → keep the header sticky so column context is visible during scroll.",
+    "[placeholder] When entering edit mode on one row → disable edit buttons on other rows to prevent concurrent edits and confusing save states.",
+    "[placeholder] When a language column has no translation yet → show placeholder text ('Add a value...') with reduced opacity so the cell is clearly actionable, not broken.",
+    "[placeholder] When the table has many rows → keep the header sticky so column context is visible during scroll.",
   ],
 
   decisionLog: [

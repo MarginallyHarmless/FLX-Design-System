@@ -52,17 +52,17 @@ export const selectFieldSpec: ComponentSpec = {
 
   guidelines: {
     do: [
-      { description: "Always provide a visible label for the select field." },
-      { description: "Use when there are 4+ options to choose from." },
-      { description: "Use chips to show multi-select values so users can remove individual selections." },
-      { description: "Use error state with helper text for validation feedback." },
-      { description: "Use appropriate size for the context — small for dense layouts, medium for forms." },
+      { description: "[placeholder] Always provide a visible label for the select field." },
+      { description: "[placeholder] Use when there are 4+ options to choose from." },
+      { description: "[placeholder] Use chips to show multi-select values so users can remove individual selections." },
+      { description: "[placeholder] Use error state with helper text for validation feedback." },
+      { description: "[placeholder] Use appropriate size for the context — small for dense layouts, medium for forms." },
     ],
     dont: [
-      { description: "Don't use for binary choices — use Switch or Checkbox instead." },
-      { description: "Don't use for fewer than 4 options — consider Radio buttons." },
-      { description: "Don't disable without providing an explanation to the user." },
-      { description: "Don't use placeholder as a replacement for labels." },
+      { description: "[placeholder] Don't use for binary choices — use Switch or Checkbox instead." },
+      { description: "[placeholder] Don't use for fewer than 4 options — consider Radio buttons." },
+      { description: "[placeholder] Don't disable without providing an explanation to the user." },
+      { description: "[placeholder] Don't use placeholder as a replacement for labels." },
     ],
   },
 
@@ -460,8 +460,8 @@ export const selectFieldSpec: ComponentSpec = {
   ],
 
   considerations: [
-    "When fewer than 4 options exist → use Radio buttons instead; a dropdown for 2–3 items adds an unnecessary click.",
-    "When multi-select is used with many selections → plan for chip overflow; the component shows a '+N' counter but the container height grows — test with 10+ selections.",
-    "When the select is inside a form with Input Fields → match size and label style to maintain visual consistency across the row.",
+    "[placeholder] When fewer than 4 options exist → use Radio buttons instead; a dropdown for 2–3 items adds an unnecessary click.",
+    "[placeholder] When multi-select is used with many selections → plan for chip overflow; the component shows a '+N' counter but the container height grows — test with 10+ selections.",
+    "[placeholder] When the select is inside a form with Input Fields → match size and label style to maintain visual consistency across the row.",
   ],
 };

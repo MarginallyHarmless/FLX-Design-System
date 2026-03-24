@@ -51,16 +51,16 @@ export const inputFieldSpec: ComponentSpec = {
 
   guidelines: {
     do: [
-      { description: "Always provide a visible label for the input field." },
-      { description: "Use error state with helper text for validation feedback." },
-      { description: "Use prefix/suffix for formatting context (e.g., currency, units)." },
-      { description: "Use appropriate size for the context — small for dense layouts, medium for forms." },
+      { description: "[placeholder] Always provide a visible label for the input field." },
+      { description: "[placeholder] Use error state with helper text for validation feedback." },
+      { description: "[placeholder] Use prefix/suffix for formatting context (e.g., currency, units)." },
+      { description: "[placeholder] Use appropriate size for the context — small for dense layouts, medium for forms." },
     ],
     dont: [
-      { description: "Don't use placeholder as a replacement for labels." },
-      { description: "Don't disable without providing an explanation to the user." },
-      { description: "Don't use for multi-line text — use Textarea instead." },
-      { description: "Don't omit error messaging when the input is in error state." },
+      { description: "[placeholder] Don't use placeholder as a replacement for labels." },
+      { description: "[placeholder] Don't disable without providing an explanation to the user." },
+      { description: "[placeholder] Don't use for multi-line text — use Textarea instead." },
+      { description: "[placeholder] Don't omit error messaging when the input is in error state." },
     ],
   },
 
@@ -469,8 +469,8 @@ export const inputFieldSpec: ComponentSpec = {
   ],
 
   considerations: [
-    "When the field has both prefix and suffix → ensure the input area still has enough width for content; test with realistic values, not just placeholder text.",
-    "When using side labels → align all side labels in the form to the same width so input containers line up vertically.",
-    "When the field is inside a narrow container (e.g. modal column, sidebar) → use the small size and drop the prefix/suffix to avoid cramping the actual input area.",
+    "[placeholder] When the field has both prefix and suffix → ensure the input area still has enough width for content; test with realistic values, not just placeholder text.",
+    "[placeholder] When using side labels → align all side labels in the form to the same width so input containers line up vertically.",
+    "[placeholder] When the field is inside a narrow container (e.g. modal column, sidebar) → use the small size and drop the prefix/suffix to avoid cramping the actual input area.",
   ],
 };

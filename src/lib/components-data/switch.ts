@@ -217,41 +217,41 @@ export const switchSpec: ComponentSpec = {
     do: [
       {
         description:
-          "Use switches for binary on/off settings that take effect immediately.",
+          "[placeholder] Use switches for binary on/off settings that take effect immediately.",
       },
       {
         description:
-          "Always provide a clear label describing what the switch controls.",
+          "[placeholder] Always provide a clear label describing what the switch controls.",
       },
       {
         description:
-          "Use the disabled state to indicate a setting that exists but cannot be changed right now.",
+          "[placeholder] Use the disabled state to indicate a setting that exists but cannot be changed right now.",
       },
       {
         description:
-          "Place the label to the right of the switch for consistent left-to-right reading order.",
+          "[placeholder] Place the label to the right of the switch for consistent left-to-right reading order.",
       },
       {
         description:
-          "Use the inverted variant on dark backgrounds to maintain contrast.",
+          "[placeholder] Use the inverted variant on dark backgrounds to maintain contrast.",
       },
     ],
     dont: [
       {
         description:
-          "Don't use a switch for multiple selections -- use Checkboxes instead.",
+          "[placeholder] Don't use a switch for multiple selections -- use Checkboxes instead.",
       },
       {
         description:
-          "Don't use a switch when the action requires a submit button -- use a Checkbox instead.",
+          "[placeholder] Don't use a switch when the action requires a submit button -- use a Checkbox instead.",
       },
       {
         description:
-          "Don't change the label text between on/off states -- it should describe the setting, not the state.",
+          "[placeholder] Don't change the label text between on/off states -- it should describe the setting, not the state.",
       },
       {
         description:
-          "Don't use the small size switch where touch targets need to meet accessibility minimums (24px).",
+          "[placeholder] Don't use the small size switch where touch targets need to meet accessibility minimums (24px).",
       },
     ],
   },
@@ -275,8 +275,8 @@ export const switchSpec: ComponentSpec = {
   relatedComponents: ["checkbox", "radio"],
 
   considerations: [
-    "When the setting doesn't take effect immediately (e.g. requires a Save button) → use a Checkbox instead; switches imply instant application.",
-    "When using the small size → verify the touch target still meets the 24px accessibility minimum; pad the hit area if needed.",
-    "When a group of switches appears in a list → align all switches to the same edge (left or right) within that list; mixing alignments breaks scannability.",
+    "[placeholder] When the setting doesn't take effect immediately (e.g. requires a Save button) → use a Checkbox instead; switches imply instant application.",
+    "[placeholder] When using the small size → verify the touch target still meets the 24px accessibility minimum; pad the hit area if needed.",
+    "[placeholder] When a group of switches appears in a list → align all switches to the same edge (left or right) within that list; mixing alignments breaks scannability.",
   ],
 };

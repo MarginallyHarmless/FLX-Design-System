@@ -109,41 +109,41 @@ export const radioV3Spec: ComponentSpec = {
     do: [
       {
         description:
-          "Use radio buttons for mutually exclusive choices where only one option can be selected.",
+          "[placeholder] Use radio buttons for mutually exclusive choices where only one option can be selected.",
       },
       {
         description:
-          "Always provide a clear, descriptive label for each radio option.",
+          "[placeholder] Always provide a clear, descriptive label for each radio option.",
       },
       {
         description:
-          "Use the error state with a helper message to indicate a required selection.",
+          "[placeholder] Use the error state with a helper message to indicate a required selection.",
       },
       {
         description:
-          "Group related radio buttons vertically for easy scanning.",
+          "[placeholder] Group related radio buttons vertically for easy scanning.",
       },
       {
         description:
-          "Always have one option pre-selected when a default is sensible.",
+          "[placeholder] Always have one option pre-selected when a default is sensible.",
       },
     ],
     dont: [
       {
         description:
-          "Don't use radio buttons for multi-select scenarios — use Checkboxes instead.",
+          "[placeholder] Don't use radio buttons for multi-select scenarios — use Checkboxes instead.",
       },
       {
         description:
-          "Don't use radio buttons for binary on/off toggles — use a Switch instead.",
+          "[placeholder] Don't use radio buttons for binary on/off toggles — use a Switch instead.",
       },
       {
         description:
-          "Don't present more than 7 radio options — use a Select dropdown for long lists.",
+          "[placeholder] Don't present more than 7 radio options — use a Select dropdown for long lists.",
       },
       {
         description:
-          "Don't disable radio buttons without explaining why via a tooltip.",
+          "[placeholder] Don't disable radio buttons without explaining why via a tooltip.",
       },
     ],
   },
@@ -167,8 +167,8 @@ export const radioV3Spec: ComponentSpec = {
   relatedComponents: ["checkbox", "segmented-button", "select-field"],
 
   considerations: [
-    "When only 2–3 options exist and they act as a mode switch → consider Segmented Button instead; it's more compact and communicates mutual exclusivity faster.",
-    "When the list exceeds 7 options → switch to a Select Field; long radio lists are hard to scan and waste vertical space.",
-    "When using the subtitle prop → the border is always shown regardless of the border prop value, matching the Checkbox behavior.",
+    "[placeholder] When only 2–3 options exist and they act as a mode switch → consider Segmented Button instead; it's more compact and communicates mutual exclusivity faster.",
+    "[placeholder] When the list exceeds 7 options → switch to a Select Field; long radio lists are hard to scan and waste vertical space.",
+    "[placeholder] When using the subtitle prop → the border is always shown regardless of the border prop value, matching the Checkbox behavior.",
   ],
 };

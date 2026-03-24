@@ -174,18 +174,18 @@ export const buttonSpec: ComponentSpec = {
 
   guidelines: {
     do: [
-      { description: "Use Primary buttons for the single most important action on a page." },
-      { description: "Use Danger scope for destructive actions to clearly signal risk." },
-      { description: "Use Secondary or Tertiary variants for supporting actions." },
-      { description: "Keep button labels short and action-oriented (e.g. Save, Delete, Continue)." },
-      { description: "Maintain consistent sizing within a button group." },
+      { description: "[placeholder] Use Primary buttons for the single most important action on a page." },
+      { description: "[placeholder] Use Danger scope for destructive actions to clearly signal risk." },
+      { description: "[placeholder] Use Secondary or Tertiary variants for supporting actions." },
+      { description: "[placeholder] Keep button labels short and action-oriented (e.g. Save, Delete, Continue)." },
+      { description: "[placeholder] Maintain consistent sizing within a button group." },
     ],
     dont: [
-      { description: "Don't use more than one Primary button per section — it dilutes hierarchy." },
-      { description: "Don't use Danger scope for non-destructive actions." },
-      { description: "Don't rely on color alone to convey meaning — include descriptive labels." },
-      { description: "Don't mix sizes in the same button group." },
-      { description: "Don't use disabled buttons without an explanation via tooltip." },
+      { description: "[placeholder] Don't use more than one Primary button per section — it dilutes hierarchy." },
+      { description: "[placeholder] Don't use Danger scope for non-destructive actions." },
+      { description: "[placeholder] Don't rely on color alone to convey meaning — include descriptive labels." },
+      { description: "[placeholder] Don't mix sizes in the same button group." },
+      { description: "[placeholder] Don't use disabled buttons without an explanation via tooltip." },
     ],
   },
 
@@ -207,9 +207,9 @@ export const buttonSpec: ComponentSpec = {
   relatedComponents: ["input-field", "radio"],
 
   considerations: [
-    "When multiple buttons compete for attention in the same section → use only one Primary per group; demote others to Secondary or Tertiary.",
-    "When a destructive action is reversible → prefer Danger Secondary over Danger Primary to match the severity level.",
-    "When using icon-only buttons (hasLabel=false) → always provide an aria-label; the XXS size is designed for this pattern but still needs a text alternative.",
-    "When mixing scope colors in the same button group → keep the hierarchy consistent (e.g. Brand Primary + Danger Secondary, not Brand Secondary + Danger Primary).",
+    "[placeholder] When multiple buttons compete for attention in the same section → use only one Primary per group; demote others to Secondary or Tertiary.",
+    "[placeholder] When a destructive action is reversible → prefer Danger Secondary over Danger Primary to match the severity level.",
+    "[placeholder] When using icon-only buttons (hasLabel=false) → always provide an aria-label; the XXS size is designed for this pattern but still needs a text alternative.",
+    "[placeholder] When mixing scope colors in the same button group → keep the hierarchy consistent (e.g. Brand Primary + Danger Secondary, not Brand Secondary + Danger Primary).",
   ],
 };

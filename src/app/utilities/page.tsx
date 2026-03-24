@@ -7,68 +7,21 @@ import {
   FlowXErrorIcon,
   FlowXTooltip,
 } from "@/components/docs/shared-elements";
-
 /* ------------------------------------------------------------------ */
-/*  Props table helper                                                 */
+/*  Consideration item                                                 */
 /* ------------------------------------------------------------------ */
 
-function PropsTable({
-  rows,
-}: {
-  rows: { name: string; type: string; default: string; description: string }[];
-}) {
-  const thStyle: React.CSSProperties = {
-    textAlign: "left",
-    padding: "8px 12px",
-    fontSize: 13,
-    fontWeight: 600,
-    color: "#1d232c",
-    borderBottom: "2px solid #e3e8ed",
-  };
-  const tdStyle: React.CSSProperties = {
-    padding: "8px 12px",
-    fontSize: 13,
-    color: "#475263",
-    borderBottom: "1px solid #f0f2f5",
-    verticalAlign: "top",
-  };
-  const codeStyle: React.CSSProperties = {
-    fontSize: 12,
-    fontFamily: "monospace",
-    backgroundColor: "#f0f2f5",
-    padding: "2px 6px",
-    borderRadius: 4,
-  };
-
+function Consideration({ text }: { text: string }) {
+  const sep = text.indexOf(" → ");
   return (
-    <div style={{ overflowX: "auto", marginTop: 16 }}>
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
-        <thead>
-          <tr>
-            <th style={thStyle}>Prop</th>
-            <th style={thStyle}>Type</th>
-            <th style={thStyle}>Default</th>
-            <th style={thStyle}>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((r) => (
-            <tr key={r.name}>
-              <td style={tdStyle}>
-                <code style={codeStyle}>{r.name}</code>
-              </td>
-              <td style={tdStyle}>
-                <code style={codeStyle}>{r.type}</code>
-              </td>
-              <td style={tdStyle}>
-                <code style={codeStyle}>{r.default}</code>
-              </td>
-              <td style={tdStyle}>{r.description}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <li className="text-sm text-muted-foreground">
+      {sep !== -1 ? (
+        <>
+          <span className="font-medium text-foreground">{text.slice(0, sep)}</span>
+          {" → "}{text.slice(sep + 3)}
+        </>
+      ) : text}
+    </li>
   );
 }
 
@@ -91,7 +44,7 @@ export default function UtilitiesPage() {
       {/* ============================================================ */}
       {/*  Label                                                        */}
       {/* ============================================================ */}
-      <section>
+      <section className="space-y-4">
         <h2 className="text-xl font-semibold">Label</h2>
         <p className="mt-1 text-sm text-muted-foreground">
           A shared label element rendered above input fields, checkboxes, and
@@ -121,43 +74,15 @@ export default function UtilitiesPage() {
           />
         </div>
 
-        <PropsTable
-          rows={[
-            {
-              name: "label",
-              type: "string",
-              default: '"Label"',
-              description: "The text content of the label.",
-            },
-            {
-              name: "size",
-              type: '"small" | "medium"',
-              default: '"medium"',
-              description:
-                "Controls font size (12/14px) and line-height (16/24px).",
-            },
-            {
-              name: "inverted",
-              type: "boolean",
-              default: "false",
-              description: "White text for use on dark backgrounds.",
-            },
-            {
-              name: "disabled",
-              type: "boolean",
-              default: "false",
-              description:
-                "Applies muted color to indicate a disabled field.",
-            },
-            {
-              name: "showInfo",
-              type: "boolean",
-              default: "false",
-              description:
-                "Shows a small info circle icon next to the label text.",
-            },
-          ]}
-        />
+        <div>
+          <h3 className="text-base font-semibold">Considerations</h3>
+          <ul className="mt-3 space-y-2">
+            <Consideration text="[placeholder] When a form field is required → show the label; never rely on placeholder alone to communicate what the field is for." />
+            <Consideration text="[placeholder] When using the info icon → pair it with a tooltip; the icon alone doesn't communicate what additional context is available." />
+            <Consideration text="[placeholder] When multiple labels stack vertically in a form → keep all labels the same size to maintain visual alignment." />
+          </ul>
+        </div>
+
       </section>
 
       <hr style={{ borderColor: "#f7f8f9" }} />
@@ -165,7 +90,7 @@ export default function UtilitiesPage() {
       {/* ============================================================ */}
       {/*  Description                                                  */}
       {/* ============================================================ */}
-      <section>
+      <section className="space-y-4">
         <h2 className="text-xl font-semibold">Description</h2>
         <p className="mt-1 text-sm text-muted-foreground">
           Helper or error text displayed beneath form components.
@@ -197,37 +122,15 @@ export default function UtilitiesPage() {
           />
         </div>
 
-        <PropsTable
-          rows={[
-            {
-              name: "text",
-              type: "string",
-              default: "(auto)",
-              description:
-                'Custom text. Defaults to "Helper text goes here" or "Error message goes here" when in error state.',
-            },
-            {
-              name: "state",
-              type: '"default" | "error" | "disabled" | "focused"',
-              default: '"default"',
-              description:
-                "Controls color: red for error, muted for disabled, neutral otherwise.",
-            },
-            {
-              name: "inverted",
-              type: "boolean",
-              default: "false",
-              description: "Lighter color for use on dark backgrounds.",
-            },
-            {
-              name: "visible",
-              type: "boolean",
-              default: "true",
-              description:
-                "When false the component renders nothing.",
-            },
-          ]}
-        />
+        <div>
+          <h3 className="text-base font-semibold">Considerations</h3>
+          <ul className="mt-3 space-y-2">
+            <Consideration text="[placeholder] When a field enters error state → always show the description with error text; hiding it forces the user to guess what went wrong." />
+            <Consideration text="[placeholder] When helper text is generic (e.g. 'Enter a value') → omit the description entirely; it adds noise without helping the user." />
+            <Consideration text="[placeholder] When the field is disabled → keep the description visible if it explains why the field is locked." />
+          </ul>
+        </div>
+
       </section>
 
       <hr style={{ borderColor: "#f7f8f9" }} />
@@ -235,7 +138,7 @@ export default function UtilitiesPage() {
       {/* ============================================================ */}
       {/*  Tooltip                                                      */}
       {/* ============================================================ */}
-      <section>
+      <section className="space-y-4">
         <h2 className="text-xl font-semibold">Tooltip</h2>
         <p className="mt-1 text-sm text-muted-foreground">
           A compact pill overlay used for contextual hints and inline error
@@ -263,31 +166,14 @@ export default function UtilitiesPage() {
           />
         </div>
 
-        <PropsTable
-          rows={[
-            {
-              name: "text",
-              type: "string",
-              default: "(auto)",
-              description:
-                'Custom text. Defaults to "This is a tooltip - placeholder text" or "This field is required" for error use case.',
-            },
-            {
-              name: "useCase",
-              type: '"default" | "error"',
-              default: '"default"',
-              description:
-                "Controls background color: neutrals/700 (#475263) for default, red/500 (#e62200) for error.",
-            },
-            {
-              name: "inverted",
-              type: "boolean",
-              default: "false",
-              description:
-                "Shifts error background to red/400 (#eb4e33) for use on dark surfaces. No effect on default use case.",
-            },
-          ]}
-        />
+        <div>
+          <h3 className="text-base font-semibold">Considerations</h3>
+          <ul className="mt-3 space-y-2">
+            <Consideration text="[placeholder] When using the error variant on a dark surface → enable inverted mode; the default red is too dark to read against dark backgrounds." />
+            <Consideration text="[placeholder] When tooltip text exceeds ~40 characters → consider using a popover or inline message instead; long tooltips are hard to read in the pill format." />
+          </ul>
+        </div>
+
       </section>
 
       <hr style={{ borderColor: "#f7f8f9" }} />
@@ -295,7 +181,7 @@ export default function UtilitiesPage() {
       {/* ============================================================ */}
       {/*  Error Icon                                                   */}
       {/* ============================================================ */}
-      <section>
+      <section className="space-y-4">
         <h2 className="text-xl font-semibold">Error Icon</h2>
         <p className="mt-1 text-sm text-muted-foreground">
           A 16px circle-exclamation SVG rendered in error states. Always uses{" "}
@@ -333,17 +219,14 @@ export default function UtilitiesPage() {
           </div>
         </div>
 
-        <PropsTable
-          rows={[
-            {
-              name: "size",
-              type: "number",
-              default: "16",
-              description:
-                "Width and height of the SVG icon in pixels.",
-            },
-          ]}
-        />
+        <div>
+          <h3 className="text-base font-semibold">Considerations</h3>
+          <ul className="mt-3 space-y-2">
+            <Consideration text="[placeholder] When placing the error icon next to a field → position it outside the input container, not inside; it should not compete with the field content." />
+            <Consideration text="[placeholder] When the error icon appears alongside error text → the icon is redundant as a standalone indicator; the text already communicates the error." />
+          </ul>
+        </div>
+
       </section>
     </div>
   );

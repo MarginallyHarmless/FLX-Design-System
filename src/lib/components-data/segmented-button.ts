@@ -181,41 +181,41 @@ export const segmentedButtonSpec: ComponentSpec = {
     do: [
       {
         description:
-          "Use segmented buttons to switch between 2-5 mutually exclusive views or filters.",
+          "[placeholder] Use segmented buttons to switch between 2-5 mutually exclusive views or filters.",
       },
       {
         description:
-          "Always provide a clear label above the segmented button describing the choice being made.",
+          "[placeholder] Always provide a clear label above the segmented button describing the choice being made.",
       },
       {
         description:
-          "Use the inverted variant on dark backgrounds to maintain contrast.",
+          "[placeholder] Use the inverted variant on dark backgrounds to maintain contrast.",
       },
       {
         description:
-          "Keep segment labels short and concise (1-2 words) for readability.",
+          "[placeholder] Keep segment labels short and concise (1-2 words) for readability.",
       },
       {
         description:
-          "Use the small size in toolbars or space-constrained layouts.",
+          "[placeholder] Use the small size in toolbars or space-constrained layouts.",
       },
     ],
     dont: [
       {
         description:
-          "Don't use segmented buttons for more than 5 options -- use a dropdown or tabs instead.",
+          "[placeholder] Don't use segmented buttons for more than 5 options -- use a dropdown or tabs instead.",
       },
       {
         description:
-          "Don't use segmented buttons for actions -- they are for selecting views or filters, not triggering operations.",
+          "[placeholder] Don't use segmented buttons for actions -- they are for selecting views or filters, not triggering operations.",
       },
       {
         description:
-          "Don't mix segmented buttons with radio buttons for the same type of selection in the same interface.",
+          "[placeholder] Don't mix segmented buttons with radio buttons for the same type of selection in the same interface.",
       },
       {
         description:
-          "Don't use long labels that cause segments to overflow or wrap.",
+          "[placeholder] Don't use long labels that cause segments to overflow or wrap.",
       },
     ],
   },
@@ -240,8 +240,8 @@ export const segmentedButtonSpec: ComponentSpec = {
   relatedComponents: ["radio", "button"],
 
   considerations: [
-    "When fewer than 3 options exist → use Radio buttons instead; a two-segment control often looks like a toggle and confuses users.",
-    "When segment labels vary significantly in length → set all segments to equal width to prevent layout shifts on selection change.",
-    "When used inside a toolbar alongside other controls → use the small size and ensure the segmented button doesn't dominate the visual hierarchy.",
+    "[placeholder] When fewer than 3 options exist → use Radio buttons instead; a two-segment control often looks like a toggle and confuses users.",
+    "[placeholder] When segment labels vary significantly in length → set all segments to equal width to prevent layout shifts on selection change.",
+    "[placeholder] When used inside a toolbar alongside other controls → use the small size and ensure the segmented button doesn't dominate the visual hierarchy.",
   ],
 };
