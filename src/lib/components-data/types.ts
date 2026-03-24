@@ -118,4 +118,23 @@ export interface ComponentSpec {
   };
 
   relatedComponents?: string[];
+
+  considerations?: string[];
+
+  realExamples?: {
+    src: string;
+    alt: string;
+    annotation: string;
+  }[];
+
+  knownExceptions?: {
+    location: string;
+    reason: string;
+  }[];
+
+  decisionLog?: {
+    date: string;
+    decision: string;
+    reasoning: string;
+  }[];
 }

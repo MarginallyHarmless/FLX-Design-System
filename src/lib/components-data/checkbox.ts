@@ -616,4 +616,10 @@ export const checkboxSpec: ComponentSpec = {
   },
 
   relatedComponents: ["radio", "switch", "select-field"],
+
+  considerations: [
+    "When a single checkbox controls agreement or consent → pair with the error state for validation, not the disabled state; disabled implies the user can't act.",
+    "When checkboxes appear in a dense list (5+ items) → use the borderless variant to reduce visual noise and let the content breathe.",
+    "When using the subtitle prop → the border is always shown regardless of the border prop value, because the subtitle needs the container framing for readability.",
+  ],
 };

@@ -11,10 +11,10 @@ export function DosAndDonts({ guidelines }: DosAndDontsProps) {
   return (
     <div className="grid gap-6 sm:grid-cols-2">
       {/* Do column */}
-      <div className="rounded-lg border border-green-200 dark:border-green-900">
-        <div className="flex items-center gap-2 rounded-t-lg bg-green-50 px-4 py-2.5 dark:bg-green-900/30">
-          <Check size={16} className="text-green-600 dark:text-green-400" />
-          <span className="text-sm font-semibold text-green-700 dark:text-green-400">
+      <div className="rounded-lg border" style={{ borderColor: "var(--flowx-green-100, #b0d8ce)" }}>
+        <div className="flex items-center gap-2 rounded-t-lg px-4 py-2.5" style={{ backgroundColor: "var(--flowx-green-50, #e6f2ef)" }}>
+          <Check size={16} style={{ color: "var(--flowx-green-500, #008060)" }} />
+          <span className="text-sm font-semibold" style={{ color: "var(--flowx-green-500, #008060)" }}>
             Do
           </span>
         </div>
@@ -24,7 +24,7 @@ export function DosAndDonts({ guidelines }: DosAndDontsProps) {
               key={i}
               className="flex items-start gap-2 text-sm text-muted-foreground"
             >
-              <Check size={14} className="mt-0.5 shrink-0 text-green-500" />
+              <Check size={14} className="mt-0.5 shrink-0" style={{ color: "var(--flowx-green-500, #008060)" }} />
               {item.description}
             </li>
           ))}
@@ -32,10 +32,10 @@ export function DosAndDonts({ guidelines }: DosAndDontsProps) {
       </div>
 
       {/* Don't column */}
-      <div className="rounded-lg border border-red-200 dark:border-red-900">
-        <div className="flex items-center gap-2 rounded-t-lg bg-red-50 px-4 py-2.5 dark:bg-red-900/30">
-          <X size={16} className="text-red-600 dark:text-red-400" />
-          <span className="text-sm font-semibold text-red-700 dark:text-red-400">
+      <div className="rounded-lg border" style={{ borderColor: "var(--flowx-red-100, #f7bab0)" }}>
+        <div className="flex items-center gap-2 rounded-t-lg px-4 py-2.5" style={{ backgroundColor: "var(--flowx-red-50, #fde9e6)" }}>
+          <X size={16} style={{ color: "var(--flowx-red-500, #e62200)" }} />
+          <span className="text-sm font-semibold" style={{ color: "var(--flowx-red-500, #e62200)" }}>
             Don&apos;t
           </span>
         </div>
@@ -45,7 +45,7 @@ export function DosAndDonts({ guidelines }: DosAndDontsProps) {
               key={i}
               className="flex items-start gap-2 text-sm text-muted-foreground"
             >
-              <X size={14} className="mt-0.5 shrink-0 text-red-500" />
+              <X size={14} className="mt-0.5 shrink-0" style={{ color: "var(--flowx-red-500, #e62200)" }} />
               {item.description}
             </li>
           ))}

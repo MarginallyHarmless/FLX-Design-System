@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import type { ComponentSpec } from "@/lib/components-data/types";
@@ -9,6 +10,20 @@ import { DosAndDonts } from "@/components/docs/dos-and-donts";
 import { TokenTable } from "@/components/docs/token-table";
 
 const separator = <hr style={{ borderColor: "#f7f8f9" }} />;
+
+function CollapsibleSection({ title, defaultOpen = true, children }: { title: string; defaultOpen?: boolean; children: ReactNode }) {
+  return (
+    <details className="group" open={defaultOpen || undefined}>
+      <summary className="cursor-pointer list-none text-xl font-semibold [&::-webkit-details-marker]:hidden">
+        <span className="flex items-center gap-2">
+          <span className="text-muted-foreground transition-transform group-open:rotate-90">▸</span>
+          {title}
+        </span>
+      </summary>
+      <div className="mt-4">{children}</div>
+    </details>
+  );
+}
 
 interface ComponentPageTemplateProps {
   spec: ComponentSpec;
@@ -48,77 +63,120 @@ export function ComponentPageTemplate({
       {separator}
 
       {/* 3. Interactive Preview */}
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Interactive Preview</h2>
+      <CollapsibleSection title="Interactive Preview">
         {interactivePreview}
-      </section>
+      </CollapsibleSection>
 
       {separator}
 
       {/* 4. Use Cases */}
       {spec.variants && spec.variants.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Use Cases</h2>
+        <CollapsibleSection title="Use Cases">
           {useCases}
-        </section>
+        </CollapsibleSection>
       )}
 
       {separator}
 
       {/* 5. States Reference */}
       {spec.states && spec.states.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold">States Reference</h2>
+        <CollapsibleSection title="States Reference">
           {statesReference}
-        </section>
+        </CollapsibleSection>
       )}
 
       {separator}
 
       {/* 6. Sizes */}
       {spec.sizes && spec.sizes.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Sizes</h2>
+        <CollapsibleSection title="Sizes">
           {sizes}
-        </section>
+        </CollapsibleSection>
       )}
 
       {separator}
 
-      {/* 7. Props Table */}
-      {spec.props && spec.props.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Props</h2>
-          <PropsTable props={spec.props} />
-        </section>
-      )}
-
-      {separator}
-
-      {/* 8. Anatomy Diagram */}
-      {spec.anatomy && spec.anatomy.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Anatomy</h2>
-          <AnatomyDiagram anatomy={spec.anatomy} />
-        </section>
-      )}
-
-      {separator}
-
-      {/* 9. Usage Guidelines */}
+      {/* 7. Usage Guidelines */}
       {spec.guidelines && (
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Usage Guidelines</h2>
+        <CollapsibleSection title="Usage Guidelines">
           <DosAndDonts guidelines={spec.guidelines} />
-        </section>
+        </CollapsibleSection>
+      )}
+
+      {/* 7b. Considerations */}
+      {spec.considerations && spec.considerations.length > 0 && (
+        <>
+          {separator}
+          <CollapsibleSection title="Considerations">
+            <ul className="space-y-2">
+              {spec.considerations.map((item, i) => {
+                const sep = item.indexOf(" → ");
+                return (
+                  <li key={i} className="text-sm text-muted-foreground">
+                    {sep !== -1 ? (
+                      <>
+                        <span className="font-medium text-foreground">{item.slice(0, sep)}</span>
+                        {" → "}{item.slice(sep + 3)}
+                      </>
+                    ) : item}
+                  </li>
+                );
+              })}
+            </ul>
+          </CollapsibleSection>
+        </>
       )}
 
       {separator}
 
-      {/* 10. Accessibility */}
+      {/* 8. Props Table — collapsed by default */}
+      {spec.props && spec.props.length > 0 && (
+        <CollapsibleSection title="Props" defaultOpen={false}>
+          <PropsTable props={spec.props} />
+        </CollapsibleSection>
+      )}
+
+      {separator}
+
+      {/* 9. Anatomy Diagram — collapsed by default */}
+      {spec.anatomy && spec.anatomy.length > 0 && (
+        <CollapsibleSection title="Anatomy" defaultOpen={false}>
+          <AnatomyDiagram anatomy={spec.anatomy} />
+        </CollapsibleSection>
+      )}
+
+      {/* 10. Real Examples */}
+      {spec.realExamples && spec.realExamples.length > 0 && (
+        <>
+          {separator}
+          <CollapsibleSection title="Real Examples">
+            <div className="space-y-6">
+              {spec.realExamples.map((example, i) => (
+                <div key={i} className="space-y-2">
+                  <div className="overflow-hidden rounded-lg border">
+                    <Image
+                      src={example.src}
+                      alt={example.alt}
+                      width={800}
+                      height={450}
+                      className="w-full"
+                    />
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    {example.annotation}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </CollapsibleSection>
+        </>
+      )}
+
+      {separator}
+
+      {/* 12. Accessibility — collapsed by default */}
       {spec.accessibility && (
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Accessibility</h2>
+        <CollapsibleSection title="Accessibility" defaultOpen={false}>
           <div className="space-y-4 rounded-lg border p-6">
             {spec.accessibility.role && (
               <div>
@@ -173,25 +231,62 @@ export function ComponentPageTemplate({
                 </div>
               )}
           </div>
-        </section>
+        </CollapsibleSection>
       )}
 
       {separator}
 
-      {/* 11. Design Tokens */}
+      {/* 11. Design Tokens — collapsed by default */}
       {tokens && tokens.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Design Tokens Used</h2>
+        <CollapsibleSection title="Design Tokens Used" defaultOpen={false}>
           <TokenTable tokens={tokens} />
-        </section>
+        </CollapsibleSection>
+      )}
+
+      {/* 14. Known Exceptions */}
+      {spec.knownExceptions && spec.knownExceptions.length > 0 && (
+        <>
+          {separator}
+          <CollapsibleSection title="Known Exceptions">
+            <div className="space-y-3">
+              {spec.knownExceptions.map((item, i) => (
+                <div key={i} className="text-sm">
+                  <span className="font-medium">{item.location}</span>
+                  <span className="text-muted-foreground"> — {item.reason}</span>
+                </div>
+              ))}
+            </div>
+          </CollapsibleSection>
+        </>
+      )}
+
+      {/* 15. Decision Log */}
+      {spec.decisionLog && spec.decisionLog.length > 0 && (
+        <>
+          {separator}
+          <CollapsibleSection title="Decision Log">
+            <div className="space-y-3">
+              {spec.decisionLog.map((entry, i) => (
+                <div key={i} className="text-sm">
+                  <span className="shrink-0 font-mono text-xs text-muted-foreground">
+                    {entry.date}
+                  </span>
+                  <span className="ml-2 font-medium">{entry.decision}</span>
+                  <span className="ml-1 text-muted-foreground">
+                    — {entry.reasoning}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </CollapsibleSection>
+        </>
       )}
 
       {separator}
 
-      {/* 12. Related Components */}
+      {/* 16. Related Components */}
       {spec.relatedComponents && spec.relatedComponents.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Related Components</h2>
+        <CollapsibleSection title="Related Components">
           <div className="flex flex-wrap gap-2">
             {spec.relatedComponents.map((slug) => {
               const related = getComponent(slug);
@@ -216,7 +311,7 @@ export function ComponentPageTemplate({
               );
             })}
           </div>
-        </section>
+        </CollapsibleSection>
       )}
     </div>
   );

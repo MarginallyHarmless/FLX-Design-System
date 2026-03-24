@@ -238,4 +238,10 @@ export const segmentedButtonSpec: ComponentSpec = {
   },
 
   relatedComponents: ["radio", "button"],
+
+  considerations: [
+    "When fewer than 3 options exist → use Radio buttons instead; a two-segment control often looks like a toggle and confuses users.",
+    "When segment labels vary significantly in length → set all segments to equal width to prevent layout shifts on selection change.",
+    "When used inside a toolbar alongside other controls → use the small size and ensure the segmented button doesn't dominate the visual hierarchy.",
+  ],
 };

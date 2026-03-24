@@ -273,4 +273,10 @@ export const switchSpec: ComponentSpec = {
   },
 
   relatedComponents: ["checkbox", "radio"],
+
+  considerations: [
+    "When the setting doesn't take effect immediately (e.g. requires a Save button) → use a Checkbox instead; switches imply instant application.",
+    "When using the small size → verify the touch target still meets the 24px accessibility minimum; pad the hit area if needed.",
+    "When a group of switches appears in a list → align all switches to the same edge (left or right) within that list; mixing alignments breaks scannability.",
+  ],
 };

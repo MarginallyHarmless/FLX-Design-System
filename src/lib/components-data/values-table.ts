@@ -94,4 +94,14 @@ export const valuesTableSpec: ComponentSpec = {
   },
 
   relatedComponents: ["input-field"],
+
+  considerations: [
+    "When entering edit mode on one row → disable edit buttons on other rows to prevent concurrent edits and confusing save states.",
+    "When a language column has no translation yet → show placeholder text ('Add a value...') with reduced opacity so the cell is clearly actionable, not broken.",
+    "When the table has many rows → keep the header sticky so column context is visible during scroll.",
+  ],
+
+  decisionLog: [
+    { date: "2024-09-24", decision: "Use modal for adding new entities instead of edit-in-place", reasoning: "Consistency with all other entity lists outweighs the convenience of inline creation. The original interaction was edit-in-place (pre-table redesign) but the team agreed consistency is more valuable." },
+  ],
 };

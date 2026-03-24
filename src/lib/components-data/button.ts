@@ -205,4 +205,11 @@ export const buttonSpec: ComponentSpec = {
   },
 
   relatedComponents: ["input-field", "radio"],
+
+  considerations: [
+    "When multiple buttons compete for attention in the same section → use only one Primary per group; demote others to Secondary or Tertiary.",
+    "When a destructive action is reversible → prefer Danger Secondary over Danger Primary to match the severity level.",
+    "When using icon-only buttons (hasLabel=false) → always provide an aria-label; the XXS size is designed for this pattern but still needs a text alternative.",
+    "When mixing scope colors in the same button group → keep the hierarchy consistent (e.g. Brand Primary + Danger Secondary, not Brand Secondary + Danger Primary).",
+  ],
 };

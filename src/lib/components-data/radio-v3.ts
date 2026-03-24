@@ -164,5 +164,11 @@ export const radioV3Spec: ComponentSpec = {
     ],
   },
 
-  relatedComponents: ["radio", "radio-v2", "checkbox"],
+  relatedComponents: ["checkbox", "segmented-button", "select-field"],
+
+  considerations: [
+    "When only 2–3 options exist and they act as a mode switch → consider Segmented Button instead; it's more compact and communicates mutual exclusivity faster.",
+    "When the list exceeds 7 options → switch to a Select Field; long radio lists are hard to scan and waste vertical space.",
+    "When using the subtitle prop → the border is always shown regardless of the border prop value, matching the Checkbox behavior.",
+  ],
 };

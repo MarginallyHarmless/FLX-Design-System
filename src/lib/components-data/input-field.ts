@@ -467,4 +467,10 @@ export const inputFieldSpec: ComponentSpec = {
       },
     },
   ],
+
+  considerations: [
+    "When the field has both prefix and suffix → ensure the input area still has enough width for content; test with realistic values, not just placeholder text.",
+    "When using side labels → align all side labels in the form to the same width so input containers line up vertically.",
+    "When the field is inside a narrow container (e.g. modal column, sidebar) → use the small size and drop the prefix/suffix to avoid cramping the actual input area.",
+  ],
 };

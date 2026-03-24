@@ -279,4 +279,10 @@ export const tabsSpec: ComponentSpec = {
   },
 
   relatedComponents: ["segmented-button", "button"],
+
+  considerations: [
+    "When tab count may exceed the visible container width → implement horizontal scroll or an overflow menu; the base component does not handle this.",
+    "When tab content loads asynchronously → keep the tab bar interactive during loading to avoid layout jumps; show a skeleton inside the panel, not on the tabs.",
+    "When a counter badge shows zero → hide the badge entirely rather than displaying '0', which adds visual clutter without information.",
+  ],
 };

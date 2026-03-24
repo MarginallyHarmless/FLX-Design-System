@@ -458,4 +458,10 @@ export const selectFieldSpec: ComponentSpec = {
       },
     },
   ],
+
+  considerations: [
+    "When fewer than 4 options exist → use Radio buttons instead; a dropdown for 2–3 items adds an unnecessary click.",
+    "When multi-select is used with many selections → plan for chip overflow; the component shows a '+N' counter but the container height grows — test with 10+ selections.",
+    "When the select is inside a form with Input Fields → match size and label style to maintain visual consistency across the row.",
+  ],
 };
