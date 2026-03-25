@@ -5,6 +5,7 @@ const isProd = process.env.NODE_ENV === "production";
 const nextConfig: NextConfig = {
   output: "export",
   basePath: isProd ? "/FLX-Design-System" : "",
+  assetPrefix: isProd ? "/FLX-Design-System" : "",
   images: { unoptimized: true },
 };
 
