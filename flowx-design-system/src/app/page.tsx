@@ -10,20 +10,22 @@ import {
 } from "@/components/ui/card";
 import { ArrowRight } from "@phosphor-icons/react";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 const quickLinks = [
   {
     title: "Foundations",
     description:
       "Explore the design tokens that make up the visual language: colors, typography, spacing, and more.",
     href: "/foundations/colors",
-    image: "/card-foundations.png",
+    image: `${basePath}/card-foundations.png`,
   },
   {
     title: "Components",
     description:
       "Design references for each component — interactive previews, usage guidelines, and visual specs.",
     href: "/components/button",
-    image: "/card-components.png",
+    image: `${basePath}/card-components.png`,
   },
 ];
 
@@ -32,8 +34,8 @@ export default function Home() {
     <div className="flex flex-col gap-10">
       <div className="flex flex-col gap-4">
         <h1 className="flex items-center gap-4 text-5xl font-bold tracking-tight">
-          <Image src="/flowx-logo-light.png" alt="FlowX" width={40} height={40} className="dark:hidden" />
-          <Image src="/flowx-logo-dark.png" alt="FlowX" width={40} height={40} className="hidden dark:block" />
+          <Image src={`${basePath}/flowx-logo-light.png`} alt="FlowX" width={40} height={40} className="dark:hidden" />
+          <Image src={`${basePath}/flowx-logo-dark.png`} alt="FlowX" width={40} height={40} className="hidden dark:block" />
           Design System
         </h1>
         <p className="text-lg text-muted-foreground">
