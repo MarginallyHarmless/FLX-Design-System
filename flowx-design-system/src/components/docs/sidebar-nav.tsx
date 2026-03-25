@@ -16,7 +16,6 @@ const foundationsItems = [
   { label: "Spacing", href: "/foundations/spacing" },
   { label: "Elevation", href: "/foundations/elevation" },
   { label: "Iconography", href: "/foundations/iconography" },
-  { label: "Grid", href: "/foundations/grid" },
 ];
 
 const utilitiesItems = [{ label: "Sub-components", href: "/utilities" }];

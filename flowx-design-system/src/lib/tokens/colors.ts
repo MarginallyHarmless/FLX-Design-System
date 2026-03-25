@@ -30,7 +30,6 @@ export const colorPalettes = {
     800: "#2a313a", 900: "#1d232c",
   },
   grays: { 50: "#ffffff", 900: "#000000" },
-  helpers: { 100: "#f0ecfa", 500: "#7a4ed1" },
 } as const;
 
 export type PaletteName = keyof typeof colorPalettes;

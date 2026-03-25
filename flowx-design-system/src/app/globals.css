@@ -118,9 +118,6 @@
   --flowx-grays-50: #ffffff;
   --flowx-grays-900: #000000;
 
-  --flowx-helpers-100: #f0ecfa;
-  --flowx-helpers-500: #7a4ed1;
-
   /* === Semantic mapping (shadcn consumes these) === */
   --background: var(--flowx-grays-50);
   --foreground: var(--flowx-neutrals-900);
