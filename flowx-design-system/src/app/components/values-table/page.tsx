@@ -365,15 +365,29 @@ function VerticalSep() {
 /*  FlowXValuesTable — the preview component                         */
 /* ------------------------------------------------------------------ */
 
+function BatchEditActions() {
+  return (
+    <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+      <SmallSecondaryButton scope="Brand">
+        <TrashSimple size={16} color="currentColor" />
+      </SmallSecondaryButton>
+    </div>
+  );
+}
+
 function FlowXValuesTable({
   editMode = false,
   error = false,
   bordered = true,
+  batchEdit = false,
 }: {
   editMode?: boolean;
   error?: boolean;
   bordered?: boolean;
+  batchEdit?: boolean;
 }) {
+  const actionColWidth = batchEdit ? 60 : 96;
+
   return (
     <div
       style={{
@@ -429,10 +443,10 @@ function FlowXValuesTable({
         ))}
         {/* Action column header spacer */}
         <VerticalSep />
-        <div style={{ width: 96, flexShrink: 0 }} />
+        <div style={{ width: actionColWidth, flexShrink: 0 }} />
       </div>
 
-      {/* ---- Row 1: always read-only ---- */}
+      {/* ---- Row 1: always read-only OR batch-edit ---- */}
       <div
         style={{
           display: "flex",
@@ -442,21 +456,30 @@ function FlowXValuesTable({
           paddingLeft: 14,
         }}
       >
-        {readOnlyRow1.map((cell, i) => (
-          <React.Fragment key={i}>
-            {i > 0 && <VerticalSep />}
-            <div style={{ flex: 1, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
-              <ReadOnlyCell data={cell} />
-            </div>
-          </React.Fragment>
-        ))}
+        {batchEdit
+          ? readOnlyRow1.map((cell, i) => (
+              <React.Fragment key={i}>
+                {i > 0 && <VerticalSep />}
+                <div style={{ flex: 1, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                  <EditableCell data={{ value: cell.value, isReadOnly: i === 0 }} />
+                </div>
+              </React.Fragment>
+            ))
+          : readOnlyRow1.map((cell, i) => (
+              <React.Fragment key={i}>
+                {i > 0 && <VerticalSep />}
+                <div style={{ flex: 1, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                  <ReadOnlyCell data={cell} />
+                </div>
+              </React.Fragment>
+            ))}
         <VerticalSep />
-        <div style={{ width: 96, flexShrink: 0, display: "flex", justifyContent: "center", paddingLeft: 16, paddingRight: 16 }}>
-          <ReadOnlyActions />
+        <div style={{ width: actionColWidth, flexShrink: 0, display: "flex", justifyContent: "center", paddingLeft: 16, paddingRight: 16 }}>
+          {batchEdit ? <BatchEditActions /> : <ReadOnlyActions />}
         </div>
       </div>
 
-      {/* ---- Row 2: read-only OR editable ---- */}
+      {/* ---- Row 2: read-only OR editable OR batch-edit ---- */}
       <div
         style={{
           display: "flex",
@@ -466,7 +489,7 @@ function FlowXValuesTable({
           paddingLeft: 14,
         }}
       >
-        {editMode
+        {(editMode || batchEdit)
           ? editRow.map((cell, i) => (
               <React.Fragment key={i}>
                 {i > 0 && <VerticalSep />}
@@ -486,7 +509,7 @@ function FlowXValuesTable({
         <VerticalSep />
         <div
           style={{
-            width: 96,
+            width: actionColWidth,
             flexShrink: 0,
             display: "flex",
             justifyContent: "center",
@@ -495,11 +518,11 @@ function FlowXValuesTable({
             alignItems: "center",
           }}
         >
-          {editMode ? <EditActions /> : <ReadOnlyActions />}
+          {batchEdit ? <BatchEditActions /> : editMode ? <EditActions /> : <ReadOnlyActions />}
         </div>
       </div>
 
-      {/* ---- Row 3: read-only OR error ---- */}
+      {/* ---- Row 3: read-only OR error OR batch-edit ---- */}
       <div
         style={{
           display: "flex",
@@ -517,18 +540,27 @@ function FlowXValuesTable({
                 </div>
               </React.Fragment>
             ))
-          : readOnlyRow3.map((cell, i) => (
-              <React.Fragment key={i}>
-                {i > 0 && <VerticalSep />}
-                <div style={{ flex: 1, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
-                  <ReadOnlyCell data={cell} />
-                </div>
-              </React.Fragment>
-            ))}
+          : batchEdit
+            ? readOnlyRow3.map((cell, i) => (
+                <React.Fragment key={i}>
+                  {i > 0 && <VerticalSep />}
+                  <div style={{ flex: 1, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                    <EditableCell data={{ value: cell.value, isReadOnly: i === 0 }} />
+                  </div>
+                </React.Fragment>
+              ))
+            : readOnlyRow3.map((cell, i) => (
+                <React.Fragment key={i}>
+                  {i > 0 && <VerticalSep />}
+                  <div style={{ flex: 1, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                    <ReadOnlyCell data={cell} />
+                  </div>
+                </React.Fragment>
+              ))}
         <VerticalSep />
         <div
           style={{
-            width: 96,
+            width: actionColWidth,
             flexShrink: 0,
             display: "flex",
             justifyContent: "center",
@@ -537,7 +569,7 @@ function FlowXValuesTable({
             alignItems: "center",
           }}
         >
-          {error ? <EditActions disabled /> : <ReadOnlyActions />}
+          {error ? <EditActions disabled /> : batchEdit ? <BatchEditActions /> : <ReadOnlyActions />}
         </div>
       </div>
     </div>
@@ -608,8 +640,15 @@ export default function ValuesTablePage() {
           description="Toggle edit mode and error state to see different row behaviors."
           controls={[
             {
-              name: "editMode",
+              name: "editType",
+              options: ["By Row", "Always On"],
+              default: "By Row",
+            },
+            {
+              name: "Row Edit State",
               type: "boolean",
+              disabledWhen: "editType",
+              disabledWhenValue: "Always On",
             },
             {
               name: "error",
@@ -624,7 +663,8 @@ export default function ValuesTablePage() {
           render={(values) => (
             <div style={{ width: "100%", padding: 16 }}>
               <FlowXValuesTable
-                editMode={values.editMode === true}
+                editMode={values.editType !== "Always On" && values["Row Edit State"] === true}
+                batchEdit={values.editType === "Always On"}
                 error={values.error === true}
                 bordered={values.bordered !== false}
               />
@@ -672,7 +712,13 @@ export default function ValuesTablePage() {
             <div style={{ overflowX: "auto" }}>
               <FlowXValuesTable editMode />
             </div>
-            <span className="text-xs text-muted-foreground">Editing</span>
+            <span className="text-xs text-muted-foreground">Editing (single row)</span>
+          </div>
+          <div className="flex flex-col gap-3">
+            <div style={{ overflowX: "auto" }}>
+              <FlowXValuesTable batchEdit />
+            </div>
+            <span className="text-xs text-muted-foreground">Batch edit (all rows editable, page-level save)</span>
           </div>
           <div className="flex flex-col gap-3">
             <div style={{ overflowX: "auto" }}>

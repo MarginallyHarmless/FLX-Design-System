@@ -251,7 +251,7 @@
 
 @layer components {
   .card-hover:hover {
-    --tw-ring-color: var(--flowx-neutrals-400) !important;
+    --tw-ring-color: var(--flowx-neutrals-200) !important;
   }
 }
 

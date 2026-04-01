@@ -12,6 +12,10 @@ interface Control {
   default?: any;
   /** Name of another control that must be truthy for this control to be enabled. */
   disabledUnless?: string;
+  /** Name of another control — when its value equals this string (or is truthy if no value specified), this control is disabled. */
+  disabledWhen?: string;
+  /** The value of the other control that triggers the disabled state. Defaults to truthy check. */
+  disabledWhenValue?: any;
   /** Name of another boolean control — when truthy, this boolean control is forced on. */
   forcedOnWhen?: string;
 }
@@ -140,7 +144,13 @@ export function ComponentPreview({
               ? ((isForcedOn || values[c.name]) ? "On" : "Off")
               : (values[c.name] ?? segmentOptions[0]);
 
-            const isDisabled = isForcedOn || (c.disabledUnless
+            const isDisabledWhen = c.disabledWhen
+              ? (c.disabledWhenValue !== undefined
+                ? values[c.disabledWhen] === c.disabledWhenValue
+                : !!values[c.disabledWhen])
+              : false;
+
+            const isDisabled = isForcedOn || isDisabledWhen || (c.disabledUnless
               ? !values[c.disabledUnless]
               : false);
 
