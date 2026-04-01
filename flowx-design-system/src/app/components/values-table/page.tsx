@@ -409,7 +409,6 @@ function FlowXValuesTable({
           height: 50,
           backgroundColor: bordered ? colors.headerBg : colors.white,
           borderBottom: `0.5px solid ${colors.border}`,
-          paddingLeft: 14,
         }}
       >
         {columnHeaders.map((col, i) => (
@@ -453,7 +452,6 @@ function FlowXValuesTable({
           alignItems: "center",
           height: 56,
           borderBottom: `0.5px solid ${colors.border}`,
-          paddingLeft: 14,
         }}
       >
         {batchEdit
@@ -461,7 +459,7 @@ function FlowXValuesTable({
               <React.Fragment key={i}>
                 {i > 0 && <VerticalSep />}
                 <div style={{ flex: 1, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
-                  <EditableCell data={{ value: cell.value, isReadOnly: i === 0 }} />
+                  <EditableCell data={{ value: cell.value }} />
                 </div>
               </React.Fragment>
             ))
@@ -486,7 +484,6 @@ function FlowXValuesTable({
           alignItems: "center",
           height: 56,
           borderBottom: `0.5px solid ${colors.border}`,
-          paddingLeft: 14,
         }}
       >
         {(editMode || batchEdit)
@@ -494,7 +491,7 @@ function FlowXValuesTable({
               <React.Fragment key={i}>
                 {i > 0 && <VerticalSep />}
                 <div style={{ flex: 1, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
-                  <EditableCell data={cell} />
+                  <EditableCell data={batchEdit ? { ...cell, isReadOnly: false } : cell} />
                 </div>
               </React.Fragment>
             ))
@@ -528,7 +525,6 @@ function FlowXValuesTable({
           display: "flex",
           alignItems: "center",
           height: 56,
-          paddingLeft: 14,
         }}
       >
         {error
@@ -545,7 +541,7 @@ function FlowXValuesTable({
                 <React.Fragment key={i}>
                   {i > 0 && <VerticalSep />}
                   <div style={{ flex: 1, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
-                    <EditableCell data={{ value: cell.value, isReadOnly: i === 0 }} />
+                    <EditableCell data={{ value: cell.value }} />
                   </div>
                 </React.Fragment>
               ))
@@ -696,6 +692,18 @@ export default function ValuesTablePage() {
             <div>
               <p className="text-sm font-medium">Standalone</p>
               <p className="mt-0.5 text-xs text-muted-foreground">Used when the table is the card itself, displayed standalone without other elements.</p>
+            </div>
+          </div>
+          <div
+            className="flex flex-col gap-3 rounded-lg p-6"
+            style={{ backgroundColor: "#f7f8f9" }}
+          >
+            <div style={{ overflowX: "auto" }}>
+              <FlowXValuesTable batchEdit bordered />
+            </div>
+            <div>
+              <p className="text-sm font-medium">Always On editing</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">Used when the page already has its own save action. All rows are editable at once, removing the need for per-row save buttons and avoiding a double-save interaction.</p>
             </div>
           </div>
         </div>
