@@ -2,7 +2,9 @@ import type { ReactNode } from "react";
 import { Check, X, Lightbulb, Warning, Info } from "@phosphor-icons/react";
 import type { UsageGuideline } from "@/lib/components-data/types";
 
-const illustrationConfig: Record<string, { bg: string; color: string; Icon: typeof Check }> = {
+type IllustrationType = "do" | "dont" | "decision" | "exception" | "info";
+
+const illustrationConfig: Record<IllustrationType, { bg: string; color: string; Icon: typeof Check }> = {
   do:        { bg: "var(--flowx-green-50, #e6f2ef)",  color: "var(--flowx-green-500, #008060)",  Icon: Check },
   dont:      { bg: "var(--flowx-red-50, #fde9e6)",    color: "var(--flowx-red-500, #e62200)",    Icon: X },
   decision:  { bg: "var(--flowx-blue-50, #e6f0fb)",   color: "var(--flowx-blue-500, #006bd8)",   Icon: Lightbulb },
@@ -10,7 +12,7 @@ const illustrationConfig: Record<string, { bg: string; color: string; Icon: type
   info:      { bg: "#f7f8f9",                          color: "#64748b",                          Icon: Info },
 };
 
-function IllustrationPanel({ type }: { type: string }) {
+function IllustrationPanel({ type }: { type: IllustrationType }) {
   const config = illustrationConfig[type];
   if (!config) return null;
   const { bg, color, Icon } = config;
@@ -61,7 +63,7 @@ function GuidelineRow({
       <div className="flex flex-col justify-center gap-1">
         <p className="text-sm font-medium">{item.title}</p>
         <p className="text-sm text-muted-foreground">{item.description}</p>
-        {item.type === "decision" && "date" in item && item.date && (
+        {item.type === "decision" && item.date && (
           <span className="mt-1 font-mono text-xs text-muted-foreground">{item.date}</span>
         )}
       </div>
