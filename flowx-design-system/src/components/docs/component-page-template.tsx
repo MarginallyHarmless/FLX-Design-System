@@ -8,6 +8,7 @@ import { PropsTable } from "@/components/docs/props-table";
 import { AnatomyDiagram } from "@/components/docs/anatomy-diagram";
 import { DosAndDonts } from "@/components/docs/dos-and-donts";
 import { TokenTable } from "@/components/docs/token-table";
+import { UsageGuidelinesSection } from "@/components/docs/usage-guidelines-section";
 
 const separator = <hr style={{ borderColor: "#f7f8f9" }} />;
 
@@ -29,7 +30,8 @@ interface ComponentPageTemplateProps {
   spec: ComponentSpec;
   tokens: { name: string; value: string; preview: ReactNode }[];
   interactivePreview: ReactNode;
-  useCases: ReactNode;
+  renderGuidelinePreview?: (props: Record<string, string>) => ReactNode;
+  useCases?: ReactNode;
   statesReference: ReactNode;
   sizes: ReactNode;
 }
@@ -38,6 +40,7 @@ export function ComponentPageTemplate({
   spec,
   tokens,
   interactivePreview,
+  renderGuidelinePreview,
   useCases,
   statesReference,
   sizes,
@@ -69,12 +72,19 @@ export function ComponentPageTemplate({
 
       {separator}
 
-      {/* 4. Use Cases */}
-      {spec.variants && spec.variants.length > 0 && (
+      {/* 4. Usage Guidelines (new) or Use Cases (legacy) */}
+      {spec.usageGuidelines && spec.usageGuidelines.length > 0 && renderGuidelinePreview ? (
+        <CollapsibleSection title="Usage Guidelines">
+          <UsageGuidelinesSection
+            guidelines={spec.usageGuidelines}
+            renderPreview={renderGuidelinePreview}
+          />
+        </CollapsibleSection>
+      ) : spec.variants && spec.variants.length > 0 && useCases ? (
         <CollapsibleSection title="Use Cases">
           {useCases}
         </CollapsibleSection>
-      )}
+      ) : null}
 
       {separator}
 
@@ -97,14 +107,14 @@ export function ComponentPageTemplate({
       {separator}
 
       {/* 7. Usage Guidelines */}
-      {spec.guidelines && (
+      {!spec.usageGuidelines && spec.guidelines && (
         <CollapsibleSection title="Usage Guidelines">
           <DosAndDonts guidelines={spec.guidelines} />
         </CollapsibleSection>
       )}
 
       {/* 7b. Considerations */}
-      {spec.considerations && spec.considerations.length > 0 && (
+      {!spec.usageGuidelines && spec.considerations && spec.considerations.length > 0 && (
         <>
           {separator}
           <CollapsibleSection title="Considerations">
@@ -244,7 +254,7 @@ export function ComponentPageTemplate({
       )}
 
       {/* 14. Known Exceptions */}
-      {spec.knownExceptions && spec.knownExceptions.length > 0 && (
+      {!spec.usageGuidelines && spec.knownExceptions && spec.knownExceptions.length > 0 && (
         <>
           {separator}
           <CollapsibleSection title="Known Exceptions">
@@ -261,7 +271,7 @@ export function ComponentPageTemplate({
       )}
 
       {/* 15. Decision Log */}
-      {spec.decisionLog && spec.decisionLog.length > 0 && (
+      {!spec.usageGuidelines && spec.decisionLog && spec.decisionLog.length > 0 && (
         <>
           {separator}
           <CollapsibleSection title="Decision Log">
