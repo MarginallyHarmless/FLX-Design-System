@@ -204,6 +204,19 @@ export const buttonSpec: ComponentSpec = {
     ],
   },
 
+  usageGuidelines: [
+    { type: "use-case", title: "Brand Primary", description: "Main call-to-action — the most common button.", props: { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off" } },
+    { type: "use-case", title: "Brand Secondary", description: "Secondary actions that sit alongside the primary CTA.", props: { scope: "Brand", variant: "Secondary", state: "Default", inverted: "Off" } },
+    { type: "use-case", title: "Brand Tertiary", description: "Low-emphasis actions such as Cancel or Learn more.", props: { scope: "Brand", variant: "Tertiary", state: "Default", inverted: "Off" } },
+    { type: "use-case", title: "Danger Primary", description: "Destructive actions like Delete or Remove.", props: { scope: "Danger", variant: "Primary", state: "Default", inverted: "Off" } },
+    { type: "use-case", title: "Danger Secondary", description: "Destructive secondary actions with less emphasis.", props: { scope: "Danger", variant: "Secondary", state: "Default", inverted: "Off" } },
+    { type: "use-case", title: "Success Primary", description: "Positive confirmation actions like Approve or Confirm.", props: { scope: "Success", variant: "Primary", state: "Default", inverted: "Off" } },
+    { type: "use-case", title: "Success Secondary", description: "Positive secondary actions with less emphasis.", props: { scope: "Success", variant: "Secondary", state: "Default", inverted: "Off" } },
+    { type: "use-case", title: "Inverted Primary", description: "Primary button on dark backgrounds.", props: { scope: "Brand", variant: "Primary", state: "Default", inverted: "On" } },
+    { type: "use-case", title: "Inverted Secondary", description: "Secondary button on dark backgrounds.", props: { scope: "Brand", variant: "Secondary", state: "Default", inverted: "On" } },
+    { type: "use-case", title: "Inverted Tertiary", description: "Tertiary button on dark backgrounds.", props: { scope: "Brand", variant: "Tertiary", state: "Default", inverted: "On" } },
+  ],
+
   relatedComponents: ["input-field", "radio"],
 
   considerations: [

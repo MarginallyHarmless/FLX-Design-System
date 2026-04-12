@@ -225,37 +225,12 @@ export default function TabsPage() {
           )}
         />
       }
-      useCases={
-        <div className="grid gap-6 sm:grid-cols-2">
-          {spec.variants.map((v) => {
-            const isInverted = v.props.inverted === "on";
-            return (
-              <div
-                key={v.name}
-                className={`flex flex-col items-center gap-3 rounded-lg p-6 ${
-                  isInverted
-                    ? "bg-neutral-900 text-white"
-                    : ""
-                }`}
-                style={!isInverted ? { backgroundColor: "#f7f8f9" } : undefined}
-              >
-                <FlowXTabs
-                  size={(v.props.size as "small" | "medium") || "medium"}
-                  inverted={isInverted}
-                />
-                <div className="text-center">
-                  <p className={`text-sm font-medium ${isInverted ? "text-neutral-200" : ""}`}>
-                    {v.name}
-                  </p>
-                  <p className={`mt-0.5 text-xs ${isInverted ? "text-neutral-400" : "text-muted-foreground"}`}>
-                    {v.useCase}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      }
+      renderGuidelinePreview={(props) => (
+        <FlowXTabs
+          size={(props.size as "small" | "medium") || "medium"}
+          inverted={props.inverted === "on"}
+        />
+      )}
       statesReference={
         <div className="flex flex-wrap items-start gap-8">
           {["active", "inactive"].map((s) => (

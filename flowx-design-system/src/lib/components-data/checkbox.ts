@@ -615,6 +615,19 @@ export const checkboxSpec: ComponentSpec = {
     ],
   },
 
+  usageGuidelines: [
+    { type: "use-case", title: "Default Unchecked", description: "Standard unchecked checkbox, the most common starting state.", props: { selected: "off", state: "default", border: "on", inverted: "off" } },
+    { type: "use-case", title: "Default Checked", description: "Checked state showing the user has opted in.", props: { selected: "on", state: "default", border: "on", inverted: "off" } },
+    { type: "use-case", title: "Without Border", description: "Use in compact layouts where the container border adds visual noise.", props: { selected: "off", state: "default", border: "off", inverted: "off" } },
+    { type: "use-case", title: "Checked Without Border", description: "Checked state in borderless compact layouts.", props: { selected: "on", state: "default", border: "off", inverted: "off" } },
+    { type: "use-case", title: "On Dark Background", description: "Use on dark surfaces like modals or hero sections.", props: { selected: "off", state: "default", border: "on", inverted: "on" } },
+    { type: "use-case", title: "Checked on Dark Background", description: "Checked state on dark surfaces.", props: { selected: "on", state: "default", border: "on", inverted: "on" } },
+    { type: "use-case", title: "Error Unchecked", description: "Show when form validation requires the checkbox to be checked.", props: { selected: "off", state: "error", border: "on", inverted: "off" } },
+    { type: "use-case", title: "Error Checked", description: "Checked but still in error — e.g. group-level validation failure.", props: { selected: "on", state: "error", border: "on", inverted: "off" } },
+    { type: "use-case", title: "Disabled Unchecked", description: "Use when the option exists but is not currently available.", props: { selected: "off", state: "disabled", border: "on", inverted: "off" } },
+    { type: "use-case", title: "Disabled Checked", description: "Use when showing a locked-in selection the user cannot change.", props: { selected: "on", state: "disabled", border: "on", inverted: "off" } },
+  ],
+
   relatedComponents: ["radio", "switch", "select-field"],
 
   considerations: [

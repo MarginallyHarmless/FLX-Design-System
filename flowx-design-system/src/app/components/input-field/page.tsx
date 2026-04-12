@@ -359,84 +359,16 @@ export default function InputFieldPage() {
           )}
         />
       }
-      useCases={
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {/* Label position use cases */}
-          <div
-            className="flex flex-col items-center gap-3 rounded-lg p-6"
-            style={{ backgroundColor: "#f7f8f9" }}
-          >
-            <FlowXInputField value="Value" hasTopLabel inlineLabel={false} />
-            <div className="text-center">
-              <p className="text-sm font-medium">Vertical label</p>
-              <p className="mt-0.5 text-xs text-muted-foreground">
-                Used in most situations on the platform.
-              </p>
-            </div>
-          </div>
-          <div
-            className="flex flex-col items-center gap-3 rounded-lg p-6"
-            style={{ backgroundColor: "#f7f8f9" }}
-          >
-            <FlowXInputField value="Value" hasTopLabel inlineLabel />
-            <div className="text-center">
-              <p className="text-sm font-medium">Horizontal label</p>
-              <p className="mt-0.5 text-xs text-muted-foreground">
-                Used in scenarios where vertical space is limited, such as nodes on a canvas.
-              </p>
-            </div>
-          </div>
-          <div
-            className="flex flex-col items-center gap-3 rounded-lg p-6"
-            style={{ backgroundColor: "#f7f8f9" }}
-          >
-            <FlowXInputField value="Value" hasTopLabel={false} inlineLabel={false} />
-            <div className="text-center">
-              <p className="text-sm font-medium">No label</p>
-              <p className="mt-0.5 text-xs text-muted-foreground">
-                Used when the context makes the purpose self-evident or a preceding element already acts as the label.
-              </p>
-            </div>
-          </div>
-
-          {/* Existing variant cards */}
-          {spec.variants.map((v) => {
-            const isInverted = v.props.inverted === "on";
-            return (
-              <div
-                key={v.name}
-                className={`flex flex-col items-center gap-3 rounded-lg p-6 ${
-                  isInverted
-                    ? "bg-neutral-900 text-white"
-                    : ""
-                }`}
-                style={!isInverted ? { backgroundColor: "#f7f8f9" } : undefined}
-              >
-                <FlowXInputField
-                  state={
-                    (v.props.state as
-                      | "default"
-                      | "focused"
-                      | "error"
-                      | "disabled") || "default"
-                  }
-                  value={v.props.filled === "on" ? "Value" : ""}
-                  inverted={isInverted}
-                  hasDescription={v.props.state === "error"}
-                />
-                <div className="text-center">
-                  <p className={`text-sm font-medium ${isInverted ? "text-neutral-200" : ""}`}>
-                    {v.name}
-                  </p>
-                  <p className={`mt-0.5 text-xs ${isInverted ? "text-neutral-400" : "text-muted-foreground"}`}>
-                    {v.useCase}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      }
+      renderGuidelinePreview={(props) => (
+        <FlowXInputField
+          state={(props.state as "default" | "focused" | "error" | "disabled") || "default"}
+          value={props.filled === "on" ? "Value" : ""}
+          inverted={props.inverted === "on"}
+          hasDescription={props.state === "error"}
+          hasTopLabel={props.hasTopLabel !== "off"}
+          inlineLabel={props.inlineLabel === "on"}
+        />
+      )}
       statesReference={
         <div className="flex flex-wrap items-start gap-6">
           {spec.states?.map((s) => (

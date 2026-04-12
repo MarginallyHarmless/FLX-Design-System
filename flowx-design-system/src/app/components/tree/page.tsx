@@ -524,42 +524,15 @@ export default function TreePage() {
           )}
         />
       }
-      useCases={
-        spec.variants && spec.variants.length > 0 ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {spec.variants.map((v) => {
-              const isInverted = v.props.inverted === "on";
-              return (
-                <div
-                  key={v.name}
-                  className={`flex flex-col items-center gap-3 rounded-lg p-6 ${
-                    isInverted
-                      ? "bg-neutral-900 text-white"
-                      : ""
-                  }`}
-                  style={!isInverted ? { backgroundColor: "#f7f8f9" } : undefined}
-                >
-                  <FlowXTree
-                    type={v.props.type as "Select (Multi)" | "Select (Single)" | "Icons"}
-                    size={v.props.size as "Medium" | "Small"}
-                    inverted={isInverted}
-                    nesting={v.props.nesting === "on"}
-                    showHeader={false}
-                  />
-                  <div className="text-center">
-                    <p className={`text-sm font-medium ${isInverted ? "text-neutral-200" : ""}`}>
-                      {v.name}
-                    </p>
-                    <p className={`mt-0.5 text-xs ${isInverted ? "text-neutral-400" : "text-muted-foreground"}`}>
-                      {v.useCase}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        ) : undefined
-      }
+      renderGuidelinePreview={(props) => (
+        <FlowXTree
+          type={props.type as "Select (Multi)" | "Select (Single)" | "Icons"}
+          size={props.size as "Medium" | "Small"}
+          inverted={props.inverted === "on"}
+          nesting={props.nesting === "on"}
+          showHeader={false}
+        />
+      )}
       statesReference={
         spec.states && spec.states.length > 0 ? (
           <div className="flex flex-wrap items-start gap-6">

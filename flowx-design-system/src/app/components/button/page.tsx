@@ -381,39 +381,14 @@ export default function ButtonPage() {
           )}
         />
       }
-      useCases={
-        spec.variants && spec.variants.length > 0 ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {spec.variants.map((v) => {
-              const isInverted = v.props.inverted === "On";
-              return (
-                <div
-                  key={v.name}
-                  className={`flex flex-col items-center gap-3 rounded-lg p-6 ${
-                    isInverted ? "bg-neutral-900 text-white" : ""
-                  }`}
-                  style={!isInverted ? { backgroundColor: "#f7f8f9" } : undefined}
-                >
-                  <FlowXButton
-                    scope={(v.props.scope as "Brand" | "Danger" | "Success") || "Brand"}
-                    variant={(v.props.variant as "Primary" | "Secondary" | "Tertiary") || "Primary"}
-                    state={(v.props.state as "Default" | "Hover" | "Pressed" | "Disabled") || "Default"}
-                    inverted={isInverted}
-                  />
-                  <div className="text-center">
-                    <p className={`text-sm font-medium ${isInverted ? "text-neutral-200" : ""}`}>
-                      {v.name}
-                    </p>
-                    <p className={`mt-0.5 text-xs ${isInverted ? "text-neutral-400" : "text-muted-foreground"}`}>
-                      {v.useCase}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        ) : undefined
-      }
+      renderGuidelinePreview={(props) => (
+        <FlowXButton
+          scope={(props.scope as "Brand" | "Danger" | "Success") || "Brand"}
+          variant={(props.variant as "Primary" | "Secondary" | "Tertiary") || "Primary"}
+          state={(props.state as "Default" | "Hover" | "Pressed" | "Disabled") || "Default"}
+          inverted={props.inverted === "On"}
+        />
+      )}
       statesReference={
         spec.states && spec.states.length > 0 ? (
           <div className="space-y-6">

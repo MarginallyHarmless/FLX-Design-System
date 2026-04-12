@@ -6,7 +6,6 @@ import { getComponent } from "@/lib/components-data/registry";
 import { StatusBanner } from "@/components/docs/status-banner";
 import { PropsTable } from "@/components/docs/props-table";
 import { AnatomyDiagram } from "@/components/docs/anatomy-diagram";
-import { DosAndDonts } from "@/components/docs/dos-and-donts";
 import { TokenTable } from "@/components/docs/token-table";
 import { UsageGuidelinesSection } from "@/components/docs/usage-guidelines-section";
 
@@ -106,15 +105,8 @@ export function ComponentPageTemplate({
 
       {separator}
 
-      {/* 7. Usage Guidelines */}
-      {!spec.usageGuidelines && spec.guidelines && (
-        <CollapsibleSection title="Usage Guidelines">
-          <DosAndDonts guidelines={spec.guidelines} />
-        </CollapsibleSection>
-      )}
-
       {/* 7b. Considerations */}
-      {!spec.usageGuidelines && spec.considerations && spec.considerations.length > 0 && (
+      {spec.considerations && spec.considerations.length > 0 && (
         <>
           {separator}
           <CollapsibleSection title="Considerations">
@@ -254,7 +246,7 @@ export function ComponentPageTemplate({
       )}
 
       {/* 14. Known Exceptions */}
-      {!spec.usageGuidelines && spec.knownExceptions && spec.knownExceptions.length > 0 && (
+      {spec.knownExceptions && spec.knownExceptions.length > 0 && (
         <>
           {separator}
           <CollapsibleSection title="Known Exceptions">
@@ -271,7 +263,7 @@ export function ComponentPageTemplate({
       )}
 
       {/* 15. Decision Log */}
-      {!spec.usageGuidelines && spec.decisionLog && spec.decisionLog.length > 0 && (
+      {spec.decisionLog && spec.decisionLog.length > 0 && (
         <>
           {separator}
           <CollapsibleSection title="Decision Log">

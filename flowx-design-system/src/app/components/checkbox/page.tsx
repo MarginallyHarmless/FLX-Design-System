@@ -409,46 +409,14 @@ export default function CheckboxPage() {
           )}
         />
       }
-      useCases={
-        spec.variants && spec.variants.length > 0 ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {spec.variants.map((v) => {
-              const isInverted = v.props.inverted === "on";
-              return (
-                <div
-                  key={v.name}
-                  className={`flex flex-col items-center gap-3 rounded-lg p-6 ${
-                    isInverted
-                      ? "bg-neutral-900 text-white"
-                      : ""
-                  }`}
-                  style={!isInverted ? { backgroundColor: "#f7f8f9" } : undefined}
-                >
-                  <FlowXCheckbox
-                    selected={v.props.selected === "on"}
-                    state={
-                      (v.props.state as
-                        | "default"
-                        | "error"
-                        | "disabled") || "default"
-                    }
-                    border={v.props.border === "on"}
-                    inverted={isInverted}
-                  />
-                  <div className="text-center">
-                    <p className={`text-sm font-medium ${isInverted ? "text-neutral-200" : ""}`}>
-                      {v.name}
-                    </p>
-                    <p className={`mt-0.5 text-xs ${isInverted ? "text-neutral-400" : "text-muted-foreground"}`}>
-                      {v.useCase}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        ) : undefined
-      }
+      renderGuidelinePreview={(props) => (
+        <FlowXCheckbox
+          selected={props.selected === "on"}
+          state={(props.state as "default" | "error" | "disabled") || "default"}
+          border={props.border === "on"}
+          inverted={props.inverted === "on"}
+        />
+      )}
       statesReference={
         spec.states && spec.states.length > 0 ? (
           <div className="flex flex-wrap items-start gap-6">

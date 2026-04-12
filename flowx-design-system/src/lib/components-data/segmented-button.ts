@@ -237,6 +237,13 @@ export const segmentedButtonSpec: ComponentSpec = {
     ],
   },
 
+  usageGuidelines: [
+    { type: "use-case", title: "Default", description: "Standard segmented control for switching between views or filters.", props: { size: "medium", inverted: "off", disabled: "off" } },
+    { type: "use-case", title: "Disabled", description: "Non-interactive segmented control indicating unavailable options.", props: { size: "medium", inverted: "off", disabled: "on" } },
+    { type: "use-case", title: "Inverted", description: "Segmented control on dark backgrounds for maintaining contrast.", props: { size: "medium", inverted: "on", disabled: "off" } },
+    { type: "use-case", title: "Small", description: "Compact segmented control for space-constrained layouts.", props: { size: "small", inverted: "off", disabled: "off" } },
+  ],
+
   relatedComponents: ["radio", "button"],
 
   considerations: [

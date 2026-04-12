@@ -104,4 +104,10 @@ export const valuesTableSpec: ComponentSpec = {
   decisionLog: [
     { date: "2024-09-24", decision: "Use modal for adding new entities instead of edit-in-place", reasoning: "Consistency with all other entity lists outweighs the convenience of inline creation. The original interaction was edit-in-place (pre-table redesign) but the team agreed consistency is more valuable." },
   ],
+
+  usageGuidelines: [
+    { type: "use-case", title: "Bordered", description: "Used when the table is part of a card or a larger container.", props: { bordered: "on", batchEdit: "off" } },
+    { type: "use-case", title: "Standalone", description: "Used when the table is the card itself.", props: { bordered: "off", batchEdit: "off" } },
+    { type: "use-case", title: "Always On editing", description: "Used when the page already has a save/discard mechanism.", props: { bordered: "on", batchEdit: "on" } },
+  ],
 };

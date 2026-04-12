@@ -173,32 +173,15 @@ export const radioV3Spec: ComponentSpec = {
   ],
 
   usageGuidelines: [
-    // --- Core use cases with previews ---
     { type: "use-case", title: "Default Unselected", description: "Standard unchecked radio, the most common starting state.", props: { selected: "off", state: "default", border: "on", inverted: "off" } },
     { type: "use-case", title: "Default Selected", description: "Checked state showing the user's active selection.", props: { selected: "on", state: "default", border: "on", inverted: "off" } },
-    { type: "do", title: "Use for mutually exclusive choices", description: "Radio buttons are for choosing exactly one option from a set. Always provide a clear, descriptive label for each option." },
-    { type: "dont", title: "Don't use for multi-select", description: "Use Checkboxes instead when users can select multiple options." },
-    // --- Border variants ---
     { type: "use-case", title: "Without Border", description: "Use in compact layouts where the container border adds visual noise.", props: { selected: "off", state: "default", border: "off", inverted: "off" } },
     { type: "use-case", title: "Selected Without Border", description: "Checked state in borderless compact layouts.", props: { selected: "on", state: "default", border: "off", inverted: "off" } },
-    // --- Inverted ---
     { type: "use-case", title: "On Dark Background", description: "Use on dark surfaces like modals or hero sections.", props: { selected: "off", state: "default", border: "on", inverted: "on" } },
     { type: "use-case", title: "Selected on Dark Background", description: "Checked state on dark surfaces.", props: { selected: "on", state: "default", border: "on", inverted: "on" } },
-    // --- Error ---
     { type: "use-case", title: "Error Unselected", description: "Show when form validation requires a selection.", props: { selected: "off", state: "error", border: "on", inverted: "off" } },
     { type: "use-case", title: "Error Selected", description: "Selected but still in error — e.g. group-level validation failure.", props: { selected: "on", state: "error", border: "on", inverted: "off" } },
-    { type: "do", title: "Use error state with a helper message", description: "Always pair the error state with a description explaining what needs to be corrected." },
-    // --- Disabled ---
     { type: "use-case", title: "Disabled Unselected", description: "Use when the option exists but is not currently available.", props: { selected: "off", state: "disabled", border: "on", inverted: "off" } },
     { type: "use-case", title: "Disabled Selected", description: "Use when showing a locked-in selection the user cannot change.", props: { selected: "on", state: "disabled", border: "on", inverted: "off" } },
-    { type: "dont", title: "Don't disable without explanation", description: "If a radio option is disabled, provide a tooltip or adjacent text explaining why it's unavailable." },
-    // --- Guidance ---
-    { type: "do", title: "Pre-select a default when sensible", description: "Always have one option pre-selected when there's a reasonable default. This reduces friction." },
-    { type: "do", title: "Group vertically for scanning", description: "Stack related radio options vertically. Horizontal layouts make it harder to associate labels with their options." },
-    { type: "dont", title: "Don't use for on/off toggles", description: "Use a Switch component instead for binary on/off actions." },
-    { type: "dont", title: "Don't exceed 7 options", description: "For longer option lists, use a Select Field dropdown instead. Long radio lists waste vertical space and are hard to scan." },
-    // --- Considerations ---
-    { type: "info", title: "Consider Segmented Button for 2–3 options", description: "When only 2–3 options exist and they act as a mode switch, Segmented Button is more compact and communicates mutual exclusivity faster." },
-    { type: "info", title: "Subtitle forces border on", description: "When using the subtitle prop, the border is always shown regardless of the border prop value, matching the Checkbox behavior." },
   ],
 };

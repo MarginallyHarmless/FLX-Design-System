@@ -464,4 +464,16 @@ export const selectFieldSpec: ComponentSpec = {
     "[placeholder] When multi-select is used with many selections → plan for chip overflow; the component shows a '+N' counter but the container height grows — test with 10+ selections.",
     "[placeholder] When the select is inside a form with Input Fields → match size and label style to maintain visual consistency across the row.",
   ],
+
+  usageGuidelines: [
+    { type: "use-case", title: "Vertical label", description: "Used in most situations on the platform.", props: { state: "default", filled: "on", inverted: "off", hasLabel: "on", inlineLabel: "off" } },
+    { type: "use-case", title: "Horizontal label", description: "Used in compact forms where vertical space is limited.", props: { state: "default", filled: "on", inverted: "off", hasLabel: "on", inlineLabel: "on" } },
+    { type: "use-case", title: "No label", description: "Used when the context makes the field's purpose obvious.", props: { state: "default", filled: "on", inverted: "off", hasLabel: "off", inlineLabel: "off" } },
+    { type: "use-case", title: "Default", description: "The standard empty select, ready for user selection.", props: { state: "default", filled: "off", inverted: "off" } },
+    { type: "use-case", title: "Filled", description: "Shows selected options as chips in the input area.", props: { state: "default", filled: "on", inverted: "off" } },
+    { type: "use-case", title: "Focused", description: "Active state when the dropdown is open or the field has focus.", props: { state: "focused", filled: "off", inverted: "off" } },
+    { type: "use-case", title: "With Validation Error", description: "Show when form validation fails after submission.", props: { state: "error", filled: "off", inverted: "off" } },
+    { type: "use-case", title: "Disabled", description: "Use when the field should be visible but not interactive.", props: { state: "disabled", filled: "off", inverted: "off" } },
+    { type: "use-case", title: "On Dark Background", description: "Use on dark surfaces like modals or hero sections.", props: { state: "default", filled: "off", inverted: "on" } },
+  ],
 };

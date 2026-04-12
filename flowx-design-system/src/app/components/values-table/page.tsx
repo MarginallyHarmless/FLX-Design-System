@@ -668,46 +668,12 @@ export default function ValuesTablePage() {
           )}
         />
       }
-      useCases={
-        <div className="grid gap-8">
-          <div
-            className="flex flex-col gap-3 rounded-lg p-6"
-            style={{ backgroundColor: "#f7f8f9" }}
-          >
-            <div style={{ overflowX: "auto" }}>
-              <FlowXValuesTable bordered />
-            </div>
-            <div>
-              <p className="text-sm font-medium">Bordered</p>
-              <p className="mt-0.5 text-xs text-muted-foreground">Used when the table is part of a card alongside other UI elements.</p>
-            </div>
-          </div>
-          <div
-            className="flex flex-col gap-3 rounded-lg p-6"
-            style={{ backgroundColor: "#f7f8f9" }}
-          >
-            <div style={{ overflowX: "auto", padding: 16 }}>
-              <FlowXValuesTable bordered={false} />
-            </div>
-            <div>
-              <p className="text-sm font-medium">Standalone</p>
-              <p className="mt-0.5 text-xs text-muted-foreground">Used when the table is the card itself, displayed standalone without other elements.</p>
-            </div>
-          </div>
-          <div
-            className="flex flex-col gap-3 rounded-lg p-6"
-            style={{ backgroundColor: "#f7f8f9" }}
-          >
-            <div style={{ overflowX: "auto" }}>
-              <FlowXValuesTable batchEdit bordered />
-            </div>
-            <div>
-              <p className="text-sm font-medium">Always On editing</p>
-              <p className="mt-0.5 text-xs text-muted-foreground">Used when the page already has its own save action. All rows are editable at once, removing the need for per-row save buttons and avoiding a double-save interaction.</p>
-            </div>
-          </div>
-        </div>
-      }
+      renderGuidelinePreview={(props) => (
+        <FlowXValuesTable
+          bordered={props.bordered === "on"}
+          batchEdit={props.batchEdit === "on"}
+        />
+      )}
       statesReference={
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-3">

@@ -473,4 +473,16 @@ export const inputFieldSpec: ComponentSpec = {
     "[placeholder] When using side labels → align all side labels in the form to the same width so input containers line up vertically.",
     "[placeholder] When the field is inside a narrow container (e.g. modal column, sidebar) → use the small size and drop the prefix/suffix to avoid cramping the actual input area.",
   ],
+
+  usageGuidelines: [
+    { type: "use-case", title: "Vertical label", description: "Used in most situations on the platform.", props: { state: "default", filled: "on", inverted: "off", hasTopLabel: "on", inlineLabel: "off" } },
+    { type: "use-case", title: "Horizontal label", description: "Used in compact forms where vertical space is limited.", props: { state: "default", filled: "on", inverted: "off", hasTopLabel: "on", inlineLabel: "on" } },
+    { type: "use-case", title: "No label", description: "Used when the context makes the field's purpose obvious.", props: { state: "default", filled: "on", inverted: "off", hasTopLabel: "off", inlineLabel: "off" } },
+    { type: "use-case", title: "Default", description: "The standard empty input, ready for user entry.", props: { state: "default", filled: "off", inverted: "off" } },
+    { type: "use-case", title: "Filled", description: "Shows user-entered content in its resting state.", props: { state: "default", filled: "on", inverted: "off" } },
+    { type: "use-case", title: "Focused", description: "Active typing state with focus ring — shown for visual reference.", props: { state: "focused", filled: "off", inverted: "off" } },
+    { type: "use-case", title: "With Validation Error", description: "Show when form validation fails after submission.", props: { state: "error", filled: "off", inverted: "off" } },
+    { type: "use-case", title: "Disabled", description: "Use when the field should be visible but not editable.", props: { state: "disabled", filled: "off", inverted: "off" } },
+    { type: "use-case", title: "On Dark Background", description: "Use on dark surfaces like modals or hero sections.", props: { state: "default", filled: "off", inverted: "on" } },
+  ],
 };

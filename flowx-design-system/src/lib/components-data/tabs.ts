@@ -278,6 +278,13 @@ export const tabsSpec: ComponentSpec = {
     ],
   },
 
+  usageGuidelines: [
+    { type: "use-case", title: "Default", description: "Standard tab bar for switching between content sections.", props: { size: "medium", inverted: "off" } },
+    { type: "use-case", title: "Small", description: "Compact tab bar for space-constrained layouts or secondary navigation.", props: { size: "small", inverted: "off" } },
+    { type: "use-case", title: "Inverted", description: "Tab bar on dark backgrounds to maintain contrast and legibility.", props: { size: "medium", inverted: "on" } },
+    { type: "use-case", title: "Small Inverted", description: "Compact inverted tab bar for dark, space-constrained layouts.", props: { size: "small", inverted: "on" } },
+  ],
+
   relatedComponents: ["segmented-button", "button"],
 
   considerations: [

@@ -150,6 +150,15 @@ export const treeSpec: ComponentSpec = {
     ],
   },
 
+  usageGuidelines: [
+    { type: "use-case", title: "Multi-Select", description: "Allow users to select multiple items from the list using checkboxes.", props: { type: "Select (Multi)", size: "Medium", inverted: "off", nesting: "off" } },
+    { type: "use-case", title: "Single-Select", description: "Restrict selection to a single item using radio buttons.", props: { type: "Select (Single)", size: "Medium", inverted: "off", nesting: "off" } },
+    { type: "use-case", title: "Icons", description: "Display items without selection controls, using icons for navigation or actions.", props: { type: "Icons", size: "Medium", inverted: "off", nesting: "off" } },
+    { type: "use-case", title: "With Nesting", description: "Group items under collapsible parent categories for hierarchical data.", props: { type: "Select (Multi)", size: "Medium", inverted: "off", nesting: "on" } },
+    { type: "use-case", title: "Inverted", description: "Use on dark surfaces such as modals or side panels with dark backgrounds.", props: { type: "Select (Multi)", size: "Medium", inverted: "on", nesting: "off" } },
+    { type: "use-case", title: "Small Size", description: "Compact variant for space-constrained layouts or secondary UI areas.", props: { type: "Select (Multi)", size: "Small", inverted: "off", nesting: "off" } },
+  ],
+
   relatedComponents: ["checkbox", "radio", "select-field"],
 
   considerations: [
