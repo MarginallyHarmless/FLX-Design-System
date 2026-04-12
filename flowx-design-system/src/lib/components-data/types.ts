@@ -71,6 +71,14 @@ export interface TokenBinding {
   resolvedValue: string;
 }
 
+export type UsageGuideline =
+  | { type: "use-case"; title: string; description: string; props: Record<string, string> }
+  | { type: "do"; title: string; description: string }
+  | { type: "dont"; title: string; description: string }
+  | { type: "decision"; title: string; description: string; date?: string }
+  | { type: "exception"; title: string; description: string }
+  | { type: "info"; title: string; description: string };
+
 export interface ComponentSpec {
   slug: string;
   name: string;
@@ -105,6 +113,7 @@ export interface ComponentSpec {
   elements?: ElementSpec[];
   variantStyles?: VariantStyle[];
   tokenBindings?: TokenBinding[];
+  usageGuidelines?: UsageGuideline[];
 
   guidelines?: {
     do: { description: string; example?: string }[];
