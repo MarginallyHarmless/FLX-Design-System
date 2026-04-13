@@ -12,6 +12,7 @@ export function FlowXLabel({
   disabled = false,
   showInfo = false,
   hasLabel = true,
+  required = false,
 }: {
   label?: string;
   size?: "small" | "medium";
@@ -19,6 +20,7 @@ export function FlowXLabel({
   disabled?: boolean;
   showInfo?: boolean;
   hasLabel?: boolean;
+  required?: boolean;
 }) {
   if (!hasLabel) return null;
 
@@ -49,6 +51,11 @@ export function FlowXLabel({
         }}
       >
         {label}
+        {required && (
+          <span style={{ color: "#64748b", marginLeft: 2 }} aria-hidden="true">
+            *
+          </span>
+        )}
       </span>
       {showInfo && (
         <Info size={16} color={color} weight="bold" style={{ flexShrink: 0 }} />
@@ -97,7 +104,7 @@ export function FlowXDescription({
 }
 
 export function FlowXErrorIcon({ size = 16 }: { size?: number }) {
-  return <WarningCircle size={size} color="#e62200" weight="bold" style={{ flexShrink: 0 }} />;
+  return <WarningCircle size={size} color="#e62200" weight="regular" style={{ flexShrink: 0 }} />;
 }
 
 export function FlowXTooltip({

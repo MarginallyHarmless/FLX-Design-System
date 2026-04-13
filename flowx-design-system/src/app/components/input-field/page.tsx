@@ -9,7 +9,7 @@ import {
 
 import { ComponentPageTemplate } from "@/components/docs/component-page-template";
 import { ComponentPreview } from "@/components/docs/component-preview";
-import { FlowXLabel, FlowXDescription, FlowXErrorIcon } from "@/components/docs/shared-elements";
+import { FlowXLabel, FlowXDescription, FlowXErrorIcon, FlowXTooltip } from "@/components/docs/shared-elements";
 import { PhosphorIcon, type IconName } from "@/lib/phosphor-icons";
 
 /* ------------------------------------------------------------------ */
@@ -38,6 +38,10 @@ function FlowXInputField({
   hasDescription = false,
   placeholder = "Placeholder",
   value = "",
+  label = "Label",
+  required = false,
+  prefixText = "$",
+  suffixText = "kg",
 }: {
   state?: "default" | "focused" | "error" | "disabled" | "hover";
   filled?: boolean;
@@ -54,6 +58,10 @@ function FlowXInputField({
   hasDescription?: boolean;
   placeholder?: string;
   value?: string;
+  label?: string;
+  required?: boolean;
+  prefixText?: string;
+  suffixText?: string;
 }) {
   const spec = inputFieldSpec;
   const variantProps = {
@@ -119,7 +127,7 @@ function FlowXInputField({
               flexShrink: 0,
             }}
           >
-            $
+            {prefixText}
           </span>
         )}
 
@@ -148,7 +156,7 @@ function FlowXInputField({
               flexShrink: 0,
             }}
           >
-            kg
+            {suffixText}
           </span>
         )}
 
@@ -167,11 +175,12 @@ function FlowXInputField({
       <div style={{ minWidth: 200 }}>
         <div className="inline-flex items-center gap-3" style={{ width: "100%" }}>
           <FlowXLabel
-            label="Label"
+            label={label}
             size={size === "small" ? "small" : "medium"}
             inverted={inverted}
             disabled={state === "disabled"}
             hasLabel={hasTopLabel}
+            required={required}
           />
           {inputContainer}
         </div>
@@ -191,11 +200,12 @@ function FlowXInputField({
     >
       {/* Label */}
       <FlowXLabel
-        label="Label"
+        label={label}
         size={size === "small" ? "small" : "medium"}
         inverted={inverted}
         disabled={state === "disabled"}
         hasLabel={hasTopLabel}
+        required={required}
       />
 
       {/* Input Container + optional error icon */}
@@ -307,16 +317,6 @@ export default function InputFieldPage() {
               disabledUnless: "hasIconStart",
             },
             {
-              name: "hasIconEnd",
-              type: "boolean",
-            },
-            {
-              name: "iconEndName",
-              type: "icon",
-              default: "CaretDown",
-              disabledUnless: "hasIconEnd",
-            },
-            {
               name: "hasPrefix",
               type: "boolean",
             },
@@ -349,26 +349,43 @@ export default function InputFieldPage() {
                 inlineLabel={values.label === "horizontal"}
                 hasIconStart={values.hasIconStart === true}
                 iconStartName={values.hasIconStart ? (values.iconStartName as IconName) : undefined}
-                hasIconEnd={values.hasIconEnd === true}
-                iconEndName={values.hasIconEnd ? (values.iconEndName as IconName) : undefined}
                 hasPrefix={values.hasPrefix === true}
                 hasSuffix={values.hasSuffix === true}
-                hasDescription={values.hasDescription === true}
+                hasDescription={values.hasDescription === true || values.state === "error"}
               />
             </div>
           )}
         />
       }
-      renderGuidelinePreview={(props) => (
-        <FlowXInputField
-          state={(props.state as "default" | "focused" | "error" | "disabled") || "default"}
-          value={props.filled === "on" ? "Value" : ""}
-          inverted={props.inverted === "on"}
-          hasDescription={props.state === "error"}
-          hasTopLabel={props.hasTopLabel !== "off"}
-          inlineLabel={props.inlineLabel === "on"}
-        />
-      )}
+      renderGuidelinePreview={(props) => {
+        const field = (
+          <FlowXInputField
+            state={(props.state as "default" | "focused" | "error" | "disabled") || "default"}
+            size={(props.size as "small" | "medium") || "medium"}
+            value={props.value ?? (props.filled === "on" ? "Value" : "")}
+            inverted={props.inverted === "on"}
+            hasDescription={props.hasDescription === "on"}
+            hasTopLabel={props.hasTopLabel !== "off"}
+            inlineLabel={props.inlineLabel === "on"}
+            hasPrefix={props.hasPrefix === "on"}
+            hasSuffix={props.hasSuffix === "on"}
+            prefixText={props.prefixText}
+            suffixText={props.suffixText}
+            placeholder={props.placeholder}
+            label={props.label}
+            required={props.required === "on"}
+          />
+        );
+        if (props.errorTooltip) {
+          return (
+            <div style={{ display: "inline-flex", flexDirection: "column", alignItems: "flex-end", gap: 6 }}>
+              <FlowXTooltip text={props.errorTooltip} useCase="error" />
+              {field}
+            </div>
+          );
+        }
+        return field;
+      }}
       statesReference={
         <div className="flex flex-wrap items-start gap-6">
           {spec.states?.map((s) => (

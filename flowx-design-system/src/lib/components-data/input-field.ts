@@ -475,14 +475,54 @@ export const inputFieldSpec: ComponentSpec = {
   ],
 
   usageGuidelines: [
-    { type: "use-case", title: "Vertical label", description: "Used in most situations on the platform.", props: { state: "default", filled: "on", inverted: "off", hasTopLabel: "on", inlineLabel: "off" } },
-    { type: "use-case", title: "Horizontal label", description: "Used in compact forms where vertical space is limited.", props: { state: "default", filled: "on", inverted: "off", hasTopLabel: "on", inlineLabel: "on" } },
-    { type: "use-case", title: "No label", description: "Used when the context makes the field's purpose obvious.", props: { state: "default", filled: "on", inverted: "off", hasTopLabel: "off", inlineLabel: "off" } },
-    { type: "use-case", title: "Default", description: "The standard empty input, ready for user entry.", props: { state: "default", filled: "off", inverted: "off" } },
-    { type: "use-case", title: "Filled", description: "Shows user-entered content in its resting state.", props: { state: "default", filled: "on", inverted: "off" } },
-    { type: "use-case", title: "Focused", description: "Active typing state with focus ring — shown for visual reference.", props: { state: "focused", filled: "off", inverted: "off" } },
-    { type: "use-case", title: "With Validation Error", description: "Show when form validation fails after submission.", props: { state: "error", filled: "off", inverted: "off" } },
-    { type: "use-case", title: "Disabled", description: "Use when the field should be visible but not editable.", props: { state: "disabled", filled: "off", inverted: "off" } },
-    { type: "use-case", title: "On Dark Background", description: "Use on dark surfaces like modals or hero sections.", props: { state: "default", filled: "off", inverted: "on" } },
+    {
+      type: "info",
+      title: "Always label your inputs",
+      description:
+        "Label every input so users know what to enter. Use a top label in most cases, and an inline label in compact surfaces where vertical space is limited, like the UI Designer config panel or Agent Builder nodes. Switch back to a top label when the expected input is long and needs the full width. Omit the label only when the field's purpose is obvious from context.",
+      previews: [
+        { state: "default", filled: "on", value: "Ana", label: "First name", hasTopLabel: "on", inlineLabel: "off", placeholder: "First name" },
+        { state: "default", filled: "on", value: "Ana", label: "First name", hasTopLabel: "on", inlineLabel: "on", placeholder: "First name" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Marking required fields",
+      description:
+        "Mark required fields with an asterisk after the label so users can scan a form and see what they must fill in before submitting. Use neutrals-500 for the asterisk so it reads as a quiet annotation rather than an alert.",
+      previews: [
+        { state: "default", filled: "off", label: "Email", required: "on", placeholder: "name@company.com" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Prefix and suffix for format",
+      description:
+        "Use a prefix or suffix to show format context like currency or units. Prefer textual affixes over icons when the meaning is textual.",
+      previews: [
+        { state: "default", filled: "on", value: "100", label: "Amount", hasPrefix: "on", prefixText: "$" },
+        { state: "default", filled: "on", value: "70", label: "Weight", hasSuffix: "on", suffixText: "kg" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Displaying errors",
+      description:
+        "In most cases, display the error message under the input with red text. When space is very limited, like inside a table cell, show the error as a red tooltip that appears on hover over the error icon.",
+      previews: [
+        { state: "error", filled: "on", value: "ana", label: "Email", hasDescription: "on" },
+        { state: "error", filled: "on", value: "ana", hasTopLabel: "off", size: "small", errorTooltip: "Please enter a valid email" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Choosing the right size",
+      description:
+        "Use Medium as the default across admin pages. Use Small in tighter spaces like canvas areas (UI Designer, Data Model, Agent Builder).",
+      previews: [
+        { state: "default", filled: "on", value: "Value", label: "Medium", size: "medium" },
+        { state: "default", filled: "on", value: "Value", label: "Small", size: "small" },
+      ],
+    },
   ],
 };
