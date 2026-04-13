@@ -173,15 +173,62 @@ export const radioV3Spec: ComponentSpec = {
   ],
 
   usageGuidelines: [
-    { type: "use-case", title: "Default Unselected", description: "Standard unchecked radio, the most common starting state.", props: { selected: "off", state: "default", border: "on", inverted: "off" } },
-    { type: "use-case", title: "Default Selected", description: "Checked state showing the user's active selection.", props: { selected: "on", state: "default", border: "on", inverted: "off" } },
-    { type: "use-case", title: "Without Border", description: "Use in compact layouts where the container border adds visual noise.", props: { selected: "off", state: "default", border: "off", inverted: "off" } },
-    { type: "use-case", title: "Selected Without Border", description: "Checked state in borderless compact layouts.", props: { selected: "on", state: "default", border: "off", inverted: "off" } },
-    { type: "use-case", title: "On Dark Background", description: "Use on dark surfaces like modals or hero sections.", props: { selected: "off", state: "default", border: "on", inverted: "on" } },
-    { type: "use-case", title: "Selected on Dark Background", description: "Checked state on dark surfaces.", props: { selected: "on", state: "default", border: "on", inverted: "on" } },
-    { type: "use-case", title: "Error Unselected", description: "Show when form validation requires a selection.", props: { selected: "off", state: "error", border: "on", inverted: "off" } },
-    { type: "use-case", title: "Error Selected", description: "Selected but still in error — e.g. group-level validation failure.", props: { selected: "on", state: "error", border: "on", inverted: "off" } },
-    { type: "use-case", title: "Disabled Unselected", description: "Use when the option exists but is not currently available.", props: { selected: "off", state: "disabled", border: "on", inverted: "off" } },
-    { type: "use-case", title: "Disabled Selected", description: "Use when showing a locked-in selection the user cannot change.", props: { selected: "on", state: "disabled", border: "on", inverted: "off" } },
+    {
+      type: "info",
+      title: "When to use a radio vs a select",
+      description:
+        "Use radios when there are up to 5 mutually exclusive options and showing them all reinforces the choice. Switch to a select when the list is longer or space is limited.",
+      previews: [
+        { selected: "on", state: "default", border: "off", inverted: "off", hasLabel: "off", value: "Email" },
+        { selected: "off", state: "default", border: "off", inverted: "off", hasLabel: "off", value: "SMS" },
+        { selected: "off", state: "default", border: "off", inverted: "off", hasLabel: "off", value: "Push" },
+      ],
+    },
+    {
+      type: "info",
+      title: "With or without a container",
+      description:
+        "Use the container border when each radio is a selectable row in a list or card, so the whole surface acts as a hit target. Omit it in compact forms or filter lists where the border adds visual noise.",
+      previewRows: [
+        [
+          { selected: "on", state: "default", border: "on", inverted: "off", hasLabel: "off", value: "Email" },
+          { selected: "off", state: "default", border: "on", inverted: "off", hasLabel: "off", value: "SMS" },
+        ],
+        [
+          { selected: "on", state: "default", border: "off", inverted: "off", hasLabel: "off", value: "Email" },
+          { selected: "off", state: "default", border: "off", inverted: "off", hasLabel: "off", value: "SMS" },
+        ],
+      ],
+    },
+    {
+      type: "info",
+      title: "Offer a default selection",
+      description:
+        "Pre-select the safest or most common option so users can move forward without making every choice explicit. Avoid leaving a required radio group empty by default.",
+      previews: [
+        { selected: "on", state: "default", border: "on", inverted: "off", hasLabel: "off", value: "Standard" },
+        { selected: "off", state: "default", border: "on", inverted: "off", hasLabel: "off", value: "Custom" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Showing errors",
+      description:
+        "Display the error below the radio with red helper text, and place the error icon to the right of the radio component, outside the container.",
+      previews: [
+        { selected: "off", state: "error", border: "on", inverted: "off", hasLabel: "off", value: "Standard", hasDescription: "on" },
+        { selected: "on", state: "error", border: "on", inverted: "off", hasLabel: "off", value: "Overnight", hasDescription: "on" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Choosing the right size",
+      description:
+        "Use Medium as the default across admin pages. Use Small in tighter spaces like canvas areas (UI Designer, Data Model, Agent Builder).",
+      previews: [
+        { selected: "on", state: "default", border: "on", inverted: "off", hasLabel: "off", value: "Medium", size: "medium" },
+        { selected: "on", state: "default", border: "on", inverted: "off", hasLabel: "off", value: "Small", size: "small" },
+      ],
+    },
   ],
 };

@@ -20,6 +20,7 @@ function FlowXRadio({
   value = "Value",
   hasDescription = false,
   subtitle = "",
+  hasLabel = true,
 }: {
   selected?: boolean;
   state?: "default" | "error" | "disabled";
@@ -30,6 +31,7 @@ function FlowXRadio({
   value?: string;
   hasDescription?: boolean;
   subtitle?: string;
+  hasLabel?: boolean;
 }) {
   const isSmall = size === "small";
   const isDisabled = state === "disabled";
@@ -121,6 +123,7 @@ function FlowXRadio({
         size={size}
         inverted={inverted}
         disabled={state === "disabled"}
+        hasLabel={hasLabel}
       />
 
       {/* Input row: container + optional error icon */}
@@ -325,7 +328,7 @@ export default function RadioV3Page() {
               }
               border={values.border !== false}
               inverted={values.inverted === true}
-              hasDescription={values.hasDescription === true}
+              hasDescription={values.hasDescription === true || values.state === "error"}
               subtitle={values.subtitle ? "This is a description text for the radio group item." : ""}
             />
           )}
@@ -337,6 +340,12 @@ export default function RadioV3Page() {
           state={(props.state as "default" | "error" | "disabled") || "default"}
           border={props.border === "on"}
           inverted={props.inverted === "on"}
+          size={(props.size as "small" | "medium") || "medium"}
+          label={props.label}
+          value={props.value}
+          hasDescription={props.hasDescription === "on"}
+          subtitle={props.subtitle}
+          hasLabel={props.hasLabel !== "off"}
         />
       )}
       statesReference={
