@@ -674,6 +674,7 @@ export default function ValuesTablePage() {
           batchEdit={props.batchEdit === "on"}
         />
       )}
+      guidelinePreviewWidth="sm:w-3/5"
       statesReference={
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-3">

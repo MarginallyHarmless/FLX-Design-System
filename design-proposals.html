@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlowX DS — Page Aesthetics Proposals</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-50: #e6f0fb;
+    --blue-100: #b0d1f3;
+    --blue-500: #006bd8;
+    --blue-600: #005fc0;
+    --blue-900: #002d5b;
+    --green-50: #e6f2ef;
+    --green-500: #008060;
+    --red-50: #fde9e6;
+    --red-500: #e62200;
+    --neutral-50: #f7f8f9;
+    --neutral-100: #e3e8ed;
+    --neutral-200: #cbd1db;
+    --neutral-300: #a6b0be;
+    --neutral-500: #64748b;
+    --neutral-700: #3d4654;
+    --neutral-800: #2a3140;
+    --neutral-900: #1d232c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background: #f0f1f3;
+    color: var(--neutral-900);
+  }
+
+  .proposal-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--neutral-900);
+    padding: 16px 40px;
+    display: flex; gap: 12px; align-items: center;
+    border-bottom: 1px solid var(--neutral-700);
+  }
+  .proposal-nav h1 {
+    font-size: 14px; font-weight: 600; color: #fff;
+    margin-right: 24px; white-space: nowrap;
+  }
+  .proposal-nav a {
+    padding: 8px 20px; border-radius: 8px;
+    font-size: 13px; font-weight: 600;
+    text-decoration: none; color: var(--neutral-300);
+    border: 1px solid var(--neutral-700);
+    transition: all 0.2s;
+  }
+  .proposal-nav a:hover { background: var(--neutral-800); color: #fff; }
+  .proposal-nav a.active { background: var(--blue-500); color: #fff; border-color: var(--blue-500); }
+
+  .proposal-section {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 60px 40px 120px;
+  }
+  .proposal-label {
+    display: inline-block;
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 14px; border-radius: 6px;
+    margin-bottom: 12px;
+  }
+  .proposal-title {
+    font-size: 28px; font-weight: 700; margin-bottom: 8px;
+  }
+  .proposal-desc {
+    font-size: 15px; color: var(--neutral-500); line-height: 1.6;
+    max-width: 600px; margin-bottom: 48px;
+  }
+
+  /* Fake component preview */
+  .fake-radio {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 12px 6px 8px;
+    border: 1px solid var(--neutral-100);
+    border-radius: 8px; background: #fff;
+  }
+  .fake-radio.selected {
+    border-color: var(--blue-500);
+    background: var(--blue-50);
+  }
+  .fake-radio-dot {
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 1.5px solid var(--neutral-200);
+  }
+  .fake-radio.selected .fake-radio-dot {
+    border: 6px solid var(--blue-500);
+  }
+  .fake-radio span { font-size: 14px; }
+
+  .fake-controls {
+    display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
+  }
+  .fake-pill-group {
+    display: inline-flex; border-radius: 8px;
+    background: var(--neutral-100); padding: 3px; gap: 2px;
+  }
+  .fake-pill {
+    padding: 5px 14px; border-radius: 6px; font-size: 12px;
+    font-weight: 500; color: var(--neutral-500); border: none; background: transparent;
+  }
+  .fake-pill.active {
+    background: #fff; color: var(--neutral-900);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  }
+  .fake-control-label {
+    font-size: 12px; font-weight: 500; color: var(--neutral-500);
+    margin-bottom: 4px;
+  }
+
+  /* Guideline row */
+  .guideline-row {
+    display: flex; gap: 20px; padding: 20px 0;
+  }
+  .guideline-row + .guideline-row { border-top: 1px solid var(--neutral-100); }
+  .guideline-preview { flex: 0 0 38%; display: flex; align-items: center; justify-content: center; border-radius: 10px; padding: 24px; background: var(--neutral-50); }
+  .guideline-text { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+  .guideline-text h4 { font-size: 14px; font-weight: 600; }
+  .guideline-text p { font-size: 13px; color: var(--neutral-500); line-height: 1.5; }
+
+  .illustration-panel {
+    flex: 0 0 38%; display: flex; align-items: center; justify-content: center;
+    border-radius: 10px; padding: 24px; min-height: 64px;
+  }
+  .illustration-panel svg { width: 24px; height: 24px; }
+
+  /* Collapsed section header */
+  .ref-section { padding: 12px 0; }
+  .ref-section h3 {
+    font-size: 16px; font-weight: 600; color: var(--neutral-500);
+    display: flex; align-items: center; gap: 8px; cursor: pointer;
+  }
+  .ref-section h3 .arrow { color: var(--neutral-300); font-size: 12px; }
+
+  /* ================================================================ */
+  /*  PROPOSAL A — Refined Editorial                                  */
+  /* ================================================================ */
+  #proposal-a { background: #fff; }
+  #proposal-a .proposal-label { background: var(--blue-50); color: var(--blue-500); }
+
+  .pa-hero {
+    position: relative;
+    background: linear-gradient(135deg, #f8faff 0%, #f0f4fb 50%, #f7f8f9 100%);
+    border-radius: 20px;
+    padding: 48px;
+    margin-bottom: 56px;
+    border: 1px solid rgba(0,107,216,0.08);
+  }
+  .pa-hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--blue-500), var(--blue-100));
+    border-radius: 20px 20px 0 0;
+  }
+  .pa-hero-canvas {
+    min-height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 28px;
+  }
+  .pa-hero-controls {
+    border-top: 1px solid rgba(0,107,216,0.1);
+    padding-top: 20px;
+  }
+
+  .pa-section-card {
+    background: #fff;
+    border: 1px solid var(--neutral-100);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    transition: box-shadow 0.2s;
+  }
+  .pa-section-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .pa-section-card h3 {
+    font-size: 18px; font-weight: 700; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .pa-section-card h3 .accent-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--blue-500);
+  }
+
+  .pa-tier-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 1.2px;
+    text-transform: uppercase; color: var(--neutral-300);
+    margin: 48px 0 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--neutral-100);
+  }
+
+  /* ================================================================ */
+  /*  PROPOSAL B — Bold Contrast                                      */
+  /* ================================================================ */
+  #proposal-b { background: var(--neutral-50); }
+  #proposal-b .proposal-label { background: var(--neutral-900); color: #fff; }
+
+  .pb-hero {
+    background: var(--neutral-900);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 48px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  }
+  .pb-hero-top {
+    padding: 32px 36px 20px;
+    border-bottom: 1px solid var(--neutral-700);
+  }
+  .pb-hero-top h2 {
+    font-size: 13px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--blue-100);
+    margin-bottom: 4px;
+  }
+  .pb-hero-top p { font-size: 12px; color: var(--neutral-500); }
+  .pb-hero-canvas {
+    min-height: 240px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 48px;
+    background: #1a1f27;
+  }
+  .pb-hero .fake-radio { border-color: var(--neutral-700); background: transparent; }
+  .pb-hero .fake-radio span { color: #fff; }
+  .pb-hero .fake-radio.selected { border-color: #3389e0; background: var(--blue-900); }
+  .pb-hero .fake-radio-dot { border-color: var(--neutral-500); }
+  .pb-hero .fake-radio.selected .fake-radio-dot { border-color: #3389e0; }
+  .pb-hero-controls {
+    padding: 16px 36px;
+    background: var(--neutral-800);
+    border-top: 1px solid var(--neutral-700);
+  }
+  .pb-hero-controls .fake-pill-group { background: var(--neutral-700); }
+  .pb-hero-controls .fake-pill { color: var(--neutral-300); }
+  .pb-hero-controls .fake-pill.active { background: var(--neutral-900); color: #fff; }
+  .pb-hero-controls .fake-control-label { color: var(--neutral-500); }
+
+  .pb-section {
+    background: #fff;
+    border-radius: 16px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    border: 1px solid var(--neutral-100);
+  }
+  .pb-section-header {
+    padding: 20px 28px;
+    display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid var(--neutral-100);
+    background: #fff;
+  }
+  .pb-section-header .icon-block {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .pb-section-header h3 { font-size: 16px; font-weight: 700; }
+  .pb-section-body { padding: 24px 28px; }
+
+  .pb-ref-group {
+    margin-top: 40px;
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid var(--neutral-100);
+    overflow: hidden;
+  }
+  .pb-ref-item {
+    padding: 16px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 14px; font-weight: 600; color: var(--neutral-700);
+    cursor: pointer; transition: background 0.15s;
+  }
+  .pb-ref-item:hover { background: var(--neutral-50); }
+  .pb-ref-item + .pb-ref-item { border-top: 1px solid var(--neutral-100); }
+  .pb-ref-item .badge {
+    font-size: 11px; font-weight: 500; color: var(--neutral-300);
+    padding: 3px 10px; border-radius: 12px; background: var(--neutral-50);
+  }
+
+  /* ================================================================ */
+  /*  PROPOSAL C — Airy Depth                                         */
+  /* ================================================================ */
+  #proposal-c { background: #fafbfc; }
+  #proposal-c .proposal-label { background: #e8f4e8; color: var(--green-500); }
+
+  .pc-hero {
+    position: relative;
+    background: #fff;
+    border-radius: 24px;
+    padding: 0;
+    margin-bottom: 56px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+    overflow: hidden;
+  }
+  .pc-hero-canvas {
+    min-height: 280px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 56px;
+    background: linear-gradient(180deg, #ffffff 0%, var(--neutral-50) 100%);
+    position: relative;
+  }
+  .pc-hero-canvas::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 32px; right: 32px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neutral-100), transparent);
+  }
+  .pc-hero-controls {
+    padding: 20px 32px;
+    background: #fff;
+  }
+  .pc-hero .fake-pill-group { background: #f0f2f5; border-radius: 10px; }
+  .pc-hero .fake-pill { border-radius: 8px; }
+  .pc-hero .fake-pill.active { border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+
+  .pc-section-group {
+    display: flex; flex-direction: column; gap: 24px;
+    margin-bottom: 56px;
+  }
+  .pc-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04), 0 0.5px 2px rgba(0,0,0,0.02);
+    overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .pc-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.03);
+    transform: translateY(-1px);
+  }
+  .pc-card-header {
+    padding: 24px 28px 0;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .pc-card-header h3 { font-size: 17px; font-weight: 700; }
+  .pc-card-header .line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, var(--neutral-100), transparent);
+    margin-left: 8px;
+  }
+  .pc-card-body { padding: 16px 28px 28px; }
+
+  .pc-ref-section {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--neutral-100);
+  }
+  .pc-ref-section .ref-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 1.2px;
+    text-transform: uppercase; color: var(--neutral-300);
+    margin-bottom: 20px;
+  }
+  .pc-ref-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  }
+  .pc-ref-chip {
+    padding: 14px 20px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid var(--neutral-100);
+    font-size: 14px; font-weight: 600; color: var(--neutral-700);
+    display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .pc-ref-chip:hover {
+    border-color: var(--blue-500);
+    background: var(--blue-50);
+    color: var(--blue-500);
+  }
+  .pc-ref-chip .arrow { color: var(--neutral-300); font-size: 14px; transition: transform 0.2s; }
+  .pc-ref-chip:hover .arrow { color: var(--blue-500); transform: translateX(2px); }
+
+  /* Divider between proposals */
+  .proposal-divider {
+    height: 4px;
+    background: linear-gradient(90deg, var(--blue-500), var(--neutral-100));
+  }
+</style>
+</head>
+<body>
+
+<nav class="proposal-nav">
+  <h1>FlowX DS Page Proposals</h1>
+  <a href="#proposal-a" class="active">A — Refined Editorial</a>
+  <a href="#proposal-b">B — Bold Contrast</a>
+  <a href="#proposal-c">C — Airy Depth</a>
+</nav>
+
+<!-- ============================================================== -->
+<!--  PROPOSAL A — Refined Editorial                                -->
+<!-- ============================================================== -->
+<section id="proposal-a">
+  <div class="proposal-section">
+    <span class="proposal-label">Proposal A</span>
+    <h2 class="proposal-title">Refined Editorial</h2>
+    <p class="proposal-desc">
+      Magazine-inspired hierarchy. A subtle gradient wash lifts the preview hero, blue accent dots mark section headings, and a "REFERENCE" tier label signals the shift to supplementary content. Elegant hover states add interactivity.
+    </p>
+
+    <!-- Title area -->
+    <div style="margin-bottom: 32px;">
+      <h1 style="font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">Radio</h1>
+      <div style="margin-top: 10px; display: flex; align-items: center; gap: 8px;">
+        <span style="font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 12px; background: var(--green-50); color: var(--green-500);">Stable</span>
+        <span style="font-size: 12px; color: var(--neutral-300);">|</span>
+        <span style="font-size: 12px; color: var(--neutral-500);">Updated Mar 16, 2026</span>
+      </div>
+      <p style="margin-top: 10px; font-size: 16px; color: var(--neutral-500); line-height: 1.6;">
+        Lets users pick exactly one option from a mutually exclusive set.
+      </p>
+    </div>
+
+    <!-- Hero Preview -->
+    <div class="pa-hero">
+      <div class="pa-hero-canvas">
+        <div style="display: flex; gap: 12px;">
+          <div class="fake-radio"><div class="fake-radio-dot"></div><span>Option A</span></div>
+          <div class="fake-radio selected"><div class="fake-radio-dot"></div><span>Option B</span></div>
+          <div class="fake-radio"><div class="fake-radio-dot"></div><span>Option C</span></div>
+        </div>
+      </div>
+      <div class="pa-hero-controls">
+        <div class="fake-controls">
+          <div>
+            <div class="fake-control-label">selected</div>
+            <div class="fake-pill-group">
+              <button class="fake-pill">Off</button>
+              <button class="fake-pill active">On</button>
+            </div>
+          </div>
+          <div>
+            <div class="fake-control-label">state</div>
+            <div class="fake-pill-group">
+              <button class="fake-pill active">default</button>
+              <button class="fake-pill">error</button>
+              <button class="fake-pill">disabled</button>
+            </div>
+          </div>
+          <div>
+            <div class="fake-control-label">size</div>
+            <div class="fake-pill-group">
+              <button class="fake-pill active">medium</button>
+              <button class="fake-pill">small</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tier 2: Core sections -->
+    <div class="pa-section-card">
+      <h3><span class="accent-dot"></span> Usage Guidelines</h3>
+      <div class="guideline-row">
+        <div class="guideline-preview">
+          <div class="fake-radio"><div class="fake-radio-dot"></div><span>Value</span></div>
+        </div>
+        <div class="guideline-text">
+          <h4>Default Unselected</h4>
+          <p>Standard unchecked radio, the most common starting state.</p>
+        </div>
+      </div>
+      <div class="guideline-row">
+        <div class="guideline-preview">
+          <div class="fake-radio selected"><div class="fake-radio-dot"></div><span>Value</span></div>
+        </div>
+        <div class="guideline-text">
+          <h4>Default Selected</h4>
+          <p>Checked state showing the user's active selection.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pa-section-card">
+      <h3><span class="accent-dot"></span> States Reference</h3>
+      <div style="display: flex; gap: 32px; padding: 12px 0;">
+        <div style="text-align: center;">
+          <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+            <div class="fake-radio"><div class="fake-radio-dot"></div><span>Value</span></div>
+            <div class="fake-radio selected"><div class="fake-radio-dot"></div><span>Value</span></div>
+          </div>
+          <span style="font-size: 12px; color: var(--neutral-500);">Default</span>
+        </div>
+        <div style="text-align: center;">
+          <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+            <div class="fake-radio" style="border-color: var(--red-500);"><div class="fake-radio-dot" style="border-color: var(--red-500);"></div><span>Value</span></div>
+          </div>
+          <span style="font-size: 12px; color: var(--neutral-500);">Error</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pa-section-card">
+      <h3><span class="accent-dot"></span> Sizes</h3>
+      <div style="display: flex; gap: 24px; align-items: flex-end; padding: 12px 0;">
+        <div style="text-align: center;">
+          <div class="fake-radio selected"><div class="fake-radio-dot"></div><span>Medium</span></div>
+          <div style="margin-top: 8px; font-size: 12px; color: var(--neutral-500);">medium</div>
+        </div>
+        <div style="text-align: center;">
+          <div class="fake-radio selected" style="padding: 4px 10px 4px 6px; font-size: 12px;">
+            <div class="fake-radio-dot" style="width: 16px; height: 16px; border-width: 5px;"></div>
+            <span style="font-size: 12px;">Small</span>
+          </div>
+          <div style="margin-top: 8px; font-size: 12px; color: var(--neutral-500);">small</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tier 3: Reference -->
+    <div class="pa-tier-label">Reference</div>
+    <div class="ref-section"><h3><span class="arrow">&#9656;</span> Props <span style="font-size: 12px; color: var(--neutral-300); font-weight: 400; margin-left: auto;">8 props</span></h3></div>
+    <div class="ref-section"><h3><span class="arrow">&#9656;</span> Anatomy <span style="font-size: 12px; color: var(--neutral-300); font-weight: 400; margin-left: auto;">5 parts</span></h3></div>
+    <div class="ref-section"><h3><span class="arrow">&#9656;</span> Accessibility</h3></div>
+    <div class="ref-section"><h3><span class="arrow">&#9656;</span> Design Tokens <span style="font-size: 12px; color: var(--neutral-300); font-weight: 400; margin-left: auto;">7 tokens</span></h3></div>
+    <div class="ref-section"><h3><span class="arrow">&#9656;</span> Related Components</h3></div>
+  </div>
+</section>
+
+<div class="proposal-divider"></div>
+
+<!-- ============================================================== -->
+<!--  PROPOSAL B — Bold Contrast                                    -->
+<!-- ============================================================== -->
+<section id="proposal-b">
+  <div class="proposal-section">
+    <span class="proposal-label">Proposal B</span>
+    <h2 class="proposal-title">Bold Contrast</h2>
+    <p class="proposal-desc">
+      Dark hero preview creates dramatic separation. Core sections get icon-badged headers. Reference sections collapse into a grouped accordion with item counts. High contrast between the dark preview and white content creates strong visual rhythm.
+    </p>
+
+    <!-- Title area -->
+    <div style="margin-bottom: 32px;">
+      <h1 style="font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">Radio</h1>
+      <div style="margin-top: 10px; display: flex; align-items: center; gap: 8px;">
+        <span style="font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 12px; background: var(--green-50); color: var(--green-500);">Stable</span>
+        <span style="font-size: 12px; color: var(--neutral-300);">|</span>
+        <span style="font-size: 12px; color: var(--neutral-500);">Updated Mar 16, 2026</span>
+      </div>
+      <p style="margin-top: 10px; font-size: 16px; color: var(--neutral-500); line-height: 1.6;">
+        Lets users pick exactly one option from a mutually exclusive set.
+      </p>
+    </div>
+
+    <!-- Dark Hero Preview -->
+    <div class="pb-hero">
+      <div class="pb-hero-top">
+        <h2>Interactive Preview</h2>
+        <p>Explore different states, sizes, and options.</p>
+      </div>
+      <div class="pb-hero-canvas">
+        <div style="display: flex; gap: 12px;">
+          <div class="fake-radio"><div class="fake-radio-dot"></div><span>Option A</span></div>
+          <div class="fake-radio selected"><div class="fake-radio-dot"></div><span>Option B</span></div>
+          <div class="fake-radio"><div class="fake-radio-dot"></div><span>Option C</span></div>
+        </div>
+      </div>
+      <div class="pb-hero-controls">
+        <div class="fake-controls">
+          <div>
+            <div class="fake-control-label">selected</div>
+            <div class="fake-pill-group">
+              <button class="fake-pill">Off</button>
+              <button class="fake-pill active">On</button>
+            </div>
+          </div>
+          <div>
+            <div class="fake-control-label">state</div>
+            <div class="fake-pill-group">
+              <button class="fake-pill active">default</button>
+              <button class="fake-pill">error</button>
+              <button class="fake-pill">disabled</button>
+            </div>
+          </div>
+          <div>
+            <div class="fake-control-label">size</div>
+            <div class="fake-pill-group">
+              <button class="fake-pill active">medium</button>
+              <button class="fake-pill">small</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Core sections with icon headers -->
+    <div class="pb-section">
+      <div class="pb-section-header">
+        <div class="icon-block" style="background: var(--blue-50); color: var(--blue-500);">&#9776;</div>
+        <h3>Usage Guidelines</h3>
+      </div>
+      <div class="pb-section-body">
+        <div class="guideline-row">
+          <div class="guideline-preview">
+            <div class="fake-radio"><div class="fake-radio-dot"></div><span>Value</span></div>
+          </div>
+          <div class="guideline-text">
+            <h4>Default Unselected</h4>
+            <p>Standard unchecked radio, the most common starting state.</p>
+          </div>
+        </div>
+        <div class="guideline-row">
+          <div class="guideline-preview">
+            <div class="fake-radio selected"><div class="fake-radio-dot"></div><span>Value</span></div>
+          </div>
+          <div class="guideline-text">
+            <h4>Default Selected</h4>
+            <p>Checked state showing the user's active selection.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pb-section">
+      <div class="pb-section-header">
+        <div class="icon-block" style="background: #fef3e6; color: #fd6b1c;">&#9673;</div>
+        <h3>States Reference</h3>
+      </div>
+      <div class="pb-section-body">
+        <div style="display: flex; gap: 32px;">
+          <div style="text-align: center;">
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+              <div class="fake-radio"><div class="fake-radio-dot"></div><span>Value</span></div>
+              <div class="fake-radio selected"><div class="fake-radio-dot"></div><span>Value</span></div>
+            </div>
+            <span style="font-size: 12px; color: var(--neutral-500);">Default</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pb-section">
+      <div class="pb-section-header">
+        <div class="icon-block" style="background: #f0e6fb; color: #7c3aed;">&#9634;</div>
+        <h3>Sizes</h3>
+      </div>
+      <div class="pb-section-body">
+        <div style="display: flex; gap: 24px; align-items: flex-end;">
+          <div style="text-align: center;">
+            <div class="fake-radio selected"><div class="fake-radio-dot"></div><span>Medium</span></div>
+            <div style="margin-top: 8px; font-size: 12px; color: var(--neutral-500);">medium</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reference accordion -->
+    <div class="pb-ref-group">
+      <div class="pb-ref-item">Props <span class="badge">8 props</span></div>
+      <div class="pb-ref-item">Anatomy <span class="badge">5 parts</span></div>
+      <div class="pb-ref-item">Accessibility <span class="badge">4 keys</span></div>
+      <div class="pb-ref-item">Design Tokens <span class="badge">7 tokens</span></div>
+      <div class="pb-ref-item">Related Components <span class="badge">3 links</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="proposal-divider"></div>
+
+<!-- ============================================================== -->
+<!--  PROPOSAL C — Airy Depth                                       -->
+<!-- ============================================================== -->
+<section id="proposal-c">
+  <div class="proposal-section">
+    <span class="proposal-label">Proposal C</span>
+    <h2 class="proposal-title">Airy Depth</h2>
+    <p class="proposal-desc">
+      Soft, elevated cards with generous rounding and subtle shadows create a layered, breathable layout. Gradient fades and hover lift effects add depth without heaviness. Reference sections become a clean 2-column grid of expandable chips.
+    </p>
+
+    <!-- Title area -->
+    <div style="margin-bottom: 32px;">
+      <h1 style="font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">Radio</h1>
+      <div style="margin-top: 10px; display: flex; align-items: center; gap: 8px;">
+        <span style="font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 12px; background: var(--green-50); color: var(--green-500);">Stable</span>
+        <span style="font-size: 12px; color: var(--neutral-300);">|</span>
+        <span style="font-size: 12px; color: var(--neutral-500);">Updated Mar 16, 2026</span>
+      </div>
+      <p style="margin-top: 10px; font-size: 16px; color: var(--neutral-500); line-height: 1.6;">
+        Lets users pick exactly one option from a mutually exclusive set.
+      </p>
+    </div>
+
+    <!-- Elevated Hero -->
+    <div class="pc-hero">
+      <div class="pc-hero-canvas">
+        <div style="display: flex; gap: 12px;">
+          <div class="fake-radio"><div class="fake-radio-dot"></div><span>Option A</span></div>
+          <div class="fake-radio selected"><div class="fake-radio-dot"></div><span>Option B</span></div>
+          <div class="fake-radio"><div class="fake-radio-dot"></div><span>Option C</span></div>
+        </div>
+      </div>
+      <div class="pc-hero-controls">
+        <div class="fake-controls">
+          <div>
+            <div class="fake-control-label">selected</div>
+            <div class="fake-pill-group">
+              <button class="fake-pill">Off</button>
+              <button class="fake-pill active">On</button>
+            </div>
+          </div>
+          <div>
+            <div class="fake-control-label">state</div>
+            <div class="fake-pill-group">
+              <button class="fake-pill active">default</button>
+              <button class="fake-pill">error</button>
+              <button class="fake-pill">disabled</button>
+            </div>
+          </div>
+          <div>
+            <div class="fake-control-label">size</div>
+            <div class="fake-pill-group">
+              <button class="fake-pill active">medium</button>
+              <button class="fake-pill">small</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Core sections -->
+    <div class="pc-section-group">
+      <div class="pc-card">
+        <div class="pc-card-header">
+          <h3>Usage Guidelines</h3>
+          <div class="line"></div>
+        </div>
+        <div class="pc-card-body">
+          <div class="guideline-row">
+            <div class="guideline-preview">
+              <div class="fake-radio"><div class="fake-radio-dot"></div><span>Value</span></div>
+            </div>
+            <div class="guideline-text">
+              <h4>Default Unselected</h4>
+              <p>Standard unchecked radio, the most common starting state.</p>
+            </div>
+          </div>
+          <div class="guideline-row">
+            <div class="guideline-preview">
+              <div class="fake-radio selected"><div class="fake-radio-dot"></div><span>Value</span></div>
+            </div>
+            <div class="guideline-text">
+              <h4>Default Selected</h4>
+              <p>Checked state showing the user's active selection.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pc-card">
+        <div class="pc-card-header">
+          <h3>States Reference</h3>
+          <div class="line"></div>
+        </div>
+        <div class="pc-card-body">
+          <div style="display: flex; gap: 32px;">
+            <div style="text-align: center;">
+              <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                <div class="fake-radio"><div class="fake-radio-dot"></div><span>Value</span></div>
+                <div class="fake-radio selected"><div class="fake-radio-dot"></div><span>Value</span></div>
+              </div>
+              <span style="font-size: 12px; color: var(--neutral-500);">Default</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pc-card">
+        <div class="pc-card-header">
+          <h3>Sizes</h3>
+          <div class="line"></div>
+        </div>
+        <div class="pc-card-body">
+          <div style="display: flex; gap: 24px; align-items: flex-end;">
+            <div style="text-align: center;">
+              <div class="fake-radio selected"><div class="fake-radio-dot"></div><span>Medium</span></div>
+              <div style="margin-top: 8px; font-size: 12px; color: var(--neutral-500);">medium</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reference grid -->
+    <div class="pc-ref-section">
+      <div class="ref-label">Reference</div>
+      <div class="pc-ref-grid">
+        <div class="pc-ref-chip">Props <span class="arrow">&rsaquo;</span></div>
+        <div class="pc-ref-chip">Anatomy <span class="arrow">&rsaquo;</span></div>
+        <div class="pc-ref-chip">Accessibility <span class="arrow">&rsaquo;</span></div>
+        <div class="pc-ref-chip">Design Tokens <span class="arrow">&rsaquo;</span></div>
+        <div class="pc-ref-chip">Known Exceptions <span class="arrow">&rsaquo;</span></div>
+        <div class="pc-ref-chip">Related Components <span class="arrow">&rsaquo;</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Smooth scroll + active nav
+  document.querySelectorAll('.proposal-nav a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      document.querySelectorAll('.proposal-nav a').forEach(l => l.classList.remove('active'));
+      e.target.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

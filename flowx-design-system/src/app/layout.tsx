@@ -65,7 +65,7 @@ export default function RootLayout({
               </aside>
 
               {/* Main area */}
-              <div className="flex-1 flex flex-col md:pl-60">
+              <div className="flex-1 flex flex-col md:pl-60" style={{ backgroundColor: "#F9FAFB" }}>
                 <TopBar />
                 <main className="flex-1 px-6 py-8 mx-auto w-full max-w-[900px]">
                   <Breadcrumbs />

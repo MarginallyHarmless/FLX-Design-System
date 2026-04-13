@@ -31,10 +31,12 @@ function GuidelineRow({
   item,
   renderPreview,
   isLast,
+  previewWidth = "sm:w-2/5",
 }: {
   item: UsageGuideline;
   renderPreview: (props: Record<string, string>) => ReactNode;
   isLast: boolean;
+  previewWidth?: string;
 }) {
   const isUseCase = item.type === "use-case";
 
@@ -44,7 +46,7 @@ function GuidelineRow({
       style={isLast ? undefined : { borderColor: "#f7f8f9" }}
     >
       {/* Left column */}
-      <div className="shrink-0 sm:w-2/5">
+      <div className={`shrink-0 ${previewWidth}`}>
         {isUseCase ? (
           <div
             className={`flex items-center justify-center rounded-lg p-6 ${
@@ -74,9 +76,10 @@ function GuidelineRow({
 interface UsageGuidelinesSectionProps {
   guidelines: UsageGuideline[];
   renderPreview: (props: Record<string, string>) => ReactNode;
+  previewWidth?: string;
 }
 
-export function UsageGuidelinesSection({ guidelines, renderPreview }: UsageGuidelinesSectionProps) {
+export function UsageGuidelinesSection({ guidelines, renderPreview, previewWidth }: UsageGuidelinesSectionProps) {
   if (!guidelines || guidelines.length === 0) return null;
 
   return (
@@ -87,6 +90,7 @@ export function UsageGuidelinesSection({ guidelines, renderPreview }: UsageGuide
           item={item}
           renderPreview={renderPreview}
           isLast={i === guidelines.length - 1}
+          previewWidth={previewWidth}
         />
       ))}
     </div>

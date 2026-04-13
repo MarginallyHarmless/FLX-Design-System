@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Info } from "@phosphor-icons/react";
 import { ICON_OPTIONS, PhosphorIcon } from "@/lib/phosphor-icons";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface Control {
   name: string;
@@ -42,8 +40,8 @@ function SegmentControl({
     <div
       style={{
         display: "inline-flex",
-        borderRadius: 8,
-        backgroundColor: "#e3e8ed",
+        borderRadius: 10,
+        backgroundColor: "#f0f2f5",
         padding: 3,
         gap: 2,
         opacity: disabled ? 0.4 : 1,
@@ -58,15 +56,15 @@ function SegmentControl({
             onClick={() => onChange(opt)}
             disabled={disabled}
             style={{
-              padding: "5px 14px",
-              borderRadius: 6,
+              padding: "6px 16px",
+              borderRadius: 8,
               border: "none",
               fontSize: 13,
               fontWeight: isActive ? 500 : 400,
               color: isActive ? "#1d232c" : "#64748b",
               backgroundColor: isActive ? "#ffffff" : "transparent",
               boxShadow: isActive
-                ? "0 1px 2px rgba(0,0,0,0.08)"
+                ? "0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)"
                 : "none",
               cursor: disabled ? "default" : "pointer",
               transition: "all 0.15s ease",
@@ -108,13 +106,20 @@ export function ComponentPreview({
     setValues((prev) => ({ ...prev, [name]: value }));
 
   return (
-    <div className="rounded-lg border bg-card text-card-foreground">
+    <div
+      className="rounded-3xl border border-neutral-100 bg-card text-card-foreground dark:border-neutral-800"
+      style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)" }}
+    >
       {/* Canvas */}
       <div
-        className="flex min-h-[200px] items-center justify-center rounded-t-lg border-b p-8 transition-colors duration-200"
+        className="flex min-h-[280px] items-center justify-center rounded-t-3xl p-14 transition-colors duration-200"
         style={{
           fontFamily: "var(--font-flowx)",
-          backgroundColor: values.inverted ? "#1a1f27" : "#f7f8f9",
+          background: values.inverted
+            ? "#1a1f27"
+            : "linear-gradient(180deg, #ffffff 0%, #f7f8f9 100%)",
+          borderBottom: "1px solid",
+          borderBottomColor: values.inverted ? "#374151" : "#f0f1f3",
         }}
       >
         {render((() => {
@@ -130,7 +135,7 @@ export function ComponentPreview({
 
       {/* Controls */}
       {controls.length > 0 && (
-        <div className="flex flex-wrap items-start gap-6 px-4 py-4">
+        <div className="flex flex-wrap items-start gap-6 rounded-b-3xl px-6 py-5">
           {controls.map((c) => {
             const segmentOptions = c.type === "boolean"
               ? ["Off", "On"]
@@ -202,18 +207,6 @@ export function ComponentPreview({
         </div>
       )}
 
-      {/* Footer */}
-      <div className="flex items-center gap-1.5 rounded-b-lg px-4 py-2 text-xs text-muted-foreground" style={{ backgroundColor: "#f7f8f9" }}>
-        📐 Design reference
-        <Tooltip>
-          <TooltipTrigger className="cursor-help">
-            <Info size={14} className="text-muted-foreground/60" />
-          </TooltipTrigger>
-          <TooltipContent side="top">
-            Design references showing the intended look and behavior of each component. The actual codebase implementation may not yet match these specs 1:1.
-          </TooltipContent>
-        </Tooltip>
-      </div>
     </div>
   );
 }
