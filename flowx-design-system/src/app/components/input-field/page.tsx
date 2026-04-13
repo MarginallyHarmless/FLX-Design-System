@@ -330,12 +330,7 @@ export default function InputFieldPage() {
             },
           ]}
           render={(values) => (
-            <div
-              className={`inline-flex items-center justify-center rounded-lg p-6 ${
-                values.inverted ? "bg-neutral-900" : ""
-              }`}
-            >
-              <FlowXInputField
+            <FlowXInputField
                 state={
                   (values.state as "default" | "focused" | "error" | "disabled") ||
                   "default"
@@ -353,7 +348,6 @@ export default function InputFieldPage() {
                 hasSuffix={values.hasSuffix === true}
                 hasDescription={values.hasDescription === true || values.state === "error"}
               />
-            </div>
           )}
         />
       }

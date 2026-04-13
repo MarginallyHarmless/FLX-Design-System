@@ -314,27 +314,21 @@ export default function SelectFieldPage() {
             },
           ]}
           render={(values) => (
-            <div
-              className={`inline-flex items-center justify-center rounded-lg p-6 ${
-                values.inverted ? "bg-neutral-900" : ""
-              }`}
-            >
-              <FlowXSelectField
-                state={
-                  (values.state as "default" | "focused" | "error" | "disabled") ||
-                  "default"
-                }
-                size={
-                  (values.size as "small" | "medium") || "medium"
-                }
-                filled={values.filled === true}
-                fillMode={(values.fillMode as "chips" | "text") || "chips"}
-                inverted={values.inverted === true}
-                hasLabel={values.label !== "off"}
-                inlineLabel={values.label === "horizontal"}
-                hasDescription={values.hasDescription === true}
-              />
-            </div>
+            <FlowXSelectField
+              state={
+                (values.state as "default" | "focused" | "error" | "disabled") ||
+                "default"
+              }
+              size={
+                (values.size as "small" | "medium") || "medium"
+              }
+              filled={values.filled === true}
+              fillMode={(values.fillMode as "chips" | "text") || "chips"}
+              inverted={values.inverted === true}
+              hasLabel={values.label !== "off"}
+              inlineLabel={values.label === "horizontal"}
+              hasDescription={values.hasDescription === true}
+            />
           )}
         />
       }
