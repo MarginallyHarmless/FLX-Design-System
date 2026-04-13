@@ -209,7 +209,7 @@ export const buttonSpec: ComponentSpec = {
       type: "info",
       title: "Choosing the right hierarchy",
       description:
-        "Use Primary for the most important call-to-action. Aim for one per screen, section, or container. Use Secondary for regular, non-primary actions; you may use several per screen. Use Tertiary for the lowest-priority actions, often in a group of three or paired with a Primary to signal an optional action.",
+        "Use Primary for the most important call-to-action, one per screen, section, or container. Use Secondary for regular actions; several per screen is fine. Use Tertiary for the lowest-priority actions, often paired with a Primary to signal an optional action.",
       previews: [
         { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off" },
         { scope: "Brand", variant: "Secondary", state: "Default", inverted: "Off" },
@@ -220,7 +220,7 @@ export const buttonSpec: ComponentSpec = {
       type: "info",
       title: "Choosing the right scope",
       description:
-        "Use Brand for the majority of actions across the product. Reserve Danger for destructive or irreversible actions such as Delete, Remove, or Discard so the risk is visually clear. Use Success to confirm positive outcomes like Keep Generated Content, typically after a decision has been made.",
+        "Use Brand for most actions. Reserve Danger for destructive or irreversible actions like Delete or Discard, so the risk is visually clear. Use Success to confirm positive outcomes, like Keep Generated Content.",
       previews: [
         { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off" },
         { scope: "Danger", variant: "Primary", state: "Default", inverted: "Off" },
@@ -231,7 +231,7 @@ export const buttonSpec: ComponentSpec = {
       type: "info",
       title: "Using icons in buttons",
       description:
-        "Most buttons don't need an icon; a clear label is usually enough. Use an icon-only button when the icon's meaning is unambiguous. Pair a leading icon with the label when the icon is recognizable and reinforces the button's meaning. Trailing icons should be used in specific use cases as a nod to the interaction.",
+        "Most buttons don't need an icon; a clear label is enough. Use icon-only when the meaning is unambiguous. Add a leading icon when it reinforces the label. Use trailing icons sparingly, as a nod to the interaction.",
       previews: [
         { scope: "Danger", variant: "Secondary", state: "Default", inverted: "Off", hasLabel: "false", hasIconStart: "true", iconStart: "TrashSimple" },
         { scope: "Brand", variant: "Secondary", state: "Default", inverted: "Off", hasIconStart: "true", iconStart: "Plus", label: "Add" },
@@ -242,7 +242,7 @@ export const buttonSpec: ComponentSpec = {
       type: "info",
       title: "Using the disabled state",
       description:
-        "Use the Disabled state to maintain layout continuity and to communicate that an action may become available later. Always pair a disabled button with a hover tooltip that explains why it is disabled, so users understand what they need to do to enable it.",
+        "Use the Disabled state to maintain layout continuity and signal that an action may become available later. Always pair it with a hover tooltip that explains why the button is disabled.",
       previews: [
         { scope: "Brand", variant: "Primary", state: "Disabled", inverted: "Off", label: "Publish", tooltip: "Add a title before publishing" },
       ],
@@ -251,7 +251,7 @@ export const buttonSpec: ComponentSpec = {
       type: "info",
       title: "Form submission buttons",
       description:
-        "Avoid disabling form submit buttons. Keep them active and surface validation feedback on click so users can see exactly what needs to be fixed.",
+        "Don't disable form submit buttons. Keep them active and surface validation feedback on click so users can see what needs fixing.",
       previews: [
         { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off", label: "Submit", showInput: "true" },
       ],
@@ -260,7 +260,7 @@ export const buttonSpec: ComponentSpec = {
       type: "info",
       title: "Choosing the right size",
       description:
-        "Use Medium as the default size across admin pages. Use Small in tighter spaces such as canvas areas like UI Designer, Data Model, and Agent Builder. Reserve XS and XXS for cases where space is extremely limited and use them sparingly.",
+        "Use Medium as the default across admin pages. Use Small in tighter spaces like canvas areas (UI Designer, Data Model, Agent Builder). Reserve XS and XXS for extremely limited space, and use them sparingly.",
       previews: [
         { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off", size: "Medium", label: "Medium" },
         { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off", size: "Small", label: "Small" },
