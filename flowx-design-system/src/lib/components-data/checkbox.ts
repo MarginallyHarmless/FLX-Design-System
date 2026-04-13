@@ -616,16 +616,55 @@ export const checkboxSpec: ComponentSpec = {
   },
 
   usageGuidelines: [
-    { type: "use-case", title: "Default Unchecked", description: "Standard unchecked checkbox, the most common starting state.", props: { selected: "off", state: "default", border: "on", inverted: "off" } },
-    { type: "use-case", title: "Default Checked", description: "Checked state showing the user has opted in.", props: { selected: "on", state: "default", border: "on", inverted: "off" } },
-    { type: "use-case", title: "Without Border", description: "Use in compact layouts where the container border adds visual noise.", props: { selected: "off", state: "default", border: "off", inverted: "off" } },
-    { type: "use-case", title: "Checked Without Border", description: "Checked state in borderless compact layouts.", props: { selected: "on", state: "default", border: "off", inverted: "off" } },
-    { type: "use-case", title: "On Dark Background", description: "Use on dark surfaces like modals or hero sections.", props: { selected: "off", state: "default", border: "on", inverted: "on" } },
-    { type: "use-case", title: "Checked on Dark Background", description: "Checked state on dark surfaces.", props: { selected: "on", state: "default", border: "on", inverted: "on" } },
-    { type: "use-case", title: "Error Unchecked", description: "Show when form validation requires the checkbox to be checked.", props: { selected: "off", state: "error", border: "on", inverted: "off" } },
-    { type: "use-case", title: "Error Checked", description: "Checked but still in error — e.g. group-level validation failure.", props: { selected: "on", state: "error", border: "on", inverted: "off" } },
-    { type: "use-case", title: "Disabled Unchecked", description: "Use when the option exists but is not currently available.", props: { selected: "off", state: "disabled", border: "on", inverted: "off" } },
-    { type: "use-case", title: "Disabled Checked", description: "Use when showing a locked-in selection the user cannot change.", props: { selected: "on", state: "disabled", border: "on", inverted: "off" } },
+    {
+      type: "info",
+      title: "With or without a container",
+      description:
+        "Use the container border when each checkbox is a selectable row in a list or card, so the whole surface acts as a hit target. Omit it in compact forms or filter lists where the border adds visual noise.",
+      previewRows: [
+        [
+          { selected: "on", state: "default", border: "on", inverted: "off", hasLabel: "off", value: "Email" },
+          { selected: "off", state: "default", border: "on", inverted: "off", hasLabel: "off", value: "SMS" },
+        ],
+        [
+          { selected: "on", state: "default", border: "off", inverted: "off", hasLabel: "off", value: "Email" },
+          { selected: "off", state: "default", border: "off", inverted: "off", hasLabel: "off", value: "SMS" },
+        ],
+      ],
+    },
+    {
+      type: "info",
+      title: "Showing errors",
+      description:
+        "Display the error below the checkbox with red helper text, and place the error icon to the right of the checkbox, outside the container.",
+      previews: [
+        { selected: "off", state: "error", border: "on", inverted: "off", hasLabel: "off", value: "Accept terms", hasDescription: "on" },
+        { selected: "on", state: "error", border: "on", inverted: "off", hasLabel: "off", value: "Admin role", hasDescription: "on" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Indeterminate state",
+      description:
+        "Use the indeterminate state on a parent checkbox when some, but not all, of its child options are selected. Clicking it should select all children; clicking again should deselect them. Show the dash icon in the same filled style as a selected checkbox.",
+      previewRows: [
+        [
+          { indeterminate: "on", state: "default", border: "off", inverted: "off", hasLabel: "off", value: "Select all" },
+          { selected: "on", state: "default", border: "off", inverted: "off", hasLabel: "off", value: "Email" },
+          { selected: "off", state: "default", border: "off", inverted: "off", hasLabel: "off", value: "SMS" },
+        ],
+      ],
+    },
+    {
+      type: "info",
+      title: "Choosing the right size",
+      description:
+        "Use Medium as the default across admin pages. Use Small in tighter spaces like canvas areas (UI Designer, Data Model, Agent Builder).",
+      previews: [
+        { selected: "off", state: "default", border: "on", inverted: "off", hasLabel: "off", value: "Medium", size: "medium" },
+        { selected: "off", state: "default", border: "on", inverted: "off", hasLabel: "off", value: "Small", size: "small" },
+      ],
+    },
   ],
 
   relatedComponents: ["radio", "switch", "select-field"],

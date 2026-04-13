@@ -77,7 +77,13 @@ export type UsageGuideline =
   | { type: "dont"; title: string; description: string }
   | { type: "decision"; title: string; description: string; date?: string }
   | { type: "exception"; title: string; description: string }
-  | { type: "info"; title: string; description: string; previews?: Record<string, string>[] };
+  | {
+      type: "info";
+      title: string;
+      description: string;
+      previews?: Record<string, string>[];
+      previewRows?: Record<string, string>[][];
+    };
 
 export interface ComponentSpec {
   slug: string;

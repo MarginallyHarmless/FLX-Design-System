@@ -38,9 +38,11 @@ function GuidelineRow({
   isLast: boolean;
   previewWidth?: string;
 }) {
-  const infoPreviews =
-    item.type === "info" && Array.isArray(item.previews) && item.previews.length > 0
-      ? item.previews
+  const infoPreviewRows: Record<string, string>[][] | null =
+    item.type === "info" && Array.isArray(item.previewRows) && item.previewRows.length > 0
+      ? item.previewRows
+      : item.type === "info" && Array.isArray(item.previews) && item.previews.length > 0
+      ? [item.previews]
       : null;
 
   return (
@@ -59,13 +61,17 @@ function GuidelineRow({
           >
             {renderPreview(item.props)}
           </div>
-        ) : infoPreviews ? (
+        ) : infoPreviewRows ? (
           <div
-            className="flex w-full flex-wrap items-center justify-center gap-3 rounded-lg p-6"
+            className="flex w-full flex-col items-center justify-center gap-3 rounded-lg p-6"
             style={{ backgroundColor: "#f7f8f9" }}
           >
-            {infoPreviews.map((p, i) => (
-              <div key={i}>{renderPreview(p)}</div>
+            {infoPreviewRows.map((row, r) => (
+              <div key={r} className="flex flex-wrap items-center justify-center gap-3">
+                {row.map((p, i) => (
+                  <div key={i}>{renderPreview(p)}</div>
+                ))}
+              </div>
             ))}
           </div>
         ) : (

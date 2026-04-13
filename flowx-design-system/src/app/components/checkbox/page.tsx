@@ -12,6 +12,7 @@ import { FlowXLabel, FlowXDescription, FlowXErrorIcon } from "@/components/docs/
 
 function FlowXCheckbox({
   selected = false,
+  indeterminate = false,
   state = "default",
   border: borderProp = true,
   inverted = false,
@@ -20,8 +21,10 @@ function FlowXCheckbox({
   value = "Value",
   hasDescription = false,
   subtitle = "",
+  hasLabel = true,
 }: {
   selected?: boolean;
+  indeterminate?: boolean;
   state?: "default" | "error" | "disabled";
   border?: boolean;
   inverted?: boolean;
@@ -30,12 +33,15 @@ function FlowXCheckbox({
   value?: string;
   hasDescription?: boolean;
   subtitle?: string;
+  hasLabel?: boolean;
 }) {
   const isSmall = size === "small";
   const isDisabled = state === "disabled";
   const isError = state === "error";
   const hasSubtitle = !!subtitle;
   const border = hasSubtitle || borderProp;
+  // Indeterminate shares the filled look with selected; only the icon differs.
+  const filled = selected || indeterminate;
 
   /* ---- Container background ---- */
   const getContainerBg = () => {
@@ -45,32 +51,32 @@ function FlowXCheckbox({
       return "#e3e8ed";
     }
     if (isError) {
-      if (inverted) return selected ? "#610e00" : "transparent";
-      return selected ? "#fde9e6" : "#ffffff";
+      if (inverted) return filled ? "#610e00" : "transparent";
+      return filled ? "#fde9e6" : "#ffffff";
     }
     // default
-    if (inverted) return selected ? "#002d5b" : "transparent";
-    return selected ? "#e6f0fb" : "#ffffff";
+    if (inverted) return filled ? "#002d5b" : "transparent";
+    return filled ? "#e6f0fb" : "#ffffff";
   };
 
   /* ---- Container border color ---- */
   const getContainerBorder = () => {
     if (isDisabled) {
-      if (inverted) return selected ? "#8390a2" : "#5b6a7e";
-      return selected ? "#64748b" : "rgba(15,17,20,0.1)";
+      if (inverted) return filled ? "#8390a2" : "#5b6a7e";
+      return filled ? "#64748b" : "rgba(15,17,20,0.1)";
     }
     if (isError) {
       if (inverted) return "#eb4e33";
       return "#e62200";
     }
     // default
-    if (inverted) return selected ? "#3389e0" : "#64748b";
-    return selected ? "#006bd8" : "#e3e8ed";
+    if (inverted) return filled ? "#3389e0" : "#64748b";
+    return filled ? "#006bd8" : "#e3e8ed";
   };
 
-  /* ---- Checkbox icon fill (selected) ---- */
+  /* ---- Checkbox icon fill (selected or indeterminate) ---- */
   const getCheckboxFill = () => {
-    if (!selected) return "transparent";
+    if (!filled) return "transparent";
     if (isDisabled) return inverted ? "#a6b0be" : "#64748b";
     if (isError) {
       if (inverted) return border ? "#eb4e33" : "#e62200";
@@ -84,7 +90,7 @@ function FlowXCheckbox({
      only the container border turns red. The icon uses the same neutral
      stroke as the default state (Figma: same CheckboxIcon variant). */
   const getCheckboxStroke = () => {
-    if (selected) return "transparent";
+    if (filled) return "transparent";
     if (isDisabled) {
       if (inverted) return "#5b6a7e";
       return "rgba(15,17,20,0.1)";
@@ -136,6 +142,7 @@ function FlowXCheckbox({
         size={size}
         inverted={inverted}
         disabled={state === "disabled"}
+        hasLabel={hasLabel}
       />
 
       {/* Input row: container + optional error icon */}
@@ -161,7 +168,27 @@ function FlowXCheckbox({
           }}
         >
           {/* Checkbox Icon */}
-          {selected ? (
+          {indeterminate ? (
+            <svg
+              width={iconSize}
+              height={iconSize}
+              viewBox={isSmall ? "0 0 16 16" : "0 0 24 24"}
+              fill="none"
+              style={{ flexShrink: 0 }}
+            >
+              {isSmall ? (
+                <>
+                  <rect x="0.5" y="0.5" width="15" height="15" rx="3.2" fill={checkboxFill} />
+                  <path d="M4.5 8H11.5" stroke="white" strokeWidth="1" strokeLinecap="round" />
+                </>
+              ) : (
+                <>
+                  <rect x="0.5" y="0.5" width="23" height="23" rx="4.8" fill={checkboxFill} />
+                  <path d="M6.5 12H17.5" stroke="white" strokeWidth="1" strokeLinecap="round" />
+                </>
+              )}
+            </svg>
+          ) : selected ? (
             <svg
               width={iconSize}
               height={iconSize}
@@ -403,7 +430,7 @@ export default function CheckboxPage() {
               }
               border={values.border !== false}
               inverted={values.inverted === true}
-              hasDescription={values.hasDescription === true}
+              hasDescription={values.hasDescription === true || values.state === "error"}
               subtitle={values.subtitle ? "This is a description text for the checkbox group item." : ""}
             />
           )}
@@ -412,9 +439,16 @@ export default function CheckboxPage() {
       renderGuidelinePreview={(props) => (
         <FlowXCheckbox
           selected={props.selected === "on"}
+          indeterminate={props.indeterminate === "on"}
           state={(props.state as "default" | "error" | "disabled") || "default"}
           border={props.border === "on"}
           inverted={props.inverted === "on"}
+          size={(props.size as "small" | "medium") || "medium"}
+          label={props.label}
+          value={props.value}
+          hasDescription={props.hasDescription === "on"}
+          subtitle={props.subtitle}
+          hasLabel={props.hasLabel !== "off"}
         />
       )}
       statesReference={
