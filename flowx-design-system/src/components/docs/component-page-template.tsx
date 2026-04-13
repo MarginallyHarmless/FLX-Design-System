@@ -110,11 +110,7 @@ export function ComponentPageTemplate({
           </p>
         </div>
 
-        <div className="mt-8">
-          <CollapsibleSection title="Interactive Preview" tier={1}>
-            {interactivePreview}
-          </CollapsibleSection>
-        </div>
+        <div className="mt-8">{interactivePreview}</div>
       </div>
 
       {/* ===== TIER 2: Core Content ===== */}
@@ -150,26 +146,6 @@ export function ComponentPageTemplate({
       <div className="mt-16">
         <div className="mb-5 text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">Reference</div>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-
-        {spec.considerations && spec.considerations.length > 0 && (
-          <CollapsibleSection title="Considerations" tier={3} defaultOpen={false}>
-            <ul className="space-y-2">
-              {spec.considerations.map((item, i) => {
-                const sep = item.indexOf(" → ");
-                return (
-                  <li key={i} className="text-sm text-muted-foreground">
-                    {sep !== -1 ? (
-                      <>
-                        <span className="font-medium text-foreground">{item.slice(0, sep)}</span>
-                        {" → "}{item.slice(sep + 3)}
-                      </>
-                    ) : item}
-                  </li>
-                );
-              })}
-            </ul>
-          </CollapsibleSection>
-        )}
 
         {spec.props && spec.props.length > 0 && (
           <CollapsibleSection title="Props" tier={3} defaultOpen={false}>

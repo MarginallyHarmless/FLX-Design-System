@@ -487,6 +487,16 @@ export const inputFieldSpec: ComponentSpec = {
     },
     {
       type: "info",
+      title: "Placeholder content",
+      description:
+        "Use placeholder text only for supplemental hints, not as a replacement for the label. Write placeholders as examples of valid input rather than instructions.",
+      previews: [
+        { state: "default", filled: "off", label: "Email", placeholder: "name@company.com" },
+        { state: "default", filled: "off", label: "Phone", placeholder: "+40 712 345 678" },
+      ],
+    },
+    {
+      type: "info",
       title: "Marking required fields",
       description:
         "Mark required fields with an asterisk after the label so users can scan a form and see what they must fill in before submitting. Use neutrals-500 for the asterisk so it reads as a quiet annotation rather than an alert.",
