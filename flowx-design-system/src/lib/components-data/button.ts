@@ -268,6 +268,22 @@ export const buttonSpec: ComponentSpec = {
         { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off", size: "XXS", label: "XXS" },
       ],
     },
+    {
+      type: "info",
+      title: "Inverted on dark backgrounds",
+      description:
+        "Use the inverted variant when the component sits on a dark or strongly colored surface like a hero section or a dark modal. Inverted colors keep text and strokes legible against the darker background.",
+      previewRows: [
+        {
+          background: "dark",
+          items: [
+            { scope: "Brand", variant: "Primary", state: "Default", inverted: "On" },
+            { scope: "Brand", variant: "Secondary", state: "Default", inverted: "On" },
+            { scope: "Brand", variant: "Tertiary", state: "Default", inverted: "On" },
+          ],
+        },
+      ],
+    },
   ],
 
   relatedComponents: ["input-field", "radio"],

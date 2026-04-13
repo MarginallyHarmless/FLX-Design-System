@@ -38,7 +38,8 @@ function GuidelineRow({
   isLast: boolean;
   previewWidth?: string;
 }) {
-  const infoPreviewRows: Record<string, string>[][] | null =
+  type PreviewRow = Record<string, string>[] | { background: "dark"; items: Record<string, string>[] };
+  const infoPreviewRows: PreviewRow[] | null =
     item.type === "info" && Array.isArray(item.previewRows) && item.previewRows.length > 0
       ? item.previewRows
       : item.type === "info" && Array.isArray(item.previews) && item.previews.length > 0
@@ -62,17 +63,22 @@ function GuidelineRow({
             {renderPreview(item.props)}
           </div>
         ) : infoPreviewRows ? (
-          <div
-            className="flex w-full flex-col items-center justify-center gap-3 rounded-lg p-6"
-            style={{ backgroundColor: "#f7f8f9" }}
-          >
-            {infoPreviewRows.map((row, r) => (
-              <div key={r} className="flex flex-wrap items-center justify-center gap-3">
-                {row.map((p, i) => (
-                  <div key={i}>{renderPreview(p)}</div>
-                ))}
-              </div>
-            ))}
+          <div className="flex w-full flex-col gap-3">
+            {infoPreviewRows.map((row, r) => {
+              const isDark = !Array.isArray(row) && row.background === "dark";
+              const items = Array.isArray(row) ? row : row.items;
+              return (
+                <div
+                  key={r}
+                  className="flex w-full flex-wrap items-center justify-center gap-3 rounded-lg p-6"
+                  style={{ backgroundColor: isDark ? "#1a1f27" : "#f7f8f9" }}
+                >
+                  {items.map((p, i) => (
+                    <div key={i}>{renderPreview(p)}</div>
+                  ))}
+                </div>
+              );
+            })}
           </div>
         ) : (
           <div className="flex w-full">

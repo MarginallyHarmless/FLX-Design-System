@@ -534,5 +534,19 @@ export const inputFieldSpec: ComponentSpec = {
         { state: "default", filled: "on", value: "Value", label: "Small", size: "small" },
       ],
     },
+    {
+      type: "info",
+      title: "Inverted on dark backgrounds",
+      description:
+        "Use the inverted variant when the component sits on a dark or strongly colored surface like a hero section or a dark modal. Inverted colors keep text and strokes legible against the darker background.",
+      previewRows: [
+        {
+          background: "dark",
+          items: [
+            { state: "default", filled: "on", value: "Ana", label: "First name", inverted: "on" },
+          ],
+        },
+      ],
+    },
   ],
 };

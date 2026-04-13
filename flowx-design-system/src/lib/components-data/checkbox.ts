@@ -665,6 +665,21 @@ export const checkboxSpec: ComponentSpec = {
         { selected: "off", state: "default", border: "on", inverted: "off", hasLabel: "off", value: "Small", size: "small" },
       ],
     },
+    {
+      type: "info",
+      title: "Inverted on dark backgrounds",
+      description:
+        "Use the inverted variant when the component sits on a dark or strongly colored surface like a hero section or a dark modal. Inverted colors keep text and strokes legible against the darker background.",
+      previewRows: [
+        {
+          background: "dark",
+          items: [
+            { selected: "on", state: "default", border: "on", inverted: "on", hasLabel: "off", value: "Email" },
+            { selected: "off", state: "default", border: "on", inverted: "on", hasLabel: "off", value: "SMS" },
+          ],
+        },
+      ],
+    },
   ],
 
   relatedComponents: ["radio", "switch", "select-field"],

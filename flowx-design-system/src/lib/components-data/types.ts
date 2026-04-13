@@ -82,7 +82,10 @@ export type UsageGuideline =
       title: string;
       description: string;
       previews?: Record<string, string>[];
-      previewRows?: Record<string, string>[][];
+      previewRows?: Array<
+        | Record<string, string>[]
+        | { background: "dark"; items: Record<string, string>[] }
+      >;
     };
 
 export interface ComponentSpec {
