@@ -3,6 +3,7 @@
 import { buttonSpec } from "@/lib/components-data/button";
 import { ComponentPageTemplate } from "@/components/docs/component-page-template";
 import { ComponentPreview } from "@/components/docs/component-preview";
+import { FlowXTooltip } from "@/components/docs/shared-elements";
 import { PhosphorIcon, type IconName } from "@/lib/phosphor-icons";
 
 /* ------------------------------------------------------------------ */
@@ -381,14 +382,53 @@ export default function ButtonPage() {
           )}
         />
       }
-      renderGuidelinePreview={(props) => (
-        <FlowXButton
-          scope={(props.scope as "Brand" | "Danger" | "Success") || "Brand"}
-          variant={(props.variant as "Primary" | "Secondary" | "Tertiary") || "Primary"}
-          state={(props.state as "Default" | "Hover" | "Pressed" | "Disabled") || "Default"}
-          inverted={props.inverted === "On"}
-        />
-      )}
+      renderGuidelinePreview={(props) => {
+        const button = (
+          <FlowXButton
+            scope={(props.scope as "Brand" | "Danger" | "Success") || "Brand"}
+            variant={(props.variant as "Primary" | "Secondary" | "Tertiary") || "Primary"}
+            state={(props.state as "Default" | "Hover" | "Pressed" | "Disabled") || "Default"}
+            size={(props.size as "Medium" | "Small" | "XS" | "XXS") || "Medium"}
+            inverted={props.inverted === "On"}
+            hasLabel={props.hasLabel !== "false"}
+            hasIconStart={props.hasIconStart === "true"}
+            hasIconEnd={props.hasIconEnd === "true"}
+            iconStart={props.iconStart as IconName | undefined}
+            iconEnd={props.iconEnd as IconName | undefined}
+            label={props.label}
+          />
+        );
+        if (props.showInput === "true") {
+          return (
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 12 }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: 220,
+                  height: 36,
+                  padding: "0 12px",
+                  border: "1px solid #e3e8ed",
+                  borderRadius: 8,
+                  backgroundColor: "#ffffff",
+                }}
+              >
+                <span style={{ fontSize: 14, color: "#a6b0be", fontFamily: "var(--font-flowx)" }}>
+                  name@company.com
+                </span>
+              </div>
+              {button}
+            </div>
+          );
+        }
+        if (!props.tooltip) return button;
+        return (
+          <div style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+            <FlowXTooltip text={props.tooltip} />
+            {button}
+          </div>
+        );
+      }}
       statesReference={
         spec.states && spec.states.length > 0 ? (
           <div className="space-y-6">

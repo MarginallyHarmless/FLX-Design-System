@@ -227,16 +227,47 @@ export const buttonSpec: ComponentSpec = {
         { scope: "Success", variant: "Primary", state: "Default", inverted: "Off" },
       ],
     },
-    { type: "use-case", title: "Brand Primary", description: "Main call-to-action — the most common button.", props: { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off" } },
-    { type: "use-case", title: "Brand Secondary", description: "Secondary actions that sit alongside the primary CTA.", props: { scope: "Brand", variant: "Secondary", state: "Default", inverted: "Off" } },
-    { type: "use-case", title: "Brand Tertiary", description: "Low-emphasis actions such as Cancel or Learn more.", props: { scope: "Brand", variant: "Tertiary", state: "Default", inverted: "Off" } },
-    { type: "use-case", title: "Danger Primary", description: "Destructive actions like Delete or Remove.", props: { scope: "Danger", variant: "Primary", state: "Default", inverted: "Off" } },
-    { type: "use-case", title: "Danger Secondary", description: "Destructive secondary actions with less emphasis.", props: { scope: "Danger", variant: "Secondary", state: "Default", inverted: "Off" } },
-    { type: "use-case", title: "Success Primary", description: "Positive confirmation actions like Approve or Confirm.", props: { scope: "Success", variant: "Primary", state: "Default", inverted: "Off" } },
-    { type: "use-case", title: "Success Secondary", description: "Positive secondary actions with less emphasis.", props: { scope: "Success", variant: "Secondary", state: "Default", inverted: "Off" } },
-    { type: "use-case", title: "Inverted Primary", description: "Primary button on dark backgrounds.", props: { scope: "Brand", variant: "Primary", state: "Default", inverted: "On" } },
-    { type: "use-case", title: "Inverted Secondary", description: "Secondary button on dark backgrounds.", props: { scope: "Brand", variant: "Secondary", state: "Default", inverted: "On" } },
-    { type: "use-case", title: "Inverted Tertiary", description: "Tertiary button on dark backgrounds.", props: { scope: "Brand", variant: "Tertiary", state: "Default", inverted: "On" } },
+    {
+      type: "info",
+      title: "Using icons in buttons",
+      description:
+        "Most buttons don't need an icon; a clear label is usually enough. Use an icon-only button when the icon's meaning is unambiguous. Pair a leading icon with the label when the icon is recognizable and reinforces the button's meaning. Trailing icons should be used in specific use cases as a nod to the interaction.",
+      previews: [
+        { scope: "Danger", variant: "Secondary", state: "Default", inverted: "Off", hasLabel: "false", hasIconStart: "true", iconStart: "TrashSimple" },
+        { scope: "Brand", variant: "Secondary", state: "Default", inverted: "Off", hasIconStart: "true", iconStart: "Plus", label: "Add" },
+        { scope: "Brand", variant: "Secondary", state: "Default", inverted: "Off", hasIconEnd: "true", iconEnd: "ArrowRight", label: "Continue" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Using the disabled state",
+      description:
+        "Use the Disabled state to maintain layout continuity and to communicate that an action may become available later. Always pair a disabled button with a hover tooltip that explains why it is disabled, so users understand what they need to do to enable it.",
+      previews: [
+        { scope: "Brand", variant: "Primary", state: "Disabled", inverted: "Off", label: "Publish", tooltip: "Add a title before publishing" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Form submission buttons",
+      description:
+        "Avoid disabling form submit buttons. Keep them active and surface validation feedback on click so users can see exactly what needs to be fixed.",
+      previews: [
+        { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off", label: "Submit", showInput: "true" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Choosing the right size",
+      description:
+        "Use Medium as the default size across admin pages. Use Small in tighter spaces such as canvas areas like UI Designer, Data Model, and Agent Builder. Reserve XS and XXS for cases where space is extremely limited and use them sparingly.",
+      previews: [
+        { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off", size: "Medium", label: "Medium" },
+        { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off", size: "Small", label: "Small" },
+        { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off", size: "XS", label: "XS" },
+        { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off", size: "XXS", label: "XXS" },
+      ],
+    },
   ],
 
   relatedComponents: ["input-field", "radio"],
