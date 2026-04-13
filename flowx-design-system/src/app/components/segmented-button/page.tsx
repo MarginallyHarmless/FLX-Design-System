@@ -17,6 +17,7 @@ function FlowXSegmentedButton({
   options = ["Tab 1", "Tab 2", "Tab 3"],
   selectedIndex = 0,
   label = "Label",
+  hasLabel = true,
   onSelect,
 }: {
   disabled?: boolean;
@@ -25,6 +26,7 @@ function FlowXSegmentedButton({
   options?: string[];
   selectedIndex?: number;
   label?: string;
+  hasLabel?: boolean;
   onSelect?: (index: number) => void;
 }) {
   const isSmall = size === "small";
@@ -65,17 +67,19 @@ function FlowXSegmentedButton({
       }}
     >
       {/* Label */}
-      <span
-        style={{
-          fontSize: labelFontSize,
-          lineHeight: isSmall ? "16px" : "22px",
-          fontWeight: 600,
-          color: labelColor,
-          whiteSpace: "nowrap",
-        }}
-      >
-        {label}
-      </span>
+      {hasLabel && (
+        <span
+          style={{
+            fontSize: labelFontSize,
+            lineHeight: isSmall ? "16px" : "22px",
+            fontWeight: 600,
+            color: labelColor,
+            whiteSpace: "nowrap",
+          }}
+        >
+          {label}
+        </span>
+      )}
 
       {/* Container */}
       <div
@@ -253,13 +257,21 @@ export default function SegmentedButtonPage() {
           )}
         />
       }
-      renderGuidelinePreview={(props) => (
-        <FlowXSegmentedButton
-          disabled={props.disabled === "on"}
-          inverted={props.inverted === "on"}
-          size={(props.size as "small" | "medium") || "medium"}
-        />
-      )}
+      renderGuidelinePreview={(props) => {
+        const options = props.options ? props.options.split(",") : undefined;
+        const selectedIndex = props.selectedIndex !== undefined ? parseInt(props.selectedIndex, 10) : undefined;
+        return (
+          <FlowXSegmentedButton
+            disabled={props.disabled === "on"}
+            inverted={props.inverted === "on"}
+            size={(props.size as "small" | "medium") || "medium"}
+            options={options}
+            selectedIndex={selectedIndex}
+            label={props.label}
+            hasLabel={props.hasLabel !== "off"}
+          />
+        );
+      }}
       statesReference={
         spec.states && spec.states.length > 0 ? (
           <div className="flex flex-wrap items-start gap-6">

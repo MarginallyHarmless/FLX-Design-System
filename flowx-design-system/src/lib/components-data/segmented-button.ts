@@ -238,10 +238,48 @@ export const segmentedButtonSpec: ComponentSpec = {
   },
 
   usageGuidelines: [
-    { type: "use-case", title: "Default", description: "Standard segmented control for switching between views or filters.", props: { size: "medium", inverted: "off", disabled: "off" } },
-    { type: "use-case", title: "Disabled", description: "Non-interactive segmented control indicating unavailable options.", props: { size: "medium", inverted: "off", disabled: "on" } },
-    { type: "use-case", title: "Inverted", description: "Segmented control on dark backgrounds for maintaining contrast.", props: { size: "medium", inverted: "on", disabled: "off" } },
-    { type: "use-case", title: "Small", description: "Compact segmented control for space-constrained layouts.", props: { size: "small", inverted: "off", disabled: "off" } },
+    {
+      type: "info",
+      title: "When to use a segmented button",
+      description:
+        "Reach for a segmented button when you have 2–5 mutually exclusive modes that benefit from being visible at once. Switch to tabs when each mode owns a distinct content panel, or to a select when the list grows beyond a handful of options.",
+      previews: [
+        { size: "medium", hasLabel: "off", options: "Day,Week,Month", selectedIndex: "0" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Segmented vs radio",
+      description:
+        "Use a segmented button when the choice immediately changes what's shown — switching views, filters, or time ranges. Use a radio when the choice is a form input that's committed later, like a plan or shipping option.",
+      previews: [
+        { size: "medium", hasLabel: "off", options: "List,Grid,Map", selectedIndex: "1" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Choosing the right size",
+      description:
+        "Use Medium as the default across admin pages. Use Small in tighter spaces like canvas areas (UI Designer, Data Model, Agent Builder).",
+      previews: [
+        { size: "medium", hasLabel: "off", options: "Day,Week,Month", selectedIndex: "0" },
+        { size: "small", hasLabel: "off", options: "Day,Week,Month", selectedIndex: "0" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Inverted on dark backgrounds",
+      description:
+        "Use the inverted variant when the component sits on a dark or strongly colored surface like a hero section or a dark modal. Inverted colors keep text and strokes legible against the darker background.",
+      previewRows: [
+        {
+          background: "dark",
+          items: [
+            { size: "medium", hasLabel: "off", options: "Day,Week,Month", selectedIndex: "0", inverted: "on" },
+          ],
+        },
+      ],
+    },
   ],
 
   relatedComponents: ["radio", "button"],
