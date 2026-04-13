@@ -477,9 +477,9 @@ export const inputFieldSpec: ComponentSpec = {
   usageGuidelines: [
     {
       type: "info",
-      title: "Always label your inputs",
+      title: "Label placement",
       description:
-        "Label every input so users know what to enter. Use a top label in most cases, and an inline label in compact surfaces where vertical space is limited, like the UI Designer config panel or Agent Builder nodes. Switch back to a top label when the expected input is long and needs the full width. Omit the label only when the field's purpose is obvious from context.",
+        "Use a vertical label by default. Switch to a horizontal label in compact surfaces like the UI Designer config panel and Agent Builder nodes, where height is limited. Use a vertical label again when the input needs the full width.",
       previews: [
         { state: "default", filled: "on", value: "Ana", label: "First name", hasTopLabel: "on", inlineLabel: "off", placeholder: "First name" },
         { state: "default", filled: "on", value: "Ana", label: "First name", hasTopLabel: "on", inlineLabel: "on", placeholder: "First name" },
