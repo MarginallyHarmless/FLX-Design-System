@@ -205,6 +205,28 @@ export const buttonSpec: ComponentSpec = {
   },
 
   usageGuidelines: [
+    {
+      type: "info",
+      title: "Choosing the right hierarchy",
+      description:
+        "Use Primary for the most important call-to-action. Aim for one per screen, section, or container. Use Secondary for regular, non-primary actions; you may use several per screen. Use Tertiary for the lowest-priority actions, often in a group of three or paired with a Primary to signal an optional action.",
+      previews: [
+        { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off" },
+        { scope: "Brand", variant: "Secondary", state: "Default", inverted: "Off" },
+        { scope: "Brand", variant: "Tertiary", state: "Default", inverted: "Off" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Choosing the right scope",
+      description:
+        "Use Brand for the majority of actions across the product. Reserve Danger for destructive or irreversible actions such as Delete, Remove, or Discard so the risk is visually clear. Use Success to confirm positive outcomes like Keep Generated Content, typically after a decision has been made.",
+      previews: [
+        { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off" },
+        { scope: "Danger", variant: "Primary", state: "Default", inverted: "Off" },
+        { scope: "Success", variant: "Primary", state: "Default", inverted: "Off" },
+      ],
+    },
     { type: "use-case", title: "Brand Primary", description: "Main call-to-action — the most common button.", props: { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off" } },
     { type: "use-case", title: "Brand Secondary", description: "Secondary actions that sit alongside the primary CTA.", props: { scope: "Brand", variant: "Secondary", state: "Default", inverted: "Off" } },
     { type: "use-case", title: "Brand Tertiary", description: "Low-emphasis actions such as Cancel or Learn more.", props: { scope: "Brand", variant: "Tertiary", state: "Default", inverted: "Off" } },

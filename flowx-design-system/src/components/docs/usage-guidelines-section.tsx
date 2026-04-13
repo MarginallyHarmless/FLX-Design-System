@@ -19,7 +19,7 @@ function IllustrationPanel({ type }: { type: IllustrationType }) {
 
   return (
     <div
-      className="flex items-center justify-center rounded-lg p-6"
+      className="flex w-full items-center justify-center rounded-lg p-6"
       style={{ backgroundColor: bg, minHeight: 80 }}
     >
       <Icon size={24} style={{ color }} />
@@ -38,26 +38,40 @@ function GuidelineRow({
   isLast: boolean;
   previewWidth?: string;
 }) {
-  const isUseCase = item.type === "use-case";
+  const infoPreviews =
+    item.type === "info" && Array.isArray(item.previews) && item.previews.length > 0
+      ? item.previews
+      : null;
 
   return (
     <div
-      className={`flex flex-col gap-4 py-6 sm:flex-row ${isLast ? "" : "border-b"}`}
+      className={`flex flex-col gap-4 py-6 sm:flex-row sm:items-stretch ${isLast ? "" : "border-b"}`}
       style={isLast ? undefined : { borderColor: "#f7f8f9" }}
     >
       {/* Left column */}
-      <div className={`shrink-0 ${previewWidth}`}>
-        {isUseCase ? (
+      <div className={`flex shrink-0 ${previewWidth}`}>
+        {item.type === "use-case" ? (
           <div
-            className={`flex items-center justify-center rounded-lg p-6 ${
+            className={`flex w-full items-center justify-center rounded-lg p-6 ${
               item.props.inverted === "on" ? "bg-neutral-900" : ""
             }`}
             style={item.props.inverted !== "on" ? { backgroundColor: "#f7f8f9" } : undefined}
           >
             {renderPreview(item.props)}
           </div>
+        ) : infoPreviews ? (
+          <div
+            className="flex w-full flex-wrap items-center justify-center gap-3 rounded-lg p-6"
+            style={{ backgroundColor: "#f7f8f9" }}
+          >
+            {infoPreviews.map((p, i) => (
+              <div key={i}>{renderPreview(p)}</div>
+            ))}
+          </div>
         ) : (
-          <IllustrationPanel type={item.type} />
+          <div className="flex w-full">
+            <IllustrationPanel type={item.type} />
+          </div>
         )}
       </div>
 
