@@ -106,8 +106,43 @@ export const valuesTableSpec: ComponentSpec = {
   ],
 
   usageGuidelines: [
-    { type: "use-case", title: "Bordered", description: "Used when the table is part of a card or a larger container.", props: { bordered: "on", batchEdit: "off" } },
-    { type: "use-case", title: "Standalone", description: "Used when the table is the card itself.", props: { bordered: "off", batchEdit: "off" } },
-    { type: "use-case", title: "Always On editing", description: "Used when the page already has a save/discard mechanism.", props: { bordered: "on", batchEdit: "on" } },
+    {
+      type: "info",
+      title: "Value tables vs Entity tables",
+      description:
+        "Use a value table for simple items that don't have their own detail page, like variables or enumerations. For complex items that open into a detail page or modal, like workflows or integrations, use an entity table instead.",
+      previews: [
+        { bordered: "on", batchEdit: "off" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Bordered vs Standalone",
+      description:
+        "Use the bordered variant when the table sits inside another container like a card or a settings panel. Use standalone when the table is the card itself -- it gets its own shadow and acts as the top-level surface.",
+      previews: [
+        { bordered: "on", batchEdit: "off" },
+        { bordered: "off", batchEdit: "off" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Row editing vs Always-on editing",
+      description:
+        "Use row-by-row editing when users update individual rows independently. Use always-on editing when the page already has a save/discard mechanism and all rows should be editable at once.",
+      previews: [
+        { bordered: "on", batchEdit: "off", editMode: "on" },
+        { bordered: "on", batchEdit: "on" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Showing validation errors",
+      description:
+        "Errors appear inline on the affected cell with a red border and error icon. Disable the save button until all errors are resolved.",
+      previews: [
+        { bordered: "on", batchEdit: "off", editMode: "on", error: "on" },
+      ],
+    },
   ],
 };
