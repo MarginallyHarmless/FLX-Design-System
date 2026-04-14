@@ -30,6 +30,23 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "FlowX Design System",
   description: "Design system documentation for FlowX",
+  openGraph: {
+    title: "FlowX Design System",
+    description: "Design system documentation for FlowX",
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/og-image.png`,
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "FlowX Design System",
+    description: "Design system documentation for FlowX",
+    images: [`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/og-image.png`],
+  },
 };
 
 export default function RootLayout({

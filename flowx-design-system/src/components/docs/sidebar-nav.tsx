@@ -28,6 +28,7 @@ const patternsItems = [
   { label: "Toasts", href: "/patterns/toasts" },
   { label: "Saving", href: "/patterns/saving" },
   { label: "Loaders", href: "/patterns/loaders" },
+  { label: "Modals", href: "/patterns/modals" },
 ];
 
 const resourcesItems = [
