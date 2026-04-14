@@ -672,6 +672,8 @@ export default function ValuesTablePage() {
         <FlowXValuesTable
           bordered={props.bordered === "on"}
           batchEdit={props.batchEdit === "on"}
+          editMode={props.editMode === "on"}
+          error={props.error === "on"}
         />
       )}
       guidelinePreviewWidth="sm:w-3/5"
