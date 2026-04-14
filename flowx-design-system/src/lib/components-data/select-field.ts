@@ -466,14 +466,69 @@ export const selectFieldSpec: ComponentSpec = {
   ],
 
   usageGuidelines: [
-    { type: "use-case", title: "Vertical label", description: "Used in most situations on the platform.", props: { state: "default", filled: "on", inverted: "off", hasLabel: "on", inlineLabel: "off" } },
-    { type: "use-case", title: "Horizontal label", description: "Used in compact forms where vertical space is limited.", props: { state: "default", filled: "on", inverted: "off", hasLabel: "on", inlineLabel: "on" } },
-    { type: "use-case", title: "No label", description: "Used when the context makes the field's purpose obvious.", props: { state: "default", filled: "on", inverted: "off", hasLabel: "off", inlineLabel: "off" } },
-    { type: "use-case", title: "Default", description: "The standard empty select, ready for user selection.", props: { state: "default", filled: "off", inverted: "off" } },
-    { type: "use-case", title: "Filled", description: "Shows selected options as chips in the input area.", props: { state: "default", filled: "on", inverted: "off" } },
-    { type: "use-case", title: "Focused", description: "Active state when the dropdown is open or the field has focus.", props: { state: "focused", filled: "off", inverted: "off" } },
-    { type: "use-case", title: "With Validation Error", description: "Show when form validation fails after submission.", props: { state: "error", filled: "off", inverted: "off" } },
-    { type: "use-case", title: "Disabled", description: "Use when the field should be visible but not interactive.", props: { state: "disabled", filled: "off", inverted: "off" } },
-    { type: "use-case", title: "On Dark Background", description: "Use on dark surfaces like modals or hero sections.", props: { state: "default", filled: "off", inverted: "on" } },
+    {
+      type: "info",
+      title: "Label placement",
+      description:
+        "Use a vertical label by default. Switch to a horizontal label in compact surfaces like the UI Designer config panel and Agent Builder nodes, where height is limited.",
+      previews: [
+        { state: "default", filled: "on", fillMode: "text", label: "Label", hasLabel: "on", inlineLabel: "off" },
+        { state: "default", filled: "on", fillMode: "text", label: "Label", hasLabel: "on", inlineLabel: "on" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Single-select vs multi-select",
+      description:
+        "Use text mode for single-select fields where the user picks exactly one option. Use chip mode for multi-select so users can see and remove individual selections.",
+      previews: [
+        { state: "default", filled: "on", fillMode: "text", label: "Role" },
+        { state: "default", filled: "on", fillMode: "chips", label: "Tags" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Displaying errors",
+      description:
+        "In most cases, display the error message under the select with red text. When space is very limited, like inside a table cell, show the error as a red tooltip that appears on hover over the error icon.",
+      previews: [
+        { state: "error", filled: "on", fillMode: "text", label: "Country", hasDescription: "on" },
+        { state: "error", filled: "on", fillMode: "text", hasLabel: "off", size: "small", errorTooltip: "Please select a valid option" },
+      ],
+    },
+    {
+      type: "info",
+      title: "When to use Select vs Radio/Checkbox",
+      description:
+        "Use a select when there are five or more options, or when screen space is tight. For fewer options, prefer radio buttons (single choice) or checkboxes (multiple choice) so all options are visible without opening a dropdown.",
+      previews: [
+        { state: "default", filled: "off", label: "Role", placeholder: "Select a role" },
+        { state: "default", filled: "on", fillMode: "text", label: "Country" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Choosing the right size",
+      description:
+        "Use Medium as the default across admin pages. Use Small in tighter spaces like canvas areas (UI Designer, Data Model, Agent Builder).",
+      previews: [
+        { state: "default", filled: "on", fillMode: "text", label: "Medium", size: "medium" },
+        { state: "default", filled: "on", fillMode: "text", label: "Small", size: "small" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Inverted on dark backgrounds",
+      description:
+        "Use the inverted variant when the component sits on a dark or strongly colored surface.",
+      previewRows: [
+        {
+          background: "dark",
+          items: [
+            { state: "default", filled: "on", fillMode: "text", label: "Label", inverted: "on" },
+          ],
+        },
+      ],
+    },
   ],
 };
