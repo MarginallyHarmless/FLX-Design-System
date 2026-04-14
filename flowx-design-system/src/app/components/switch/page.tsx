@@ -277,8 +277,9 @@ export default function SwitchPage() {
         if (props.layout === "card") {
           return (
             <div
-              className="rounded-lg border bg-white px-4 py-3 flex items-center justify-between"
+              className="rounded-lg border bg-white px-4 py-3 flex items-center justify-between gap-4"
               style={{
+                minWidth: 280,
                 borderColor: isInverted ? "#374151" : "#e3e8ed",
                 backgroundColor: isInverted ? "#1f2937" : "#ffffff",
               }}
