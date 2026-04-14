@@ -40,9 +40,9 @@ const colors = {
 /* ------------------------------------------------------------------ */
 
 const columnHeaders = [
-  { label: "Code", bold: true, hasFilter: true },
-  { label: "en - English", bold: false, hasSort: true },
-  { label: "fr-French", bold: false, hasSort: true },
+  { label: "Code", bold: true, hasFilter: true, width: 90 },
+  { label: "EN", bold: false, hasSort: true },
+  { label: "FR", bold: false, hasSort: true },
 ];
 
 interface CellData {
@@ -416,7 +416,9 @@ function FlowXValuesTable({
             {i > 0 && <VerticalSep />}
             <div
               style={{
-                flex: 1,
+                flex: col.width ? undefined : 1,
+                width: col.width,
+                flexShrink: col.width ? 0 : undefined,
                 display: "flex",
                 alignItems: "center",
                 gap: 4,
@@ -458,7 +460,7 @@ function FlowXValuesTable({
           ? readOnlyRow1.map((cell, i) => (
               <React.Fragment key={i}>
                 {i > 0 && <VerticalSep />}
-                <div style={{ flex: 1, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                <div style={{ flex: columnHeaders[i]?.width ? undefined : 1, width: columnHeaders[i]?.width, flexShrink: columnHeaders[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
                   <EditableCell data={{ value: cell.value }} />
                 </div>
               </React.Fragment>
@@ -466,7 +468,7 @@ function FlowXValuesTable({
           : readOnlyRow1.map((cell, i) => (
               <React.Fragment key={i}>
                 {i > 0 && <VerticalSep />}
-                <div style={{ flex: 1, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                <div style={{ flex: columnHeaders[i]?.width ? undefined : 1, width: columnHeaders[i]?.width, flexShrink: columnHeaders[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
                   <ReadOnlyCell data={cell} />
                 </div>
               </React.Fragment>
@@ -477,7 +479,8 @@ function FlowXValuesTable({
         </div>
       </div>
 
-      {/* ---- Row 2: read-only OR editable OR batch-edit ---- */}
+      {/* ---- Row 2: read-only OR editable OR batch-edit (hidden when error-only) ---- */}
+      {(editMode || !error) && (
       <div
         style={{
           display: "flex",
@@ -490,7 +493,7 @@ function FlowXValuesTable({
           ? editRow.map((cell, i) => (
               <React.Fragment key={i}>
                 {i > 0 && <VerticalSep />}
-                <div style={{ flex: 1, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                <div style={{ flex: columnHeaders[i]?.width ? undefined : 1, width: columnHeaders[i]?.width, flexShrink: columnHeaders[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
                   <EditableCell data={batchEdit ? { ...cell, isReadOnly: false } : cell} />
                 </div>
               </React.Fragment>
@@ -498,7 +501,7 @@ function FlowXValuesTable({
           : readOnlyRow2.map((cell, i) => (
               <React.Fragment key={i}>
                 {i > 0 && <VerticalSep />}
-                <div style={{ flex: 1, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                <div style={{ flex: columnHeaders[i]?.width ? undefined : 1, width: columnHeaders[i]?.width, flexShrink: columnHeaders[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
                   <ReadOnlyCell data={cell} />
                 </div>
               </React.Fragment>
@@ -518,6 +521,7 @@ function FlowXValuesTable({
           {batchEdit ? <BatchEditActions /> : editMode ? <EditActions /> : <ReadOnlyActions />}
         </div>
       </div>
+      )}
 
       {/* ---- Row 3: read-only OR error OR batch-edit ---- */}
       <div
@@ -531,7 +535,7 @@ function FlowXValuesTable({
           ? errorRow.map((cell, i) => (
               <React.Fragment key={i}>
                 {i > 0 && <VerticalSep />}
-                <div style={{ flex: 1, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                <div style={{ flex: columnHeaders[i]?.width ? undefined : 1, width: columnHeaders[i]?.width, flexShrink: columnHeaders[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
                   <ErrorCell data={cell} />
                 </div>
               </React.Fragment>
@@ -540,7 +544,7 @@ function FlowXValuesTable({
             ? readOnlyRow3.map((cell, i) => (
                 <React.Fragment key={i}>
                   {i > 0 && <VerticalSep />}
-                  <div style={{ flex: 1, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                  <div style={{ flex: columnHeaders[i]?.width ? undefined : 1, width: columnHeaders[i]?.width, flexShrink: columnHeaders[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
                     <EditableCell data={{ value: cell.value }} />
                   </div>
                 </React.Fragment>
@@ -548,7 +552,7 @@ function FlowXValuesTable({
             : readOnlyRow3.map((cell, i) => (
                 <React.Fragment key={i}>
                   {i > 0 && <VerticalSep />}
-                  <div style={{ flex: 1, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                  <div style={{ flex: columnHeaders[i]?.width ? undefined : 1, width: columnHeaders[i]?.width, flexShrink: columnHeaders[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
                     <ReadOnlyCell data={cell} />
                   </div>
                 </React.Fragment>
@@ -669,12 +673,14 @@ export default function ValuesTablePage() {
         />
       }
       renderGuidelinePreview={(props) => (
-        <FlowXValuesTable
-          bordered={props.bordered === "on"}
-          batchEdit={props.batchEdit === "on"}
-          editMode={props.editMode === "on"}
-          error={props.error === "on"}
-        />
+        <div style={{ width: 420, maxWidth: "100%" }}>
+          <FlowXValuesTable
+            bordered={props.bordered === "on"}
+            batchEdit={props.batchEdit === "on"}
+            editMode={props.editMode === "on"}
+            error={props.error === "on"}
+          />
+        </div>
       )}
       guidelinePreviewWidth="sm:w-3/5"
       statesReference={

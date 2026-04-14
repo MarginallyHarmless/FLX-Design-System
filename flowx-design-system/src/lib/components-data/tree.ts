@@ -2,10 +2,10 @@ import { type ComponentSpec } from "./types";
 
 export const treeSpec: ComponentSpec = {
   slug: "tree",
-  name: "Tree",
+  name: "Dropdown Panel",
   description:
     "A hierarchical dropdown list for selecting items with optional search, grouping, and multiple selection modes.",
-  status: "beta",
+  status: "stable",
   figmaLink:
     "https://www.figma.com/design/aGMqzHMsAiwCUU5DSgUe1S/?node-id=428-21871",
   lastUpdated: "2026-03-25",

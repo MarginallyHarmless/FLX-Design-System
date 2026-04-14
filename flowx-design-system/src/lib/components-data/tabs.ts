@@ -292,9 +292,9 @@ export const tabsSpec: ComponentSpec = {
       type: "info",
       title: "With counter badges",
       description:
-        "Add a counter badge to show how many items live inside each tab's panel. Hide the badge when the count is zero.",
+        "Add counter badges when tab panels hold variable-length collections like tables or lists, so users can see the volume before switching. Skip counters when panels hold fixed content like settings or an overview.",
       previews: [
-        { size: "medium", inverted: "off", tabs: "Overview,Details,Activity", activeIndex: "0", hasCounter: "on" },
+        { size: "medium", inverted: "off", tabs: "Overview,Tasks,Logs", activeIndex: "0", counterIndexes: "1,2" },
       ],
     },
     {

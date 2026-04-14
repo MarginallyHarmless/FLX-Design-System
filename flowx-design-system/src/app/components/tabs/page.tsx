@@ -23,6 +23,7 @@ function FlowXTabs({
   hasIcon = false,
   iconName,
   hasCounter = false,
+  counterIndexes,
 }: {
   size?: "small" | "medium";
   inverted?: boolean;
@@ -31,6 +32,7 @@ function FlowXTabs({
   hasIcon?: boolean;
   iconName?: IconName;
   hasCounter?: boolean;
+  counterIndexes?: number[];
 }) {
   const spec = tabsSpec;
   const variantProps = {
@@ -101,7 +103,7 @@ function FlowXTabs({
             </span>
 
             {/* Counter */}
-            {hasCounter && (
+            {(counterIndexes ? counterIndexes.includes(i) : hasCounter) && (
               <span
                 style={{
                   display: "inline-flex",
@@ -232,6 +234,7 @@ export default function TabsPage() {
           tabs={props.tabs ? (props.tabs as string).split(",") : undefined}
           activeIndex={props.activeIndex !== undefined ? parseInt(props.activeIndex as string, 10) : undefined}
           hasCounter={props.hasCounter === "on"}
+          counterIndexes={props.counterIndexes ? (props.counterIndexes as string).split(",").map(Number) : undefined}
         />
       )}
       statesReference={

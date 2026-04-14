@@ -485,7 +485,7 @@ export default function TreePage() {
       tokens={treeTokens}
       interactivePreview={
         <ComponentPreview
-          title="Tree"
+          title="Dropdown Panel"
           description="Explore different selection modes, sizes, and options."
           controls={[
             {

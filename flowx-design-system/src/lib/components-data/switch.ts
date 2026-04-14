@@ -12,7 +12,7 @@ export const switchSpec: ComponentSpec = {
 
   variants: [
     { name: "Left-side Alignment", useCase: "Default placement — switch on the left with label to the right. Use for standard toggle lists and forms.", props: { on: "on", state: "default", inverted: "off", size: "medium", layout: "left-align" } },
-    { name: "Right-side Alignment", useCase: "Switch aligned right when it controls the whole card or shares a line with another element.", props: { on: "on", state: "default", inverted: "off", size: "medium", layout: "card", cardTitle: "Enable notifications" } },
+    { name: "Right-side Alignment", useCase: "Switch aligned right when it controls the whole card or shares a line with another element.", props: { on: "on", state: "default", inverted: "off", size: "medium", layout: "card", cardTitle: "Advanced settings" } },
   ],
 
   props: [
@@ -274,7 +274,7 @@ export const switchSpec: ComponentSpec = {
 
   usageGuidelines: [
     { type: "use-case", title: "Left-side Alignment", description: "Default placement — switch on the left with label to the right. Use for standard toggle lists and forms.", props: { on: "on", state: "default", inverted: "off", size: "medium", layout: "left-align" } },
-    { type: "use-case", title: "Right-side Alignment", description: "Switch aligned right when it controls the whole card or shares a line with another element.", props: { on: "on", state: "default", inverted: "off", size: "medium", layout: "card", cardTitle: "Enable notifications" } },
+    { type: "use-case", title: "Right-side Alignment", description: "Switch aligned right when it controls the whole card or shares a line with another element.", props: { on: "on", state: "default", inverted: "off", size: "medium", layout: "card", cardTitle: "Advanced settings" } },
   ],
 
   relatedComponents: ["checkbox", "radio"],

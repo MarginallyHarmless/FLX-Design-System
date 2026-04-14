@@ -135,19 +135,6 @@ function FlowXSelectField({
               <XClose size={chipXSize} color={inverted ? (chipStyle?.textColor ?? "#000") : "#64748B"} style={{ flexShrink: 0, opacity: 0.7 }} />
             </span>
           ))}
-          <span
-            style={{
-              fontSize: chipTypo?.fontSize,
-              lineHeight: chipTypo?.lineHeight ? `${chipTypo.lineHeight}px` : undefined,
-              color: chipCountStyle?.textColor,
-              paddingLeft: 2,
-              paddingRight: 2,
-              display: "inline-flex",
-              alignItems: "center",
-            }}
-          >
-            + 20
-          </span>
         </div>
       ) : (
         <span

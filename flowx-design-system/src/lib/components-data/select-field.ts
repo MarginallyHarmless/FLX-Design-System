@@ -478,7 +478,7 @@ export const selectFieldSpec: ComponentSpec = {
     },
     {
       type: "info",
-      title: "Single-select vs multi-select",
+      title: "Chips vs Text",
       description:
         "Use text mode for single-select fields where the user picks exactly one option. Use chip mode for multi-select so users can see and remove individual selections.",
       previews: [

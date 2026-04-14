@@ -141,7 +141,7 @@ export const valuesTableSpec: ComponentSpec = {
       description:
         "Errors appear inline on the affected cell with a red border and error icon. Disable the save button until all errors are resolved.",
       previews: [
-        { bordered: "on", batchEdit: "off", editMode: "on", error: "on" },
+        { bordered: "on", batchEdit: "off", error: "on" },
       ],
     },
   ],
