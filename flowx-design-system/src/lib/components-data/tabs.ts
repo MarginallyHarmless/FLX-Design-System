@@ -279,10 +279,57 @@ export const tabsSpec: ComponentSpec = {
   },
 
   usageGuidelines: [
-    { type: "use-case", title: "Default", description: "Standard tab bar for switching between content sections.", props: { size: "medium", inverted: "off" } },
-    { type: "use-case", title: "Small", description: "Compact tab bar for space-constrained layouts or secondary navigation.", props: { size: "small", inverted: "off" } },
-    { type: "use-case", title: "Inverted", description: "Tab bar on dark backgrounds to maintain contrast and legibility.", props: { size: "medium", inverted: "on" } },
-    { type: "use-case", title: "Small Inverted", description: "Compact inverted tab bar for dark, space-constrained layouts.", props: { size: "small", inverted: "on" } },
+    {
+      type: "info",
+      title: "Tabs vs Segmented button",
+      description:
+        "Use tabs when each option owns a distinct content panel below. Use a segmented button when the options toggle a mode or filter within the same view.",
+      previews: [
+        { size: "medium", inverted: "off", tabs: "Overview,Details,Activity", activeIndex: "0" },
+      ],
+    },
+    {
+      type: "info",
+      title: "With counter badges",
+      description:
+        "Add a counter badge to show how many items live inside each tab's panel. Hide the badge when the count is zero.",
+      previews: [
+        { size: "medium", inverted: "off", tabs: "Overview,Details,Activity", activeIndex: "0", hasCounter: "on" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Tab label length",
+      description:
+        "Keep tab labels to one or two words so the bar stays compact and scannable. If a label needs more context, shorten it and let the panel content clarify.",
+      previews: [
+        { size: "medium", inverted: "off", tabs: "Overview,Details,Activity", activeIndex: "0" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Choosing the right size",
+      description:
+        "Use Medium as the default across admin pages. Use Small in tighter spaces like canvas areas (UI Designer, Data Model, Agent Builder).",
+      previews: [
+        { size: "medium", inverted: "off", tabs: "Overview,Details,Activity", activeIndex: "0" },
+        { size: "small", inverted: "off", tabs: "Overview,Details,Activity", activeIndex: "0" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Inverted on dark backgrounds",
+      description:
+        "Use the inverted variant when the component sits on a dark or strongly colored surface.",
+      previewRows: [
+        {
+          background: "dark",
+          items: [
+            { size: "medium", inverted: "on", tabs: "Overview,Details,Activity", activeIndex: "0" },
+          ],
+        },
+      ],
+    },
   ],
 
   relatedComponents: ["segmented-button", "button"],
