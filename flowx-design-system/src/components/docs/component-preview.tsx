@@ -119,11 +119,11 @@ export function ComponentPreview({
           }
         }
       }
-      // Clear boolean controls whose requiredValue is no longer satisfied
+      // Reset controls whose requiredValue is no longer satisfied
       for (const c of controls) {
-        if (c.requiredValue && next[c.name]) {
+        if (c.requiredValue) {
           if (next[c.requiredValue.control] !== c.requiredValue.value) {
-            next[c.name] = false;
+            next[c.name] = c.type === "boolean" ? false : (c.default ?? c.options?.[0]);
           }
         }
       }
@@ -189,7 +189,11 @@ export function ComponentPreview({
                 : !!values[c.disabledWhen])
               : false;
 
-            const isDisabled = isForcedOn || isDisabledWhen || (c.disabledUnless
+            const isRequiredUnsatisfied = c.requiredValue
+              ? values[c.requiredValue.control] !== c.requiredValue.value
+              : false;
+
+            const isDisabled = isForcedOn || isRequiredUnsatisfied || isDisabledWhen || (c.disabledUnless
               ? !values[c.disabledUnless]
               : false);
 

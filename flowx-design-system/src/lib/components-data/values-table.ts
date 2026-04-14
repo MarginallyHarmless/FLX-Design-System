@@ -2,7 +2,7 @@ import { type ComponentSpec } from "./types";
 
 export const valuesTableSpec: ComponentSpec = {
   slug: "values-table",
-  name: "Table (Values)",
+  name: "Tables",
   description:
     "Editable table for managing simple items that don't warrant their own details page — inline editing with validation.",
   status: "stable",
@@ -113,6 +113,7 @@ export const valuesTableSpec: ComponentSpec = {
         "Use a value table for simple items that don't have their own detail page, like variables or enumerations. For complex items that open into a detail page or modal, like workflows or integrations, use an entity table instead.",
       previews: [
         { bordered: "on", batchEdit: "off" },
+        { bordered: "off", batchEdit: "off", entityMode: "on", hideEditedBy: "on" },
       ],
     },
     {

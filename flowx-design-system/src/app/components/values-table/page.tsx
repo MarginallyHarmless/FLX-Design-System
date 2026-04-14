@@ -10,7 +10,7 @@ import {
 import { ComponentPageTemplate } from "@/components/docs/component-page-template";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { FlowXErrorIcon, FlowXTooltip } from "@/components/docs/shared-elements";
-import { PencilSimple, TrashSimple, Check, X as XIcon, SortAscending, Funnel, Warning } from "@phosphor-icons/react";
+import { PencilSimple, TrashSimple, Check, X as XIcon, SortAscending, Funnel, Warning, Play, DotsThreeVertical } from "@phosphor-icons/react";
 
 /* ------------------------------------------------------------------ */
 /*  Colors extracted from Figma (scan_text_nodes + get_node_info)     */
@@ -50,6 +50,7 @@ interface CellData {
   value: string;
   isPlaceholder?: boolean;
   hasWarning?: boolean;
+  initials?: string;
 }
 
 const readOnlyRow1: CellData[] = [
@@ -74,6 +75,31 @@ const warningRow: CellData[] = [
   { value: "CODE 1" },
   { value: "Value", hasWarning: true },
   { value: "Value" },
+];
+
+/* Entity table data */
+const entityColumnHeaders = [
+  { label: "Name", bold: false, width: 180 },
+  { label: "Description", bold: false },
+  { label: "Edited by", bold: false, width: 130 },
+];
+
+const entityRow1: CellData[] = [
+  { value: "Onboarding flow" },
+  { value: "New user setup" },
+  { value: "Ana M.", initials: "AM" },
+];
+
+const entityRow2: CellData[] = [
+  { value: "Payment process" },
+  { value: "Checkout steps" },
+  { value: "John D.", initials: "JD" },
+];
+
+const entityRow3: CellData[] = [
+  { value: "KYC verification" },
+  { value: "Identity check" },
+  { value: "Maria S.", initials: "MS" },
 ];
 
 interface EditCellData {
@@ -121,6 +147,25 @@ function ReadOnlyCell({ data }: { data: CellData }) {
         opacity: data.isPlaceholder ? colors.placeholderOpacity : 1,
       }}
     >
+      {data.initials && (
+        <span
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 24,
+            height: 24,
+            borderRadius: 12,
+            backgroundColor: "#e3e8ed",
+            fontSize: 10,
+            fontWeight: 600,
+            color: "#0f1114",
+            flexShrink: 0,
+          }}
+        >
+          {data.initials}
+        </span>
+      )}
       <span style={{ flex: 1 }}>{data.value}</span>
       {data.hasWarning && <Warning size={16} color={colors.warningIcon} style={{ flexShrink: 0, marginRight: 2 }} />}
     </div>
@@ -342,6 +387,19 @@ function ReadOnlyActions() {
   );
 }
 
+function EntityActions() {
+  return (
+    <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+      <SmallSecondaryButton scope="Brand">
+        <Play size={16} color="currentColor" />
+      </SmallSecondaryButton>
+      <SmallSecondaryButton scope="Brand">
+        <DotsThreeVertical size={16} color="currentColor" />
+      </SmallSecondaryButton>
+    </div>
+  );
+}
+
 function EditActions({ disabled = false }: { disabled?: boolean }) {
   return (
     <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
@@ -392,14 +450,26 @@ function FlowXValuesTable({
   warning = false,
   bordered = true,
   batchEdit = false,
+  entityMode = false,
+  hideEditedBy = false,
 }: {
   editMode?: boolean;
   error?: boolean;
   warning?: boolean;
   bordered?: boolean;
   batchEdit?: boolean;
+  entityMode?: boolean;
+  hideEditedBy?: boolean;
 }) {
+  const Sep = entityMode ? () => null : VerticalSep;
   const actionColWidth = batchEdit ? 60 : 96;
+  const allCols = entityMode ? entityColumnHeaders : columnHeaders;
+  const cols = (entityMode && hideEditedBy) ? allCols.filter(c => c.label !== "Edited by") : allCols;
+  const filterRow = (row: CellData[]) => (entityMode && hideEditedBy) ? row.slice(0, cols.length) : row;
+  const row1Data = filterRow(entityMode ? entityRow1 : readOnlyRow1);
+  const row2Data = filterRow(entityMode ? entityRow2 : readOnlyRow2);
+  const row3Data = filterRow(entityMode ? entityRow3 : readOnlyRow3);
+  const RowActions = entityMode ? EntityActions : ReadOnlyActions;
 
   return (
     <div
@@ -424,9 +494,9 @@ function FlowXValuesTable({
           borderBottom: `0.5px solid ${colors.border}`,
         }}
       >
-        {columnHeaders.map((col, i) => (
+        {cols.map((col, i) => (
           <React.Fragment key={col.label}>
-            {i > 0 && <VerticalSep />}
+            {i > 0 && <Sep />}
             <div
               style={{
                 flex: col.width ? undefined : 1,
@@ -443,8 +513,8 @@ function FlowXValuesTable({
               <span
                 style={{
                   fontSize: 12,
-                  fontWeight: col.bold ? 700 : 400,
-                  color: col.bold ? colors.headerTextBold : colors.headerText,
+                  fontWeight: 600,
+                  color: "#64748b",
                   lineHeight: "18px",
                 }}
               >
@@ -456,7 +526,7 @@ function FlowXValuesTable({
           </React.Fragment>
         ))}
         {/* Action column header spacer */}
-        <VerticalSep />
+        <Sep />
         <div style={{ width: actionColWidth, flexShrink: 0 }} />
       </div>
 
@@ -470,25 +540,25 @@ function FlowXValuesTable({
         }}
       >
         {batchEdit
-          ? readOnlyRow1.map((cell, i) => (
+          ? row1Data.map((cell, i) => (
               <React.Fragment key={i}>
-                {i > 0 && <VerticalSep />}
-                <div style={{ flex: columnHeaders[i]?.width ? undefined : 1, width: columnHeaders[i]?.width, flexShrink: columnHeaders[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                {i > 0 && <Sep />}
+                <div style={{ flex: cols[i]?.width ? undefined : 1, width: cols[i]?.width, flexShrink: cols[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
                   <EditableCell data={{ value: cell.value }} />
                 </div>
               </React.Fragment>
             ))
-          : readOnlyRow1.map((cell, i) => (
+          : row1Data.map((cell, i) => (
               <React.Fragment key={i}>
-                {i > 0 && <VerticalSep />}
-                <div style={{ flex: columnHeaders[i]?.width ? undefined : 1, width: columnHeaders[i]?.width, flexShrink: columnHeaders[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                {i > 0 && <Sep />}
+                <div style={{ flex: cols[i]?.width ? undefined : 1, width: cols[i]?.width, flexShrink: cols[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
                   <ReadOnlyCell data={cell} />
                 </div>
               </React.Fragment>
             ))}
-        <VerticalSep />
+        <Sep />
         <div style={{ width: actionColWidth, flexShrink: 0, display: "flex", justifyContent: "center", paddingLeft: 16, paddingRight: 16 }}>
-          {batchEdit ? <BatchEditActions /> : <ReadOnlyActions />}
+          {batchEdit ? <BatchEditActions /> : <RowActions />}
         </div>
       </div>
 
@@ -504,21 +574,21 @@ function FlowXValuesTable({
         {(!error && (editMode || batchEdit))
           ? editRow.map((cell, i) => (
               <React.Fragment key={i}>
-                {i > 0 && <VerticalSep />}
-                <div style={{ flex: columnHeaders[i]?.width ? undefined : 1, width: columnHeaders[i]?.width, flexShrink: columnHeaders[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                {i > 0 && <Sep />}
+                <div style={{ flex: cols[i]?.width ? undefined : 1, width: cols[i]?.width, flexShrink: cols[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
                   <EditableCell data={batchEdit ? { ...cell, isReadOnly: false } : cell} />
                 </div>
               </React.Fragment>
             ))
-          : readOnlyRow2.map((cell, i) => (
+          : row2Data.map((cell, i) => (
               <React.Fragment key={i}>
-                {i > 0 && <VerticalSep />}
-                <div style={{ flex: columnHeaders[i]?.width ? undefined : 1, width: columnHeaders[i]?.width, flexShrink: columnHeaders[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                {i > 0 && <Sep />}
+                <div style={{ flex: cols[i]?.width ? undefined : 1, width: cols[i]?.width, flexShrink: cols[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
                   <ReadOnlyCell data={cell} />
                 </div>
               </React.Fragment>
             ))}
-        <VerticalSep />
+        <Sep />
         <div
           style={{
             width: actionColWidth,
@@ -530,7 +600,7 @@ function FlowXValuesTable({
             alignItems: "center",
           }}
         >
-          {(!error && batchEdit) ? <BatchEditActions /> : (!error && editMode) ? <EditActions /> : <ReadOnlyActions />}
+          {(!error && batchEdit) ? <BatchEditActions /> : (!error && editMode) ? <EditActions /> : <RowActions />}
         </div>
       </div>
 
@@ -545,8 +615,8 @@ function FlowXValuesTable({
         {error
           ? errorRow.map((cell, i) => (
               <React.Fragment key={i}>
-                {i > 0 && <VerticalSep />}
-                <div style={{ flex: columnHeaders[i]?.width ? undefined : 1, width: columnHeaders[i]?.width, flexShrink: columnHeaders[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                {i > 0 && <Sep />}
+                <div style={{ flex: cols[i]?.width ? undefined : 1, width: cols[i]?.width, flexShrink: cols[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
                   <ErrorCell data={cell} />
                 </div>
               </React.Fragment>
@@ -554,30 +624,30 @@ function FlowXValuesTable({
           : warning
             ? warningRow.map((cell, i) => (
                 <React.Fragment key={i}>
-                  {i > 0 && <VerticalSep />}
-                  <div style={{ flex: columnHeaders[i]?.width ? undefined : 1, width: columnHeaders[i]?.width, flexShrink: columnHeaders[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                  {i > 0 && <Sep />}
+                  <div style={{ flex: cols[i]?.width ? undefined : 1, width: cols[i]?.width, flexShrink: cols[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
                     <ReadOnlyCell data={cell} />
                   </div>
                 </React.Fragment>
               ))
           : batchEdit
-            ? readOnlyRow3.map((cell, i) => (
+            ? row3Data.map((cell, i) => (
                 <React.Fragment key={i}>
-                  {i > 0 && <VerticalSep />}
-                  <div style={{ flex: columnHeaders[i]?.width ? undefined : 1, width: columnHeaders[i]?.width, flexShrink: columnHeaders[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                  {i > 0 && <Sep />}
+                  <div style={{ flex: cols[i]?.width ? undefined : 1, width: cols[i]?.width, flexShrink: cols[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
                     <EditableCell data={{ value: cell.value }} />
                   </div>
                 </React.Fragment>
               ))
-            : readOnlyRow3.map((cell, i) => (
+            : row3Data.map((cell, i) => (
                 <React.Fragment key={i}>
-                  {i > 0 && <VerticalSep />}
-                  <div style={{ flex: columnHeaders[i]?.width ? undefined : 1, width: columnHeaders[i]?.width, flexShrink: columnHeaders[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                  {i > 0 && <Sep />}
+                  <div style={{ flex: cols[i]?.width ? undefined : 1, width: cols[i]?.width, flexShrink: cols[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
                     <ReadOnlyCell data={cell} />
                   </div>
                 </React.Fragment>
               ))}
-        <VerticalSep />
+        <Sep />
         <div
           style={{
             width: actionColWidth,
@@ -589,7 +659,7 @@ function FlowXValuesTable({
             alignItems: "center",
           }}
         >
-          {error ? <EditActions disabled /> : batchEdit ? <BatchEditActions /> : <ReadOnlyActions />}
+          {error ? <EditActions disabled /> : batchEdit ? <BatchEditActions /> : <RowActions />}
         </div>
       </div>
     </div>
@@ -656,9 +726,14 @@ export default function ValuesTablePage() {
       tokens={tableTokens}
       interactivePreview={
         <ComponentPreview
-          title="Table (Values)"
+          title="Tables"
           description="Toggle edit mode and error state to see different row behaviors."
           controls={[
+            {
+              name: "type",
+              options: ["Value", "Entity"],
+              default: "Value",
+            },
             {
               name: "editing",
               options: ["Off", "Row Edit", "Always On"],
@@ -667,16 +742,17 @@ export default function ValuesTablePage() {
                 { watch: "error", value: "Row Edit" },
                 { watch: "warning", value: "Off" },
               ],
+              requiredValue: { control: "type", value: "Value" },
             },
             {
               name: "error",
               type: "boolean",
-              requiredValue: { control: "editing", value: "Row Edit" },
+              requiredValue: { control: "type", value: "Value" },
             },
             {
               name: "warning",
               type: "boolean",
-              requiredValue: { control: "editing", value: "Off" },
+              requiredValue: { control: "type", value: "Value" },
             },
             {
               name: "bordered",
@@ -687,6 +763,7 @@ export default function ValuesTablePage() {
           render={(values) => (
             <div style={{ width: "100%", padding: 16 }}>
               <FlowXValuesTable
+                entityMode={values.type === "Entity"}
                 editMode={values.editing === "Row Edit"}
                 batchEdit={values.editing === "Always On"}
                 error={values.error === true}
@@ -700,6 +777,8 @@ export default function ValuesTablePage() {
       renderGuidelinePreview={(props) => (
         <div style={{ width: 420, maxWidth: "100%" }}>
           <FlowXValuesTable
+            entityMode={props.entityMode === "on"}
+            hideEditedBy={props.hideEditedBy === "on"}
             bordered={props.bordered === "on"}
             batchEdit={props.batchEdit === "on"}
             editMode={props.editMode === "on"}
