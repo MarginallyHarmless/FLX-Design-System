@@ -151,12 +151,40 @@ export const treeSpec: ComponentSpec = {
   },
 
   usageGuidelines: [
-    { type: "use-case", title: "Multi-Select", description: "Allow users to select multiple items from the list using checkboxes.", props: { type: "Select (Multi)", size: "Medium", inverted: "off", nesting: "off" } },
-    { type: "use-case", title: "Single-Select", description: "Restrict selection to a single item using radio buttons.", props: { type: "Select (Single)", size: "Medium", inverted: "off", nesting: "off" } },
-    { type: "use-case", title: "Icons", description: "Display items without selection controls, using icons for navigation or actions.", props: { type: "Icons", size: "Medium", inverted: "off", nesting: "off" } },
-    { type: "use-case", title: "With Nesting", description: "Group items under collapsible parent categories for hierarchical data.", props: { type: "Select (Multi)", size: "Medium", inverted: "off", nesting: "on" } },
-    { type: "use-case", title: "Inverted", description: "Use on dark surfaces such as modals or side panels with dark backgrounds.", props: { type: "Select (Multi)", size: "Medium", inverted: "on", nesting: "off" } },
-    { type: "use-case", title: "Small Size", description: "Compact variant for space-constrained layouts or secondary UI areas.", props: { type: "Select (Multi)", size: "Small", inverted: "off", nesting: "off" } },
+    {
+      type: "info",
+      title: "Showing the search header",
+      description:
+        "Show the search header when the list contains more than seven items so users can filter quickly. Hide it for short lists where all options are visible at a glance.",
+      previews: [
+        { type: "Select (Multi)", size: "Medium", inverted: "off", nesting: "off", showHeader: "on" },
+        { type: "Select (Multi)", size: "Medium", inverted: "off", nesting: "off", showHeader: "off" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Choosing the right size",
+      description:
+        "Use Medium as the default across admin pages. Use Small in tighter spaces like canvas areas (UI Designer, Data Model, Agent Builder).",
+      previews: [
+        { type: "Select (Multi)", size: "Medium", inverted: "off", nesting: "off" },
+        { type: "Select (Multi)", size: "Small", inverted: "off", nesting: "off" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Inverted on dark backgrounds",
+      description:
+        "Use the inverted variant when the component sits on a dark or strongly colored surface.",
+      previewRows: [
+        {
+          background: "dark",
+          items: [
+            { type: "Select (Multi)", size: "Medium", inverted: "on", nesting: "off" },
+          ],
+        },
+      ],
+    },
   ],
 
   relatedComponents: ["checkbox", "radio", "select-field"],
