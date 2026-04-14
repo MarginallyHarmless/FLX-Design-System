@@ -28,6 +28,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://marginallyharmless.github.io/FLX-Design-System"),
   title: "FlowX Design System",
   description: "Design system documentation for FlowX",
   openGraph: {
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
     description: "Design system documentation for FlowX",
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/og-image.png`,
+        url: "/og-image.png",
         width: 1200,
         height: 630,
       },
@@ -45,7 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "FlowX Design System",
     description: "Design system documentation for FlowX",
-    images: [`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/og-image.png`],
+    images: ["/og-image.png"],
   },
 };
 
