@@ -10,7 +10,7 @@ import {
 import { X as XClose, CaretDown } from "@phosphor-icons/react";
 import { ComponentPageTemplate } from "@/components/docs/component-page-template";
 import { ComponentPreview } from "@/components/docs/component-preview";
-import { FlowXLabel, FlowXDescription, FlowXErrorIcon } from "@/components/docs/shared-elements";
+import { FlowXLabel, FlowXDescription, FlowXErrorIcon, FlowXTooltip } from "@/components/docs/shared-elements";
 
 /* ------------------------------------------------------------------ */
 /*  FlowXSelectField — data-driven preview component                    */
@@ -334,17 +334,31 @@ export default function SelectFieldPage() {
           )}
         />
       }
-      renderGuidelinePreview={(props) => (
-        <FlowXSelectField
-          state={(props.state as "default" | "focused" | "error" | "disabled") || "default"}
-          filled={props.filled === "on"}
-          fillMode="text"
-          inverted={props.inverted === "on"}
-          hasLabel={props.hasLabel !== "off"}
-          inlineLabel={props.inlineLabel === "on"}
-          hasDescription={props.state === "error"}
-        />
-      )}
+      renderGuidelinePreview={(props) => {
+        const field = (
+          <FlowXSelectField
+            state={(props.state as "default" | "focused" | "error" | "disabled") || "default"}
+            size={(props.size as "small" | "medium") || "medium"}
+            filled={props.filled === "on"}
+            fillMode={(props.fillMode as "chips" | "text") || "text"}
+            inverted={props.inverted === "on"}
+            hasLabel={props.hasLabel !== "off"}
+            inlineLabel={props.inlineLabel === "on"}
+            hasDescription={props.hasDescription === "on"}
+            placeholder={props.placeholder}
+            label={props.label}
+          />
+        );
+        if (props.errorTooltip) {
+          return (
+            <div style={{ display: "inline-flex", flexDirection: "column", alignItems: "flex-end", gap: 6 }}>
+              <FlowXTooltip text={props.errorTooltip} useCase="error" />
+              {field}
+            </div>
+          );
+        }
+        return field;
+      }}
       statesReference={
         <div className="flex flex-wrap items-start gap-6">
           {spec.states?.map((s) => (
