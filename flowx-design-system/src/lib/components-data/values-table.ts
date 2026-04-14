@@ -43,7 +43,7 @@ export const valuesTableSpec: ComponentSpec = {
     },
   ],
 
-  states: ["read-only", "editing", "error"],
+  states: ["read-only", "editing", "error", "warning"],
 
   anatomy: [
     { part: "Table Container", description: "Outer wrapper with white background, 1px border (#cbd1db), and 16px corner radius." },
@@ -142,6 +142,15 @@ export const valuesTableSpec: ComponentSpec = {
         "Errors appear inline on the affected cell with a red border and error icon. Disable the save button until all errors are resolved.",
       previews: [
         { bordered: "on", batchEdit: "off", error: "on" },
+      ],
+    },
+    {
+      type: "info",
+      title: "Warning state",
+      description:
+        "A warning icon appears on a read-only cell when an external configuration change has made the value invalid. Unlike validation errors, warnings are not caused by direct editing of the table.",
+      previews: [
+        { bordered: "on", batchEdit: "off", warning: "on" },
       ],
     },
   ],

@@ -10,7 +10,7 @@ import {
 import { ComponentPageTemplate } from "@/components/docs/component-page-template";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { FlowXErrorIcon, FlowXTooltip } from "@/components/docs/shared-elements";
-import { PencilSimple, TrashSimple, Check, X as XIcon, SortAscending, Funnel } from "@phosphor-icons/react";
+import { PencilSimple, TrashSimple, Check, X as XIcon, SortAscending, Funnel, Warning } from "@phosphor-icons/react";
 
 /* ------------------------------------------------------------------ */
 /*  Colors extracted from Figma (scan_text_nodes + get_node_info)     */
@@ -33,6 +33,7 @@ const colors = {
   saveBtnActive: "#008060",
   saveBtnDisabled: "#e3e8ed",
   cancelBtn: "#e62200",
+  warningIcon: "#fd6b1c",
 };
 
 /* ------------------------------------------------------------------ */
@@ -48,6 +49,7 @@ const columnHeaders = [
 interface CellData {
   value: string;
   isPlaceholder?: boolean;
+  hasWarning?: boolean;
 }
 
 const readOnlyRow1: CellData[] = [
@@ -65,6 +67,12 @@ const readOnlyRow2: CellData[] = [
 const readOnlyRow3: CellData[] = [
   { value: "CODE 1" },
   { value: "Value" },
+  { value: "Value" },
+];
+
+const warningRow: CellData[] = [
+  { value: "CODE 1" },
+  { value: "Value", hasWarning: true },
   { value: "Value" },
 ];
 
@@ -105,13 +113,16 @@ function ReadOnlyCell({ data }: { data: CellData }) {
       style={{
         display: "flex",
         alignItems: "center",
+        gap: 6,
+        width: "100%",
         fontSize: 14,
         fontWeight: 400,
         color: colors.cellText,
         opacity: data.isPlaceholder ? colors.placeholderOpacity : 1,
       }}
     >
-      {data.value}
+      <span style={{ flex: 1 }}>{data.value}</span>
+      {data.hasWarning && <Warning size={16} color={colors.warningIcon} style={{ flexShrink: 0, marginRight: 2 }} />}
     </div>
   );
 }
@@ -378,11 +389,13 @@ function BatchEditActions() {
 function FlowXValuesTable({
   editMode = false,
   error = false,
+  warning = false,
   bordered = true,
   batchEdit = false,
 }: {
   editMode?: boolean;
   error?: boolean;
+  warning?: boolean;
   bordered?: boolean;
   batchEdit?: boolean;
 }) {
@@ -479,8 +492,7 @@ function FlowXValuesTable({
         </div>
       </div>
 
-      {/* ---- Row 2: read-only OR editable OR batch-edit (hidden when error-only) ---- */}
-      {(editMode || !error) && (
+      {/* ---- Row 2: read-only OR editable OR batch-edit ---- */}
       <div
         style={{
           display: "flex",
@@ -489,7 +501,7 @@ function FlowXValuesTable({
           borderBottom: `0.5px solid ${colors.border}`,
         }}
       >
-        {(editMode || batchEdit)
+        {(!error && (editMode || batchEdit))
           ? editRow.map((cell, i) => (
               <React.Fragment key={i}>
                 {i > 0 && <VerticalSep />}
@@ -518,12 +530,11 @@ function FlowXValuesTable({
             alignItems: "center",
           }}
         >
-          {batchEdit ? <BatchEditActions /> : editMode ? <EditActions /> : <ReadOnlyActions />}
+          {(!error && batchEdit) ? <BatchEditActions /> : (!error && editMode) ? <EditActions /> : <ReadOnlyActions />}
         </div>
       </div>
-      )}
 
-      {/* ---- Row 3: read-only OR error OR batch-edit ---- */}
+      {/* ---- Row 3: read-only OR error OR warning OR batch-edit ---- */}
       <div
         style={{
           display: "flex",
@@ -540,6 +551,15 @@ function FlowXValuesTable({
                 </div>
               </React.Fragment>
             ))
+          : warning
+            ? warningRow.map((cell, i) => (
+                <React.Fragment key={i}>
+                  {i > 0 && <VerticalSep />}
+                  <div style={{ flex: columnHeaders[i]?.width ? undefined : 1, width: columnHeaders[i]?.width, flexShrink: columnHeaders[i]?.width ? 0 : undefined, paddingLeft: 14, paddingRight: 14, display: "flex", alignItems: "center", minWidth: 0 }}>
+                    <ReadOnlyCell data={cell} />
+                  </div>
+                </React.Fragment>
+              ))
           : batchEdit
             ? readOnlyRow3.map((cell, i) => (
                 <React.Fragment key={i}>
@@ -640,19 +660,23 @@ export default function ValuesTablePage() {
           description="Toggle edit mode and error state to see different row behaviors."
           controls={[
             {
-              name: "editType",
-              options: ["By Row", "Always On"],
-              default: "By Row",
-            },
-            {
-              name: "Row Edit State",
-              type: "boolean",
-              disabledWhen: "editType",
-              disabledWhenValue: "Always On",
+              name: "editing",
+              options: ["Off", "Row Edit", "Always On"],
+              default: "Off",
+              setValueWhen: [
+                { watch: "error", value: "Row Edit" },
+                { watch: "warning", value: "Off" },
+              ],
             },
             {
               name: "error",
               type: "boolean",
+              requiredValue: { control: "editing", value: "Row Edit" },
+            },
+            {
+              name: "warning",
+              type: "boolean",
+              requiredValue: { control: "editing", value: "Off" },
             },
             {
               name: "bordered",
@@ -663,9 +687,10 @@ export default function ValuesTablePage() {
           render={(values) => (
             <div style={{ width: "100%", padding: 16 }}>
               <FlowXValuesTable
-                editMode={values.editType !== "Always On" && values["Row Edit State"] === true}
-                batchEdit={values.editType === "Always On"}
+                editMode={values.editing === "Row Edit"}
+                batchEdit={values.editing === "Always On"}
                 error={values.error === true}
+                warning={values.warning === true}
                 bordered={values.bordered !== false}
               />
             </div>
@@ -679,6 +704,7 @@ export default function ValuesTablePage() {
             batchEdit={props.batchEdit === "on"}
             editMode={props.editMode === "on"}
             error={props.error === "on"}
+            warning={props.warning === "on"}
           />
         </div>
       )}
@@ -708,6 +734,12 @@ export default function ValuesTablePage() {
               <FlowXValuesTable error />
             </div>
             <span className="text-xs text-muted-foreground">Error</span>
+          </div>
+          <div className="flex flex-col gap-3">
+            <div style={{ overflowX: "auto" }}>
+              <FlowXValuesTable warning />
+            </div>
+            <span className="text-xs text-muted-foreground">Warning</span>
           </div>
         </div>
       }

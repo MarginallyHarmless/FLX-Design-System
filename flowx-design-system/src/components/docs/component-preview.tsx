@@ -16,6 +16,10 @@ interface Control {
   disabledWhenValue?: any;
   /** Name of another boolean control — when truthy, this boolean control is forced on. */
   forcedOnWhen?: string;
+  /** Override this control's value when another control is truthy. Later entries take priority. */
+  setValueWhen?: { watch: string; value: any }[];
+  /** This boolean control can only be on when the watched control has the specified value. Clears automatically otherwise. */
+  requiredValue?: { control: string; value: any };
 }
 
 interface ComponentPreviewProps {
@@ -103,7 +107,28 @@ export function ComponentPreview({
   });
 
   const update = (name: string, value: any) =>
-    setValues((prev) => ({ ...prev, [name]: value }));
+    setValues((prev) => {
+      const next = { ...prev, [name]: value };
+      // Apply setValueWhen: if a control watches the changed control, update its value
+      for (const c of controls) {
+        if (c.setValueWhen) {
+          for (const rule of c.setValueWhen) {
+            if (rule.watch === name && next[name]) {
+              next[c.name] = rule.value;
+            }
+          }
+        }
+      }
+      // Clear boolean controls whose requiredValue is no longer satisfied
+      for (const c of controls) {
+        if (c.requiredValue && next[c.name]) {
+          if (next[c.requiredValue.control] !== c.requiredValue.value) {
+            next[c.name] = false;
+          }
+        }
+      }
+      return next;
+    });
 
   return (
     <div
@@ -128,6 +153,11 @@ export function ComponentPreview({
             if (c.forcedOnWhen && values[c.forcedOnWhen]) {
               resolved[c.name] = true;
             }
+            if (c.setValueWhen) {
+              for (const rule of c.setValueWhen) {
+                if (values[rule.watch]) resolved[c.name] = rule.value;
+              }
+            }
           }
           return resolved;
         })())}
@@ -145,9 +175,13 @@ export function ComponentPreview({
               ? !!values[c.forcedOnWhen]
               : false;
 
-            const segmentValue = c.type === "boolean"
-              ? ((isForcedOn || values[c.name]) ? "On" : "Off")
-              : (values[c.name] ?? segmentOptions[0]);
+            const activeRule = c.setValueWhen?.find((rule) => values[rule.watch]);
+
+            const segmentValue = activeRule
+              ? (c.type === "boolean" ? (activeRule.value ? "On" : "Off") : activeRule.value)
+              : c.type === "boolean"
+                ? ((isForcedOn || values[c.name]) ? "On" : "Off")
+                : (values[c.name] ?? segmentOptions[0]);
 
             const isDisabledWhen = c.disabledWhen
               ? (c.disabledWhenValue !== undefined
