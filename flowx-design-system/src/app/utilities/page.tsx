@@ -7,27 +7,6 @@ import {
   FlowXErrorIcon,
   FlowXTooltip,
 } from "@/components/docs/shared-elements";
-/* ------------------------------------------------------------------ */
-/*  Consideration item                                                 */
-/* ------------------------------------------------------------------ */
-
-function Consideration({ text }: { text: string }) {
-  const sep = text.indexOf(" → ");
-  return (
-    <li className="text-sm text-muted-foreground">
-      {sep !== -1 ? (
-        <>
-          <span className="font-medium text-foreground">{text.slice(0, sep)}</span>
-          {" → "}{text.slice(sep + 3)}
-        </>
-      ) : text}
-    </li>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Page                                                               */
-/* ------------------------------------------------------------------ */
 
 export default function UtilitiesPage() {
   return (
@@ -74,14 +53,6 @@ export default function UtilitiesPage() {
           />
         </div>
 
-        <div>
-          <h3 className="text-base font-semibold">Considerations</h3>
-          <ul className="mt-3 space-y-2">
-            <Consideration text="[placeholder] When a form field is required → show the label; never rely on placeholder alone to communicate what the field is for." />
-            <Consideration text="[placeholder] When using the info icon → pair it with a tooltip; the icon alone doesn't communicate what additional context is available." />
-            <Consideration text="[placeholder] When multiple labels stack vertically in a form → keep all labels the same size to maintain visual alignment." />
-          </ul>
-        </div>
 
       </section>
 
@@ -122,14 +93,6 @@ export default function UtilitiesPage() {
           />
         </div>
 
-        <div>
-          <h3 className="text-base font-semibold">Considerations</h3>
-          <ul className="mt-3 space-y-2">
-            <Consideration text="[placeholder] When a field enters error state → always show the description with error text; hiding it forces the user to guess what went wrong." />
-            <Consideration text="[placeholder] When helper text is generic (e.g. 'Enter a value') → omit the description entirely; it adds noise without helping the user." />
-            <Consideration text="[placeholder] When the field is disabled → keep the description visible if it explains why the field is locked." />
-          </ul>
-        </div>
 
       </section>
 
@@ -166,12 +129,129 @@ export default function UtilitiesPage() {
           />
         </div>
 
+        {/* Usage Guidelines */}
         <div>
-          <h3 className="text-base font-semibold">Considerations</h3>
-          <ul className="mt-3 space-y-2">
-            <Consideration text="[placeholder] When using the error variant on a dark surface → enable inverted mode; the default red is too dark to read against dark backgrounds." />
-            <Consideration text="[placeholder] When tooltip text exceeds ~40 characters → consider using a popover or inline message instead; long tooltips are hard to read in the pill format." />
-          </ul>
+          <h3 className="text-base font-semibold">Usage Guidelines</h3>
+
+          <div className="flex flex-col gap-4 py-6 sm:flex-row sm:items-stretch">
+            {/* Preview */}
+            <div className="flex shrink-0 sm:w-2/5">
+              <div
+                className="flex w-full items-center justify-center rounded-lg p-6"
+                style={{ backgroundColor: "#f7f8f9" }}
+              >
+                <img
+                  src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/tooltip-positioning.png`}
+                  alt="Tooltip positioning priority"
+                  style={{ maxWidth: 260 }}
+                />
+              </div>
+            </div>
+            {/* Text */}
+            <div className="flex flex-col justify-center gap-1">
+              <p className="text-sm font-medium">Positioning</p>
+              <p className="text-sm text-muted-foreground">
+                Place the tooltip where there is available space, following this
+                priority: above the hovered element, then below, then left or
+                right.
+              </p>
+            </div>
+          </div>
+
+          {/* Timing — info points */}
+          <div
+            className="flex flex-col gap-4 py-6 sm:flex-row sm:items-stretch border-t"
+            style={{ borderColor: "#f7f8f9" }}
+          >
+            <div className="flex shrink-0 sm:w-2/5">
+              <div
+                className="flex w-full items-center justify-center rounded-lg p-6"
+                style={{ backgroundColor: "#f7f8f9" }}
+              >
+                <img
+                  src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/tooltip-delay-info.png`}
+                  alt="Tooltip on info point"
+                  style={{ maxWidth: 260 }}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col justify-center gap-1">
+              <p className="text-sm font-medium">Timing for info points</p>
+              <p className="text-sm text-muted-foreground">
+                Show delay: 300 ms. Hide delay: 300 ms. Keep the tooltip visible
+                while the cursor is hovering over it.
+              </p>
+            </div>
+          </div>
+
+          {/* Timing — other elements */}
+          <div
+            className="flex flex-col gap-4 py-6 sm:flex-row sm:items-stretch border-t"
+            style={{ borderColor: "#f7f8f9" }}
+          >
+            <div className="flex shrink-0 sm:w-2/5">
+              <div
+                className="flex w-full items-center justify-center rounded-lg p-6"
+                style={{ backgroundColor: "#f7f8f9" }}
+              >
+                <img
+                  src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/tooltip-delay-other.png`}
+                  alt="Tooltip on other elements"
+                  style={{ maxWidth: 140 }}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col justify-center gap-1">
+              <p className="text-sm font-medium">Timing for other elements</p>
+              <p className="text-sm text-muted-foreground">
+                Show delay: 1500 ms. Hide delay: 300 ms. Keep the tooltip
+                visible while the cursor is hovering over it.
+              </p>
+            </div>
+          </div>
+
+          {/* Size constraints */}
+          <div
+            className="flex flex-col gap-4 py-6 sm:flex-row sm:items-stretch border-t"
+            style={{ borderColor: "#f7f8f9" }}
+          >
+            <div className="flex shrink-0 sm:w-2/5">
+              <div
+                className="flex w-full items-center justify-center rounded-lg p-6"
+                style={{ backgroundColor: "#f7f8f9", fontFamily: "var(--font-flowx)" }}
+              >
+                <div
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    padding: 8,
+                    borderRadius: 8,
+                    backgroundColor: "#475263",
+                    maxWidth: 240,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 12,
+                      lineHeight: "16px",
+                      fontWeight: 400,
+                      color: "#ffffff",
+                      whiteSpace: "normal",
+                    }}
+                  >
+                    Assign this task to a team member before moving it to the review stage
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col justify-center gap-1">
+              <p className="text-sm font-medium">Size constraints</p>
+              <p className="text-sm text-muted-foreground">
+                Keep tooltips under 500 px wide and no taller than 5 lines of
+                text. If you need more space, consider using a popover instead.
+              </p>
+            </div>
+          </div>
         </div>
 
       </section>
@@ -219,13 +299,6 @@ export default function UtilitiesPage() {
           </div>
         </div>
 
-        <div>
-          <h3 className="text-base font-semibold">Considerations</h3>
-          <ul className="mt-3 space-y-2">
-            <Consideration text="[placeholder] When placing the error icon next to a field → position it outside the input container, not inside; it should not compete with the field content." />
-            <Consideration text="[placeholder] When the error icon appears alongside error text → the icon is redundant as a standalone indicator; the text already communicates the error." />
-          </ul>
-        </div>
 
       </section>
     </div>
