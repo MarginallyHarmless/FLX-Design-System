@@ -530,7 +530,7 @@ export default function TreePage() {
           size={props.size as "Medium" | "Small"}
           inverted={props.inverted === "on"}
           nesting={props.nesting === "on"}
-          showHeader={false}
+          showHeader={props.showHeader === "on"}
         />
       )}
       statesReference={
