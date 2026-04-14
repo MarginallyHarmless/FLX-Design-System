@@ -230,7 +230,7 @@ export default function TabsPage() {
           size={(props.size as "small" | "medium") || "medium"}
           inverted={props.inverted === "on"}
           tabs={props.tabs ? (props.tabs as string).split(",") : undefined}
-          activeIndex={props.activeIndex ? parseInt(props.activeIndex as string, 10) : undefined}
+          activeIndex={props.activeIndex !== undefined ? parseInt(props.activeIndex as string, 10) : undefined}
           hasCounter={props.hasCounter === "on"}
         />
       )}
