@@ -32,6 +32,7 @@ function FlowXSelectField({
   inlineLabel = false,
   hasDescription = false,
   placeholder = "Placeholder",
+  label = "Label",
 }: {
   state?: "default" | "focused" | "error" | "disabled";
   filled?: boolean;
@@ -42,6 +43,7 @@ function FlowXSelectField({
   inlineLabel?: boolean;
   hasDescription?: boolean;
   placeholder?: string;
+  label?: string;
 }) {
   const spec = selectFieldSpec;
   const variantProps = {
@@ -178,7 +180,7 @@ function FlowXSelectField({
       <div style={{ minWidth: 200 }}>
         <div className="inline-flex items-center gap-3" style={{ width: "100%" }}>
           <FlowXLabel
-            label="Label"
+            label={label}
             size={size === "small" ? "small" : "medium"}
             inverted={inverted}
             disabled={state === "disabled"}
@@ -202,7 +204,7 @@ function FlowXSelectField({
     >
       {/* Label */}
       <FlowXLabel
-        label="Label"
+        label={label}
         size={size === "small" ? "small" : "medium"}
         inverted={inverted}
         disabled={state === "disabled"}
