@@ -40,7 +40,7 @@ const colors = {
 /*  Sub-components                                                    */
 /* ------------------------------------------------------------------ */
 
-const columnHeaders = [
+const columnHeaders: { label: string; bold: boolean; hasFilter?: boolean; hasSort?: boolean; width?: number }[] = [
   { label: "Code", bold: true, hasFilter: true, width: 90 },
   { label: "EN", bold: false, hasSort: true },
   { label: "FR", bold: false, hasSort: true },
@@ -78,7 +78,7 @@ const warningRow: CellData[] = [
 ];
 
 /* Entity table data */
-const entityColumnHeaders = [
+const entityColumnHeaders: { label: string; bold: boolean; hasFilter?: boolean; hasSort?: boolean; width?: number }[] = [
   { label: "Name", bold: false, width: 180 },
   { label: "Description", bold: false },
   { label: "Edited by", bold: false, width: 130 },
