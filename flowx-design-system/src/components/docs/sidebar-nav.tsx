@@ -20,7 +20,15 @@ const foundationsItems = [
 
 const utilitiesItems = [{ label: "Sub-components", href: "/utilities" }];
 
-const patternsItems = [{ label: "Patterns", href: "/patterns" }];
+const patternsItems = [
+  { label: "Navigation Headers", href: "/patterns/navigation-headers" },
+  { label: "Workflow Nodes", href: "/patterns/workflow-nodes" },
+  { label: "Config Panels", href: "/patterns/config-panels" },
+  { label: "Menus", href: "/patterns/menus" },
+  { label: "Toasts", href: "/patterns/toasts" },
+  { label: "Saving", href: "/patterns/saving" },
+  { label: "Loaders", href: "/patterns/loaders" },
+];
 
 const resourcesItems = [
   { label: "Figma", href: "/resources/figma" },

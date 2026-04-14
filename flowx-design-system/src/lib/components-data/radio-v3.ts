@@ -202,6 +202,15 @@ export const radioV3Spec: ComponentSpec = {
     },
     {
       type: "info",
+      title: "Standalone radios",
+      description:
+        "Standalone radios are only used when their connection to other components is clear and they give sufficient context.",
+      previews: [
+        { context: "user-list" },
+      ],
+    },
+    {
+      type: "info",
       title: "Offer a default selection",
       description:
         "Pre-select the safest or most common option so users can move forward without making every choice explicit. Avoid leaving a required radio group empty by default.",
@@ -222,6 +231,24 @@ export const radioV3Spec: ComponentSpec = {
     },
     {
       type: "info",
+      title: "Long values wrap to multiple lines",
+      description:
+        "When the value is too long for the available width, the text wraps and the radio aligns to the top of the first line.",
+      previews: [
+        {
+          selected: "on",
+          state: "default",
+          border: "on",
+          inverted: "off",
+          hasLabel: "off",
+          multiline: "on",
+          maxWidth: "320",
+          value: "Escalate to a senior reviewer above the loan threshold",
+        },
+      ],
+    },
+    {
+      type: "info",
       title: "Choosing the right size",
       description:
         "Use Medium as the default across admin pages. Use Small in tighter spaces like canvas areas (UI Designer, Data Model, Agent Builder).",
@@ -234,7 +261,7 @@ export const radioV3Spec: ComponentSpec = {
       type: "info",
       title: "Inverted on dark backgrounds",
       description:
-        "Use the inverted variant when the component sits on a dark or strongly colored surface like a hero section or a dark modal. Inverted colors keep text and strokes legible against the darker background.",
+        "Use the inverted variant when the component sits on a dark or strongly colored surface.",
       previewRows: [
         {
           background: "dark",

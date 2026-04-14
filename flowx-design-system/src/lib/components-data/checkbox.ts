@@ -634,6 +634,15 @@ export const checkboxSpec: ComponentSpec = {
     },
     {
       type: "info",
+      title: "Standalone checkboxes",
+      description:
+        "Standalone checkboxes are only used when their connection to other components is clear and they give sufficient context.",
+      previews: [
+        { context: "user-list" },
+      ],
+    },
+    {
+      type: "info",
       title: "Showing errors",
       description:
         "Display the error below the checkbox with red helper text, and place the error icon to the right of the checkbox, outside the container.",
@@ -646,13 +655,31 @@ export const checkboxSpec: ComponentSpec = {
       type: "info",
       title: "Indeterminate state",
       description:
-        "Use the indeterminate state on a parent checkbox when some, but not all, of its child options are selected. Clicking it should select all children; clicking again should deselect them. Show the dash icon in the same filled style as a selected checkbox.",
+        "Use the indeterminate state on a parent checkbox when only some of its children are selected. Clicking it selects all; clicking again deselects them.",
       previewRows: [
         [
           { indeterminate: "on", state: "default", border: "off", inverted: "off", hasLabel: "off", value: "Select all" },
           { selected: "on", state: "default", border: "off", inverted: "off", hasLabel: "off", value: "Email" },
           { selected: "off", state: "default", border: "off", inverted: "off", hasLabel: "off", value: "SMS" },
         ],
+      ],
+    },
+    {
+      type: "info",
+      title: "Long values wrap to multiple lines",
+      description:
+        "When the value is too long for the available width, the text wraps and the checkbox aligns to the top of the first line.",
+      previews: [
+        {
+          selected: "on",
+          state: "default",
+          border: "on",
+          inverted: "off",
+          hasLabel: "off",
+          multiline: "on",
+          maxWidth: "320",
+          value: "Notify reviewers when a draft is submitted for approval",
+        },
       ],
     },
     {
@@ -669,7 +696,7 @@ export const checkboxSpec: ComponentSpec = {
       type: "info",
       title: "Inverted on dark backgrounds",
       description:
-        "Use the inverted variant when the component sits on a dark or strongly colored surface like a hero section or a dark modal. Inverted colors keep text and strokes legible against the darker background.",
+        "Use the inverted variant when the component sits on a dark or strongly colored surface.",
       previewRows: [
         {
           background: "dark",

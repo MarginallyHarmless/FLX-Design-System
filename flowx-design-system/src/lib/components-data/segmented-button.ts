@@ -270,7 +270,7 @@ export const segmentedButtonSpec: ComponentSpec = {
       type: "info",
       title: "Inverted on dark backgrounds",
       description:
-        "Use the inverted variant when the component sits on a dark or strongly colored surface like a hero section or a dark modal. Inverted colors keep text and strokes legible against the darker background.",
+        "Use the inverted variant when the component sits on a dark or strongly colored surface.",
       previewRows: [
         {
           background: "dark",

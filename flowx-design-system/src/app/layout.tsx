@@ -52,14 +52,14 @@ export default function RootLayout({
             <div className="flex min-h-screen">
               {/* Sidebar - hidden on mobile, shown on md+ */}
               <aside className="hidden md:flex w-60 flex-col border-r bg-background fixed inset-y-0 left-0 z-30">
-                <div className="flex h-14 items-center gap-2.5 px-4 border-b">
+                <div className="flex h-14 shrink-0 items-center gap-2.5 px-4 py-3 border-b">
                   <Image src={`${basePath}/flowx-logo-light.png`} alt="FlowX" width={18} height={18} className="dark:hidden" />
                   <Image src={`${basePath}/flowx-logo-dark.png`} alt="FlowX" width={18} height={18} className="hidden dark:block" />
                   <Link href="/" className="font-semibold text-lg">
                     Design System
                   </Link>
                 </div>
-                <ScrollArea className="flex-1 py-4">
+                <ScrollArea className="flex-1 overflow-hidden py-4">
                   <SidebarNav />
                 </ScrollArea>
               </aside>

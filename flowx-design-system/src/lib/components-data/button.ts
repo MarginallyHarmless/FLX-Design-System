@@ -211,9 +211,9 @@ export const buttonSpec: ComponentSpec = {
       description:
         "Use Primary for the most important call-to-action, one per screen, section, or container. Use Secondary for regular actions; several per screen is fine. Use Tertiary for the lowest-priority actions, often paired with a Primary to signal an optional action.",
       previews: [
-        { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off" },
-        { scope: "Brand", variant: "Secondary", state: "Default", inverted: "Off" },
-        { scope: "Brand", variant: "Tertiary", state: "Default", inverted: "Off" },
+        { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off", label: "Save" },
+        { scope: "Brand", variant: "Secondary", state: "Default", inverted: "Off", label: "Cancel" },
+        { scope: "Brand", variant: "Tertiary", state: "Default", inverted: "Off", label: "Learn More" },
       ],
     },
     {
@@ -222,9 +222,9 @@ export const buttonSpec: ComponentSpec = {
       description:
         "Use Brand for most actions. Reserve Danger for destructive or irreversible actions like Delete or Discard, so the risk is visually clear. Use Success to confirm positive outcomes, like Keep Generated Content.",
       previews: [
-        { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off" },
-        { scope: "Danger", variant: "Primary", state: "Default", inverted: "Off" },
-        { scope: "Success", variant: "Primary", state: "Default", inverted: "Off" },
+        { scope: "Brand", variant: "Primary", state: "Default", inverted: "Off", label: "Submit" },
+        { scope: "Danger", variant: "Primary", state: "Default", inverted: "Off", label: "Delete" },
+        { scope: "Success", variant: "Primary", state: "Default", inverted: "Off", label: "Keep UI" },
       ],
     },
     {
@@ -272,7 +272,7 @@ export const buttonSpec: ComponentSpec = {
       type: "info",
       title: "Inverted on dark backgrounds",
       description:
-        "Use the inverted variant when the component sits on a dark or strongly colored surface like a hero section or a dark modal. Inverted colors keep text and strokes legible against the darker background.",
+        "Use the inverted variant when the component sits on a dark or strongly colored surface.",
       previewRows: [
         {
           background: "dark",

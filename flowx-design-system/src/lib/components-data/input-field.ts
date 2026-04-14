@@ -489,7 +489,7 @@ export const inputFieldSpec: ComponentSpec = {
       type: "info",
       title: "Placeholder content",
       description:
-        "Use placeholder text only for supplemental hints, not as a replacement for the label. Write placeholders as examples of valid input rather than instructions.",
+        "Use placeholder text only for supplemental hints, not as a replacement for the label.",
       previews: [
         { state: "default", filled: "off", label: "Email", placeholder: "name@company.com" },
         { state: "default", filled: "off", label: "Phone", placeholder: "+40 712 345 678" },
@@ -538,7 +538,7 @@ export const inputFieldSpec: ComponentSpec = {
       type: "info",
       title: "Inverted on dark backgrounds",
       description:
-        "Use the inverted variant when the component sits on a dark or strongly colored surface like a hero section or a dark modal. Inverted colors keep text and strokes legible against the darker background.",
+        "Use the inverted variant when the component sits on a dark or strongly colored surface.",
       previewRows: [
         {
           background: "dark",

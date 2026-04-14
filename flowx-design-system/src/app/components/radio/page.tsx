@@ -1,9 +1,98 @@
 "use client";
 
+import { User } from "@phosphor-icons/react";
 import { radioV3Spec } from "@/lib/components-data/radio-v3";
 import { ComponentPageTemplate } from "@/components/docs/component-page-template";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { FlowXLabel, FlowXDescription, FlowXErrorIcon } from "@/components/docs/shared-elements";
+
+/* ------------------------------------------------------------------ */
+/*  Standalone-radio preview — illustrates "no label" usage in a       */
+/*  user-list context (matches the checkbox standalone preview).       */
+/* ------------------------------------------------------------------ */
+
+function StandaloneUserListPreview() {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        maxWidth: 460,
+        fontFamily: "var(--font-flowx)",
+        backgroundColor: "#ffffff",
+        borderRadius: 8,
+        overflow: "hidden",
+      }}
+    >
+      {/* Row 1 — registered user, unselected */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+          padding: "10px 14px",
+          backgroundColor: "#ffffff",
+        }}
+      >
+        <div
+          style={{
+            width: 36,
+            height: 36,
+            borderRadius: "50%",
+            backgroundColor: "#e3e8ed",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 12,
+            fontWeight: 600,
+            color: "#1d232c",
+            flexShrink: 0,
+          }}
+        >
+          AT
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", flex: 1, minWidth: 0 }}>
+          <span style={{ fontSize: 14, fontWeight: 400, color: "#1d232c" }}>Ana Tudor</span>
+          <span style={{ fontSize: 12, color: "#64748b" }}>ana@flowx.ai</span>
+        </div>
+        <FlowXRadio selected={false} border={false} hasLabel={false} value="" />
+      </div>
+
+      {/* Row 2 — pending invite, selected */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+          padding: "10px 14px",
+          backgroundColor: "#e6f0fb",
+        }}
+      >
+        <div
+          style={{
+            width: 36,
+            height: 36,
+            borderRadius: "50%",
+            border: "1.5px dashed #5b6a7e",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+          }}
+        >
+          <User size={16} color="#1d232c" weight="regular" />
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <span style={{ fontSize: 14, color: "#1d232c" }}>
+            paul.teodorescu@yahoo.com (Pending)
+          </span>
+        </div>
+        <FlowXRadio selected={true} border={false} hasLabel={false} value="" />
+      </div>
+    </div>
+  );
+}
 
 /* ------------------------------------------------------------------ */
 /*  FlowXRadio — local preview component matching Figma design         */
@@ -21,6 +110,8 @@ function FlowXRadio({
   hasDescription = false,
   subtitle = "",
   hasLabel = true,
+  multiline = false,
+  maxWidth,
 }: {
   selected?: boolean;
   state?: "default" | "error" | "disabled";
@@ -32,6 +123,8 @@ function FlowXRadio({
   hasDescription?: boolean;
   subtitle?: string;
   hasLabel?: boolean;
+  multiline?: boolean;
+  maxWidth?: number;
 }) {
   const isSmall = size === "small";
   const isDisabled = state === "disabled";
@@ -115,6 +208,7 @@ function FlowXRadio({
         gap: 2,
         fontFamily: "var(--font-flowx)",
         cursor: isDisabled ? "not-allowed" : "pointer",
+        maxWidth,
       }}
     >
       {/* Label */}
@@ -138,10 +232,10 @@ function FlowXRadio({
         <div
           style={{
             display: "inline-flex",
-            alignItems: hasSubtitle ? "flex-start" : "center",
+            alignItems: hasSubtitle || multiline ? "flex-start" : "center",
             gap: 8,
-            ...(hasSubtitle
-              ? { paddingTop: 8, paddingBottom: 8, paddingLeft: 12, paddingRight: 12 }
+            ...(hasSubtitle || multiline
+              ? { paddingTop: 8, paddingBottom: 8, paddingLeft: border ? 12 : 0, paddingRight: border ? 12 : 0 }
               : { height: isSmall ? 28 : 36, paddingLeft: border ? 8 : 0, paddingRight: border ? 12 : 0 }),
             borderRadius: border ? 8 : 0,
             border: border ? `1px solid ${containerBorder}` : "none",
@@ -176,8 +270,8 @@ function FlowXRadio({
             />
           )}
 
-          {/* Value text + optional subtitle */}
-          {hasSubtitle ? (
+          {/* Value text + optional subtitle (skipped when standalone) */}
+          {(value || hasSubtitle) && (hasSubtitle ? (
             <div style={{ display: "flex", flexDirection: "column", gap: isSmall ? 2 : 0 }}>
               <span
                 style={{
@@ -206,12 +300,12 @@ function FlowXRadio({
                 fontSize: isSmall ? 12 : 14,
                 lineHeight: isSmall ? "16px" : "24px",
                 color: valueColor,
-                whiteSpace: "nowrap",
+                whiteSpace: multiline ? "normal" : "nowrap",
               }}
             >
               {value}
             </span>
-          )}
+          ))}
         </div>
 
         {/* Error icon outside container */}
@@ -334,20 +428,27 @@ export default function RadioV3Page() {
           )}
         />
       }
-      renderGuidelinePreview={(props) => (
-        <FlowXRadio
-          selected={props.selected === "on"}
-          state={(props.state as "default" | "error" | "disabled") || "default"}
-          border={props.border === "on"}
-          inverted={props.inverted === "on"}
-          size={(props.size as "small" | "medium") || "medium"}
-          label={props.label}
-          value={props.value}
-          hasDescription={props.hasDescription === "on"}
-          subtitle={props.subtitle}
-          hasLabel={props.hasLabel !== "off"}
-        />
-      )}
+      renderGuidelinePreview={(props) => {
+        if (props.context === "user-list") {
+          return <StandaloneUserListPreview />;
+        }
+        return (
+          <FlowXRadio
+            selected={props.selected === "on"}
+            state={(props.state as "default" | "error" | "disabled") || "default"}
+            border={props.border === "on"}
+            inverted={props.inverted === "on"}
+            size={(props.size as "small" | "medium") || "medium"}
+            label={props.label}
+            value={props.value}
+            hasDescription={props.hasDescription === "on"}
+            subtitle={props.subtitle}
+            hasLabel={props.hasLabel !== "off"}
+            multiline={props.multiline === "on"}
+            maxWidth={props.maxWidth ? parseInt(props.maxWidth, 10) : undefined}
+          />
+        );
+      }}
       statesReference={
         spec.states && spec.states.length > 0 ? (
           <div className="flex flex-wrap items-start gap-6">
